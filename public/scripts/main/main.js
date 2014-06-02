@@ -27,7 +27,9 @@ app.controller('MainCtrl',function($scope){
 
         // Get top data from requested sub.
         $.getJSON('http://www.reddit.com/r/' + $scope.sub + '/top.json?sort=top&t=week',function(response){
+            console.log(response.data);
             $scope.posts = response.data.children;
+            $scope.$apply();
         })
     };
 
