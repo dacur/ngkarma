@@ -3,7 +3,7 @@
 var app = angular.module('MainApp',['wu.masonry']);
 
 // Controller for sub form.
-app.controller('MainCtrl',function($scope, brickService){
+app.controller('MainCtrl',function($scope){
 
     // Create Masonry object.
     var container = $('#brick-wall');
@@ -14,7 +14,7 @@ app.controller('MainCtrl',function($scope, brickService){
 
     // Update masonry layout regularly.
     setInterval(function(){
-        console.log("Updating layout...")
+        console.log("Updating layout...");
         reloadMasonry(false);
     },2000);
 
@@ -28,24 +28,22 @@ app.controller('MainCtrl',function($scope, brickService){
         // Get top data from requested sub.
         $.getJSON('http://www.reddit.com/r/' + $scope.sub + '/top.json?sort=top&t=week',function(response){
             $scope.posts = response.data.children;
-
-            // Create new bricks for each new item, then reload the wall.
-            $scope.posts.forEach(function(post){
-                var brick = brickService.createBrick(post.data);
-                $(container).prepend(brick);
-                reloadMasonry(true);
-            });
         })
     };
 
     // Check if post content is JPG image link.
-    $scope.isImage = function(url){
-        return /jpg|png|gif$/i.test(url);
-    };
+    $scope.checkTypeByUrl = function(url){
 
-    // Check if post is Imgur link, but not directly to image. TODO: Detect and handle Imgur galleries.
-    $scope.isImgur = function(url){
-        return /imgur\.com.*\/[^.]+$/.test(url);
+        // Check if post is image.
+        if(/jpg|png|gif$/i.test(url))
+            return "image";
+
+        // Check if post is Imgur link, but not directly to image. TODO: Detect and handle Imgur galleries.
+        else if(/imgur\.com.*\/[^.]+$/.test(url))
+            return "imgur";
+
+        else return false;
+
     };
 
     // Check if post content is self post.
