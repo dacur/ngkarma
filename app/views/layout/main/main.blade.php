@@ -16,7 +16,7 @@
             <img ng-if="checkTypeByUrl(post.data.url) == 'image'" id="contentImage" src="@{{ post.data.url }}" />
 
             <!-- If link to imgur page, refer to image directly. -->
-            <img ng-if="checkTypeByUrl(post.data.url) == 'imgur" id="contentImage" src="@{{ post.data.url }}.jpg" />
+            <img ng-if="checkTypeByUrl(post.data.url) == 'imgur'" id="contentImage" src="@{{ post.data.url }}.jpg" />
 
             <!-- If self post, post the text. -->
             <div ng-if="isSelf(post.data.selftext)" id="contentText" ng-body-html-unsafe="test">@{{ post.data.selftext }}</div>
