@@ -26,6 +26,7 @@
 
     <!--Main Angular Scripts-->
     <script src="/scripts/main/main.js"></script>
+    <script src="/scripts/main/services.js"></script>
 
     <!--Masonry-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>

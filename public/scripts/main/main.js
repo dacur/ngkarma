@@ -3,14 +3,20 @@
 var app = angular.module('MainApp',['wu.masonry']);
 
 // Controller for sub form.
-app.controller('MainCtrl',function($scope){
+app.controller('MainCtrl',function($scope, brickService){
 
     // Create Masonry object.
-    var container = document.querySelector('#brick-wall');
-    var masonry = new Masonry( container, {
-        columnWidth: 300,
-        itemSelector: '.brick'
+    var container = $('#brick-wall');
+    container.masonry({
+        columnWidth:  300,
+        itemSelector: '.item'
     });
+
+    // Update masonry layout regularly.
+    setInterval(function(){
+        console.log("Updating layout...")
+        reloadMasonry(false);
+    },2000);
 
     // Get content from specified subreddit.
     $scope.getSub = function(){
@@ -21,9 +27,14 @@ app.controller('MainCtrl',function($scope){
 
         // Get top data from requested sub.
         $.getJSON('http://www.reddit.com/r/' + $scope.sub + '/top.json?sort=top&t=week',function(response){
-            console.log(response);
             $scope.posts = response.data.children;
-            masonry.reloadItems();
+
+            // Create new bricks for each new item, then reload the wall.
+            $scope.posts.forEach(function(post){
+                var brick = brickService.createBrick(post.data);
+                $(container).prepend(brick);
+                reloadMasonry(true);
+            });
         })
     };
 
@@ -40,6 +51,13 @@ app.controller('MainCtrl',function($scope){
     // Check if post content is self post.
     $scope.isSelf = function(self){
         return self != null && self != "";
+    };
+
+    // Reload masonry.
+    function reloadMasonry(reload){
+        if(reload)
+            container.masonry('reloadItems');
+        container.masonry('layout');
     };
 
 });

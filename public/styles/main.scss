@@ -1,5 +1,9 @@
 @import 'colors.scss';
 
+hr{
+  margin-top:10px;
+}
+
 #menubar{
   background-color:$dark_teal;
   color:$white;
@@ -20,8 +24,14 @@
   }
 }
 
+#sub-select{
+  padding:10px;
+}
+
 #brick-wall{
   width:100%;
+  height:100%;
+  background-image: url("/resources/images/furley_bg.png");
 
   .brick{
     width: 290px;
@@ -31,13 +41,15 @@
     background-color:$white;
 
     .title{
-      border-radius: 5px 5px 0 0;
+      border-radius: 4px 4px 0 0;
       padding: 0 3px 0 3px;
       color:$white;
       background-color:$black;
     }
 
     .content{
+      text-align:center;
+
       #contentImage{
         max-width:288px;
       }

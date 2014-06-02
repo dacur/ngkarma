@@ -1,3 +1,6 @@
+hr {
+  margin-top: 10px; }
+
 #menubar {
   background-color: #006561;
   color: white;
@@ -11,8 +14,13 @@
     #menubar #menu-buttons .btn-menu {
       float: right; }
 
+#sub-select {
+  padding: 10px; }
+
 #brick-wall {
-  width: 100%; }
+  width: 100%;
+  height: 100%;
+  background-image: url("/resources/images/furley_bg.png"); }
   #brick-wall .brick {
     width: 290px;
     margin: 5px;
@@ -20,12 +28,14 @@
     border-radius: 5px;
     background-color: white; }
     #brick-wall .brick .title {
-      border-radius: 5px 5px 0 0;
+      border-radius: 4px 4px 0 0;
       padding: 0 3px 0 3px;
       color: white;
       background-color: black; }
-    #brick-wall .brick .content #contentImage {
-      max-width: 288px; }
+    #brick-wall .brick .content {
+      text-align: center; }
+      #brick-wall .brick .content #contentImage {
+        max-width: 288px; }
     #brick-wall .brick .info {
       border-top: 1px solid #aaaaaa; }
       #brick-wall .brick .info .left {
