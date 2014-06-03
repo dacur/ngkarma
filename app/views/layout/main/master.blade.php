@@ -7,13 +7,16 @@
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
+    <!--FontAwesome.io-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!--Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
 
     <!--Main Stylesheet-->
     <link rel="stylesheet" href="styles/main.css">
 </head>
-<body ng-controller="MainCtrl">
+<body ng-controller="MainCtrl" ng-cloak>
 
     <!--Load Menu-->
     @yield('menu')

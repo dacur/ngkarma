@@ -1,29 +1,43 @@
 @extends('layout.main.master')
 @section('main')
-<div id="sub-select">
-    <form name="subForm" ng-submit="getSub()">
-        <label>Enter a sub:</label><br />
-        r/<input type="text" ng-model="sub" placeholder="pics" />
-        <input type="submit">
-    </form>
+<div class="row" id="sub-select">
+    <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+        <form ng-submit="getSub()">
+            <label ng-show="!loadingSub">Enter a subreddit:</label>
+            <label ng-show="loadingSub">Loading...</label><br />
+            <div class="input-group">
+                <input class="form-control" id="sub" type="text" ng-model="sub" placeholder="loading..." ng-disabled="loadingSub" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" ng-disabled="loadingSub||sub==''||sub==undefined">submit</button>
+                </span>
+            </div>
+        </form>
+    </div>
 </div>
 <hr />
 <div id="brick-wall" masonry>
     <div class="brick masonry-brick" ng-repeat="post in posts">
         <div class="title">@{{ post.data.title }}</div>
         <div class="content">
-            <!-- If image, display it here. -->
-            <img ng-if="checkTypeByUrl(post.data.url) == 'image'" id="contentImage" src="@{{ post.data.url }}" />
+            <!-- If image, but not Imgur, display it here. -->
+            <img ng-if="isImage(post.data.url) && !isImgur(post.data.domain)" id="contentImage" src="@{{ post.data.url }}" />
 
-            <!-- If link to imgur page, refer to image directly. -->
-            <img ng-if="checkTypeByUrl(post.data.url) == 'imgur'" id="contentImage" src="@{{ post.data.url }}.jpg" />
+            <!-- If direct link to Imgur image, load large thumbnail. -->
+            <a ng-if="isImage(post.data.url) && isImgur(post.data.domain)"
+                href="@{{ post.data.url }}">
+               <img id="contentImage" src="@{{ getImgurThumb(post.data.url) }}" />
+            </a>
+
+            <!-- If link to Imgur, but not direct to image, half-ass append .jpg. -->
+            <img ng-if="!isImage(post.data.url) && isImgur(post.data.domain)" id="contentImage" src="@{{ post.data.url }}.jpg" />
 
             <!-- If self post, post the text. -->
             <div ng-if="isSelf(post.data.selftext)" id="contentText" ng-body-html-unsafe="test">@{{ post.data.selftext }}</div>
 
             <!-- Otherwise, try to screenshot the link destination. -->
-            <img ng-if="!checkTypeByUrl(post.data.url) && !isSelf(post.data.selftext)"
-                 id="contentImage" src="http://immediatenet.com/t/l?Size=1024x768&URL=@{{ post.data.url }}" />
+            <a ng-if="!isImage(post.data.url) && !isImgur(post.data.domain) && !isSelf(post.data.selftext)" href="@{{ post.data.url }}">
+                <img id="contentImage" src="http://immediatenet.com/t/l?Size=1024x768&URL=@{{ stripHttps(post.data.url) }}" />
+            </a>
 
             <!-- Otherwise, display "No Image Available". -->
             <!--<p ng-if="!isImgur(post.data.url) && !isSelf(post.data.selftext)">No Content Available</p>-->
@@ -39,8 +53,8 @@
                     </a>
             </div>
             <div class="right">
-                <img src="/resources/images/upvote.png" /> @{{ post.data.ups }}<br/>
-                <img src="/resources/images/downvote.png" /> @{{ post.data.downs }}<br/>
+                <i class="fa fa-arrow-up"></i> @{{ post.data.ups }}<br/>
+                <i class="fa fa-arrow-down"></i> @{{ post.data.downs }}<br/>
                 Points: @{{ post.data.score }}
             </div>
         </div>

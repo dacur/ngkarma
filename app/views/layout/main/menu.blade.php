@@ -5,7 +5,8 @@
         <div class="col-xs-9">
             <h3>Reddit Interface</h3>
         </div>
-        <div id="menu-buttons" class="col-xs-3">
+        <div class="btn-toolbar" id="menu-buttons" class="col-xs-3">
+            <input type="button" class="btn btn-menu" value="About" />
             <input type="button" class="btn btn-menu" value="Sign Up" />
         </div>
     </div>

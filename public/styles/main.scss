@@ -9,7 +9,7 @@ hr{
 }
 
 #menubar{
-  background-color:$dark_teal;
+  background-color:$very_dark_blue;
   color:$white;
   width:100%;
   height:50px;
@@ -35,26 +35,31 @@ hr{
 #brick-wall{
   width:100%;
   height:100%;
+  background-color:$black;
   //background-image: url("/resources/images/furley_bg.png");
 
   .brick{
     width: 290px;
     margin: 5px;
-    border: 1px solid $black;
+    border: 2px solid $white;
     border-radius: 5px;
     background-color:$white;
+    overflow:hidden;
 
     .title{
       border-radius: 4px 4px 0 0;
       padding: 0 3px 0 3px;
       color:$white;
-      background-color:$black;
+      background-color:rgb(109, 128, 151);
+      overflow:hidden;
     }
 
     .content{
       text-align:center;
+      overflow:hidden;
 
       #contentImage{
+        width:288px;
         max-width:288px;
       }
     }
@@ -78,9 +83,9 @@ hr{
 // Override Bootstrap Buttons
 .btn-menu{
   background-color:$white;
-  color:$dark_teal;
+  color:$very_dark_blue;
 }
 .btn-menu:hover{
   background-color:$white;
-  color:$dark_teal;
+  color:$very_dark_blue;
 }

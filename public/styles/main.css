@@ -5,7 +5,7 @@ hr {
   margin-top: 10px; }
 
 #menubar {
-  background-color: #006561;
+  background-color: #000033;
   color: white;
   width: 100%;
   height: 50px; }
@@ -22,21 +22,26 @@ hr {
 
 #brick-wall {
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  background-color: black; }
   #brick-wall .brick {
     width: 290px;
     margin: 5px;
-    border: 1px solid black;
+    border: 2px solid white;
     border-radius: 5px;
-    background-color: white; }
+    background-color: white;
+    overflow: hidden; }
     #brick-wall .brick .title {
       border-radius: 4px 4px 0 0;
       padding: 0 3px 0 3px;
       color: white;
-      background-color: black; }
+      background-color: #6d8097;
+      overflow: hidden; }
     #brick-wall .brick .content {
-      text-align: center; }
+      text-align: center;
+      overflow: hidden; }
       #brick-wall .brick .content #contentImage {
+        width: 288px;
         max-width: 288px; }
     #brick-wall .brick .info {
       border-top: 1px solid #aaaaaa; }
@@ -49,8 +54,8 @@ hr {
 
 .btn-menu {
   background-color: white;
-  color: #006561; }
+  color: #000033; }
 
 .btn-menu:hover {
   background-color: white;
-  color: #006561; }
+  color: #000033; }
