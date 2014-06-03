@@ -2,6 +2,10 @@
 
 html,body{
   font-family: 'Ubuntu', sans-serif;
+  a,a:visited,a:hover,a:active{
+    text-decoration:none;
+    color:$black;
+  }
 }
 
 hr{
@@ -52,6 +56,15 @@ hr{
       color:$white;
       background-color:rgb(109, 128, 151);
       overflow:hidden;
+//      a,a:visited,a:hover,a:active{
+//        color:$white;
+//      }
+
+      .subLink{
+        a,a:visited,a:hover,a:active{
+          color:$black;
+        }
+      }
     }
 
     .content{

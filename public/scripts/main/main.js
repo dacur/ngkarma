@@ -28,11 +28,11 @@ app.controller('MainCtrl',function($scope, MainService){
     },1000);
 
     // Get content from specified subreddit.
-    $scope.getSub = function(){
+    $scope.getSub = function(sub){
         // Remove leading 'r/' if present.
-        if(/^\/?r\//.test($scope.sub))
-            $scope.sub = $scope.sub.replace(/^\/?r\//g,'');
-        getSubreddit($scope.sub);
+        if(/^\/?r\//.test(sub))
+            sub = sub.replace(/^\/?r\//g,'');
+        getSubreddit(sub);
         $scope.sub = "";
     };
 
@@ -41,14 +41,33 @@ app.controller('MainCtrl',function($scope, MainService){
         return /jpg|png|gif$/i.test(url);
     };
 
-        // Check if post is Imgur link.
+    // Check if post is Imgur link.
     $scope.isImgur = function(dom){
         return /imgur\.com/.test(dom);
     };
 
     // Convert Imgur image links to large thumbnails.
     $scope.getImgurThumb = function(url){
-        return url.replace(/(\.[a-zA-Z0-9]+)$/,"m$1");
+        if(!(/\.gif$/).test(url))
+            return url.replace(/(\.[a-zA-Z0-9]+)$/,"m$1");
+        return url;
+    };
+
+    // Check if post is YouTube video link.
+    $scope.isYouTube = function(dom, url){
+        return (/youtube.com/.test(dom) && /watch/.test(url)) || /youtu.be/.test(dom)
+    };
+
+    // Get YouTube embed code.
+    $scope.embedYouTube = function(dom,url){
+        var video_id;
+        if(dom == "youtube.com")
+            video_id = url.match(/watch\?v=([^&]+)/);
+        else if(dom == "youtu.be")
+            video_id = url.match(/\/([^/]+)$/);
+        if(video_id[0] == null || video_id[0] == undefined || video_id[0] == "")
+            return "Could not embed YouTube Video.";
+        return video_id[0];
     };
 
     // Check if post content is self post.
@@ -80,7 +99,6 @@ app.controller('MainCtrl',function($scope, MainService){
             // Invalid sub. Load front page.
             $.getJSON('http://www.reddit.com/.json',function(response){
                 $scope.loadingSub = false;
-                console.log(response.data)
                 $scope.posts = response.data.children;
                 $scope.$apply();
             })

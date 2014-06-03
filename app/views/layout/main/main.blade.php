@@ -1,23 +1,25 @@
 @extends('layout.main.master')
 @section('main')
-<div class="row" id="sub-select">
-    <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
-        <form ng-submit="getSub()">
-            <label ng-show="!loadingSub">Enter a subreddit:</label>
-            <label ng-show="loadingSub">Loading...</label><br />
-            <div class="input-group">
-                <input class="form-control" id="sub" type="text" ng-model="sub" placeholder="loading..." ng-disabled="loadingSub" />
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit" ng-disabled="loadingSub||sub==''||sub==undefined">submit</button>
-                </span>
-            </div>
-        </form>
-    </div>
+<div class="container-fluid" id="sub-select">
+        <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+            <form ng-submit="getSub(sub)">
+                <label ng-show="!loadingSub">Enter a subreddit:</label>
+                <label ng-show="loadingSub">Loading...</label><br />
+                <div class="input-group">
+                    <input class="form-control" id="sub" type="text" ng-model="sub" placeholder="loading..." ng-disabled="loadingSub" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit" ng-disabled="loadingSub||sub==''||sub==undefined">submit</button>
+                    </span>
+                </div>
+            </form>
+        </div>
 </div>
 <hr />
 <div id="brick-wall" masonry>
     <div class="brick masonry-brick" ng-repeat="post in posts">
-        <div class="title">@{{ post.data.title }}</div>
+        <div class="title">
+            <a class="subLink" href="#" ng-click="getSub(post.data.subreddit)">r/@{{ post.data.subreddit }}</a> - @{{ post.data.title }}
+        </div>
         <div class="content">
             <!-- If image, but not Imgur, display it here. -->
             <img ng-if="isImage(post.data.url) && !isImgur(post.data.domain)" id="contentImage" src="@{{ post.data.url }}" />
@@ -28,15 +30,20 @@
                <img id="contentImage" src="@{{ getImgurThumb(post.data.url) }}" />
             </a>
 
+            <!-- If YouTube video, try to embed. -->
+            <div ng-if="isYouTube(post.data.domain,post.data.url)">
+                <iframe type="text/html" width="290" height="175" src="//www.youtube.com/embed/@{{ embedYouTube(post.data.domain,post.data.url) }}?autoplay=1" frameborder="0"></iframe>
+            </div>
+
             <!-- If link to Imgur, but not direct to image, half-ass append .jpg. -->
             <img ng-if="!isImage(post.data.url) && isImgur(post.data.domain)" id="contentImage" src="@{{ post.data.url }}.jpg" />
 
             <!-- If self post, post the text. -->
-            <div ng-if="isSelf(post.data.selftext)" id="contentText" ng-body-html-unsafe="test">@{{ post.data.selftext }}</div>
+            <div ng-if="post.data.is_self" id="contentText" ng-body-html-unsafe="test">@{{ post.data.selftext }}</div>
 
             <!-- Otherwise, try to screenshot the link destination. -->
-            <a ng-if="!isImage(post.data.url) && !isImgur(post.data.domain) && !isSelf(post.data.selftext)" href="@{{ post.data.url }}">
-                <img id="contentImage" src="http://immediatenet.com/t/l?Size=1024x768&URL=@{{ stripHttps(post.data.url) }}" />
+            <a ng-if="!isImage(post.data.url) && !isImgur(post.data.domain) && !isYouTube(post.data.domain,post.data.url) && !isSelf(post.data.selftext)" href="@{{ post.data.url }}">
+                <img id="contentImage" target="_blank" src="http://immediatenet.com/t/l?Size=1024x768&URL=@{{ stripHttps(post.data.url) }}" />
             </a>
 
             <!-- Otherwise, display "No Image Available". -->

@@ -1,5 +1,8 @@
 html, body {
   font-family: 'Ubuntu', sans-serif; }
+  html a, html a:visited, html a:hover, html a:active, body a, body a:visited, body a:hover, body a:active {
+    text-decoration: none;
+    color: black; }
 
 hr {
   margin-top: 10px; }
@@ -37,6 +40,8 @@ hr {
       color: white;
       background-color: #6d8097;
       overflow: hidden; }
+      #brick-wall .brick .title .subLink a, #brick-wall .brick .title .subLink a:visited, #brick-wall .brick .title .subLink a:hover, #brick-wall .brick .title .subLink a:active {
+        color: black; }
     #brick-wall .brick .content {
       text-align: center;
       overflow: hidden; }
