@@ -1,9 +1,15 @@
 'use strict';
 
-var app = angular.module('MainApp',['wu.masonry']);
+var app = angular.module('MainApp',['wu.masonry','youtube-api']);
 
 // Controller for sub form.
 app.controller('MainCtrl',function($scope, MainService){
+
+    // Set initial subreddit.
+    var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
+    if(initSub[1] != undefined && initSub[1] != null && initSub[1] != "")
+        getSubreddit(initSub[1]); // Load specified sub.
+    else getSubreddit(); // Load front page.
 
     // Rotate sub input placeholder with popular subreddit suggestions.
     var subs = MainService.getDefaultSubs();
@@ -11,9 +17,6 @@ app.controller('MainCtrl',function($scope, MainService){
         var n = Math.floor(Math.random()*subs.length+1);
         $('#sub').attr('placeholder','r/' + subs[n]);
     },1500);
-
-    // Load front page.
-    getSubreddit();
 
     // Create Masonry object.
     var container = $('#brick-wall');
@@ -59,15 +62,15 @@ app.controller('MainCtrl',function($scope, MainService){
     };
 
     // Get YouTube embed code.
-    $scope.embedYouTube = function(dom,url){
+    $scope.getYouTubeVideoId = function(dom,url){
         var video_id;
-        if(dom == "youtube.com")
-            video_id = url.match(/watch\?v=([^&]+)/);
-        else if(dom == "youtu.be")
-            video_id = url.match(/\/([^/]+)$/);
-        if(video_id[0] == null || video_id[0] == undefined || video_id[0] == "")
-            return "Could not embed YouTube Video.";
-        return video_id[0];
+        if(/youtube.com/.test(dom))
+            video_id = url.match(/[^a-zA-Z0-9]v=([a-zA-Z0-9-_]+)/);
+        else if(/youtu.be/.test(dom))
+            video_id = url.match(/youtu\.be\/([a-zA-Z0-9-_]+)/);
+        if(video_id != undefined && video_id.length > 1)
+            return video_id[1];
+        return false;
     };
 
     // Check if post content is self post.
@@ -98,6 +101,7 @@ app.controller('MainCtrl',function($scope, MainService){
         if(sub==undefined||sub==null||sub==""){
             // Invalid sub. Load front page.
             $.getJSON('http://www.reddit.com/.json',function(response){
+                console.log(response.data);
                 $scope.loadingSub = false;
                 $scope.posts = response.data.children;
                 $scope.$apply();
@@ -105,11 +109,22 @@ app.controller('MainCtrl',function($scope, MainService){
         }else{
             // Get top data from requested sub.
             $.getJSON('http://www.reddit.com/r/' + sub + '/top.json?sort=top&t=week',function(response){
+                console.log(response.data);
                 $scope.loadingSub = false;
                 $scope.posts = response.data.children;
                 $scope.$apply();
             });
         }
+    }
+
+    function parseUrl(key) {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+            function(m,key,value) {
+                vars[key] = value;
+            }
+        );
+        return vars[key];
     }
 
 });

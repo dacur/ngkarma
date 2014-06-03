@@ -31,8 +31,8 @@
             </a>
 
             <!-- If YouTube video, try to embed. -->
-            <div ng-if="isYouTube(post.data.domain,post.data.url)">
-                <iframe type="text/html" width="290" height="175" src="//www.youtube.com/embed/@{{ embedYouTube(post.data.domain,post.data.url) }}?autoplay=1" frameborder="0"></iframe>
+            <div id="youtube-@{{ post.data.id }}" ng-if="isYouTube(post.data.domain,post.data.url)"
+                 data-yt-player="myPlayer" data-yt-vid="@{{ getYouTubeVideoId(post.data.domain,post.data.url) }}">
             </div>
 
             <!-- If link to Imgur, but not direct to image, half-ass append .jpg. -->

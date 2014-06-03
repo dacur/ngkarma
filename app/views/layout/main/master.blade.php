@@ -14,7 +14,7 @@
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
 
     <!--Main Stylesheet-->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body ng-controller="MainCtrl" ng-cloak>
 
@@ -42,6 +42,9 @@
 
     <!--Script to allow Masonry to wait until all images have loaded before reacting.-->
     <script src="/bower_components/imagesloaded/imagesloaded.js"></script>
+
+    <!--AngularJS YouTube API directive-->
+    <script src="/scripts/youtube.js"></script>
 
 </body>
 </html>
