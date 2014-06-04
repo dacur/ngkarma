@@ -1,7 +1,7 @@
 @extends('layout.main.master')
 @section('main')
 <div class="container-fluid" id="sub-select">
-        <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+        <div class="col-sm-5 col-xs-12">
             <form ng-submit="getSub(sub)">
                 <label ng-show="!loadingSub">Enter a subreddit:</label>
                 <label ng-show="loadingSub">Loading...</label><br />

@@ -3,16 +3,18 @@
 var app = angular.module('MainApp',['wu.masonry','youtube-api']);
 
 // Controller for sub form.
-app.controller('MainCtrl',function($scope, MainService){
+app.controller('MainCtrl',function($scope, ApiService, SubService){
+
+
 
     // Set initial subreddit.
     var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
-    if(initSub[1] != undefined && initSub[1] != null && initSub[1] != "")
+    if(initSub != null && initSub[1] != null && initSub[1] != "")
         getSubreddit(initSub[1]); // Load specified sub.
     else getSubreddit(); // Load front page.
 
     // Rotate sub input placeholder with popular subreddit suggestions.
-    var subs = MainService.getDefaultSubs();
+    var subs = SubService.getDefaultSubs();
     setInterval(function(){
         var n = Math.floor(Math.random()*subs.length+1);
         $('#sub').attr('placeholder','r/' + subs[n]);
@@ -85,6 +87,26 @@ app.controller('MainCtrl',function($scope, MainService){
         return url;
     };
 
+    // Connect to Reddit.
+    $scope.logIn = function(){
+        var data = {
+            username: $scope.r_user,
+            password: $scope.r_pass
+        }
+        ApiService.Auth(data).success(function(response) {
+            if(response.hasOwnProperty('user') && response.user.hasOwnProperty('data') && response.hasOwnProperty('subs')
+                && response.subs.hasOwnProperty('data') && response.subs.data.hasOwnProperty('children'))
+            {
+                $scope.user = response.user.data;
+                $scope.subs = response.subs.data.children;
+                $scope.isLoggedIn = true;
+            }
+            console.log($scope.user);
+        }).error(function(response) {
+            console.log(response);
+        });
+    };
+
     // Reload masonry.
     function reloadMasonry(reload){
         if(reload)
@@ -101,7 +123,6 @@ app.controller('MainCtrl',function($scope, MainService){
         if(sub==undefined||sub==null||sub==""){
             // Invalid sub. Load front page.
             $.getJSON('http://www.reddit.com/.json',function(response){
-                console.log(response.data);
                 $scope.loadingSub = false;
                 $scope.posts = response.data.children;
                 $scope.$apply();
@@ -109,7 +130,6 @@ app.controller('MainCtrl',function($scope, MainService){
         }else{
             // Get top data from requested sub.
             $.getJSON('http://www.reddit.com/r/' + sub + '/top.json?sort=top&t=week',function(response){
-                console.log(response.data);
                 $scope.loadingSub = false;
                 $scope.posts = response.data.children;
                 $scope.$apply();

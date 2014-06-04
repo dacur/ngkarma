@@ -2,7 +2,25 @@
 
 var app = angular.module('MainApp');
 
-app.service('MainService',function(){
+app.service('ApiService',function($http){
+    return {
+        Auth: function(data){
+            return $http({
+                method: 'POST',
+                url: '/api/auth',
+                data: data
+            })
+        },
+        getUser: function(){
+            return $http({
+                method: 'GET',
+                url: '/api/user'
+            })
+        }
+    }
+});
+
+app.service('SubService',function(){
     return {
         getDefaultSubs: function(){
             return [

@@ -18,13 +18,12 @@ hr{
   width:100%;
   height:50px;
 
-  h3{
-    margin-bottom: 0px;
-  }
-
-  #menu-buttons{
+  .menu-right{
     float:right;
-    padding:7px 7px 0 0;
+
+    .login{
+      padding:7px 7px 0 0;
+    }
 
     .btn-menu{
       float:right;
