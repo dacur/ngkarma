@@ -14,6 +14,8 @@ hr {
   height: 50px; }
   #menubar .menu-right {
     float: right; }
+    #menubar .menu-right #login-loading {
+      padding-right: 14px; }
     #menubar .menu-right .login {
       padding: 7px 7px 0 0; }
     #menubar .menu-right .btn-menu {

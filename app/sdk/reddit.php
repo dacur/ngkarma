@@ -49,6 +49,7 @@ class reddit{
     * @param string $title The title of the story
     * @param string $link The link that the story should forward to
     * @param string $subreddit The subreddit where the story should be added
+    * @return mixed
     */
     public function createStory($title = null, $link = null, $subreddit = null){
         $urlSubmit = "{$this->apiHost}/submit";
@@ -72,6 +73,7 @@ class reddit{
         if ($response->jquery[18][3][0] == "that link has already been submitted"){
             return $response->jquery[18][3][0];
         }
+        return false;
     }
     
     /**
@@ -102,6 +104,8 @@ class reddit{
     * Get the listing of submissions from a subreddit
     * @link http://www.reddit.com/dev/api#GET_listing
     * @param string $sr The subreddit name. Ex: technology, limit (integer): The number of posts to gather
+    * @param int $limit
+    * @return mixed
     */
     public function getListing($sr, $limit = 5){
         $limit = (isset($limit)) ? "?limit=".$limit : "";
@@ -119,6 +123,7 @@ class reddit{
     * Get information on a URLs submission on Reddit
     * @link https://github.com/reddit/reddit/wiki/API%3A-info.json
     * @param string $url The URL to get information for
+    * @return mixed
     */
     public function getPageInfo($url){
         $response = null;
@@ -134,6 +139,7 @@ class reddit{
     *
     * Get Raw JSON for a reddit permalink
     * @param string $permalink permalink to get raw JSON for
+    * @return mixed
     */
     public function getRawJSON($permalink){
         $urlListing = "http://www.reddit.com/{$permalink}.json";
@@ -149,6 +155,7 @@ class reddit{
     * @link https://github.com/reddit/reddit/wiki/API%3A-save
     * @param string $name the full name of the post to save (name parameter
     *                     in the getSubscriptions() return value)
+    * @return mixed
     */
     public function savePost($name){
         $response = null;
@@ -167,6 +174,7 @@ class reddit{
     * @link https://github.com/reddit/reddit/wiki/API%3A-unsave
     * @param string $name the full name of the post to unsave (name parameter
     *                     in the getSubscriptions() return value)
+    * @return mixed
     */
     public function unsavePost($name){
         $response = null;
@@ -183,6 +191,7 @@ class reddit{
     *
     * Get the listing of a user's saved posts 
     * @param string $username the desired user. Must be already authenticated.
+    * @return mixed
     */
     public function getSaved($username){
         return $this->runCurl("http://www.reddit.com/user/".$username."/saved.json");
@@ -195,6 +204,7 @@ class reddit{
     * @link https://github.com/reddit/reddit/wiki/API%3A-hide
     * @param string $name The full name of the post to hide (name parameter
     *                     in the getSubscriptions() return value)
+    * @return mixed
     */
     public function hidePost($name){
         $response = null;
@@ -213,6 +223,7 @@ class reddit{
     * @link https://github.com/reddit/reddit/wiki/API%3A-unhide
     * @param string $name The full name of the post to unhide (name parameter
     *                     in the getSubscriptions() return value)
+    * @return mixed
     */
     public function unhidePost($name){
         $response = null;
@@ -235,6 +246,7 @@ class reddit{
     * @param string $replyTo The e-mail the sharee should respond to
     * @param string $shareTo The e-mail the story should be sent to
     * @param string $message The e-mail message
+    * @return mixed
     */
     public function sharePost($name, $shareFrom, $replyTo, $shareTo, $message){
         $urlShare = "{$this->apiHost}/share";
@@ -258,6 +270,7 @@ class reddit{
     * @param string $name The full name of the post to comment (name parameter
     *                     in the getSubscriptions() return value)
     * @param string $text The comment markup
+    * @return mixed
     */
     public function addComment($name, $text){
         $response = null;
@@ -281,6 +294,7 @@ class reddit{
     *                     in the getSubscriptions() return value)
     * @param int $vote The vote to be made (1 = upvote, 0 = no vote,
     *                  -1 = downvote)
+    * @return mixed
     */
     public function addVote($name, $vote = 1){
         $response = null;
@@ -301,6 +315,7 @@ class reddit{
     * @param string $user The name of the user
     * @param string $text Flair text to assign
     * @param string $cssClass CSS class to assign to the flair text
+    * @return mixed
     */
     public function setFlair($subreddit, $user, $text, $cssClass){
         $urlFlair = "{$this->apiHost}/flair";
@@ -323,6 +338,7 @@ class reddit{
     * @param int $limit The maximum number of items to return (max 1000)
     * @param string $after Return entries starting after this user
     * @param string $before Return entries starting before this user
+    * @return mixed
     */
     public function getFlairList($subreddit, $limit = 100, $after, $before){
         $urlFlairList = "{$this->apiHost}/share";
@@ -343,6 +359,7 @@ class reddit{
     * @link https://github.com/reddit/reddit/wiki/API%3A-flaircsv
     * @param string $subreddit The subreddit to use
     * @param string $flairCSV CSV file contents, up to 100 lines
+    * @return mixed
     */
     public function setFlairCSV($subreddit, $flairCSV){
         $urlFlairCSV = "{$this->apiHost}/flaircsv.json";
@@ -361,6 +378,7 @@ class reddit{
     * @link URL
     * @param string $url URL to be requested
     * @param string $postVals NVP string to be send with POST request
+    * @return mixed
     */
     private function runCurl($url, $postVals = null){
         $ch = curl_init($url);

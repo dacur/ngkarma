@@ -2,7 +2,7 @@
 <html lang="en" ng-app="MainApp">
 <head>
     <meta charset="UTF-8">
-    <title>New Reddit Interface</title>
+    <title>SpreadIt - Just another way to view reddit</title>
 
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -16,7 +16,7 @@
     <!--Main Stylesheet-->
     <link rel="stylesheet" href="/styles/main.css">
 </head>
-<body ng-controller="MainCtrl" ng-cloak>
+<body ng-controller="MainCtrl" ng-init="init('{{ Cookie::get('username') }}',' {{ Cookie::get('subs') }}')"ng-cloak>
 
     <!--Load Menu-->
     @yield('menu')

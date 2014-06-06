@@ -3,15 +3,29 @@
 var app = angular.module('MainApp',['wu.masonry','youtube-api']);
 
 // Controller for sub form.
-app.controller('MainCtrl',function($scope, ApiService, SubService){
+app.controller('MainCtrl',function($scope, $http, ApiService, SubService){
 
+    $scope.loading = false;
 
+    // Initialize user and sub values from Cookie data.
+    $scope.init = function(username,subs){
+        if(username != null && username != "")
+            if(subs != null && subs != "")
+            {
+                $scope.isLoggedIn = true;
+                $scope.name = username;
+                $scope.subs = subs;
+            }
 
-    // Set initial subreddit.
-    var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
-    if(initSub != null && initSub[1] != null && initSub[1] != "")
-        getSubreddit(initSub[1]); // Load specified sub.
-    else getSubreddit(); // Load front page.
+        // Set initial subreddit.
+        var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
+        if($scope.subs != null || $scope.subs != "")
+            getSubreddit($scope.subs);
+        else if(initSub != null && initSub[1] != null && initSub[1] != "")
+            getSubreddit(initSub[1]); // Load specified sub.
+        else getSubreddit(); // Load front page.
+
+    };
 
     // Rotate sub input placeholder with popular subreddit suggestions.
     var subs = SubService.getDefaultSubs();
@@ -89,20 +103,32 @@ app.controller('MainCtrl',function($scope, ApiService, SubService){
 
     // Connect to Reddit.
     $scope.logIn = function(){
+
+        $scope.r_user = 'sqrtoftwo';
+        $scope.r_pass = 'fa7trt62';
+
         var data = {
             username: $scope.r_user,
             password: $scope.r_pass
         }
-        ApiService.Auth(data).success(function(response) {
-            if(response.hasOwnProperty('user') && response.user.hasOwnProperty('data') && response.hasOwnProperty('subs')
-                && response.subs.hasOwnProperty('data') && response.subs.data.hasOwnProperty('children'))
-            {
-                $scope.user = response.user.data;
-                $scope.subs = response.subs.data.children;
-                $scope.isLoggedIn = true;
-            }
-            console.log($scope.user);
-        }).error(function(response) {
+
+        $scope.loading = true;
+        ApiService.Auth(data).success(function(response){
+            $scope.loading = false;
+
+            console.log(response);
+
+            // Set username.
+            $scope.name = response.name;
+
+            // Load user's subreddits in a multireddit.
+            getSubreddit(response.subs);
+            $scope.isLoggedIn = true;
+
+            //TODO: Handle login errors here.
+
+        }).error(function(response){
+            console.log('Login request failed.')
             console.log(response);
         });
     };
@@ -129,7 +155,7 @@ app.controller('MainCtrl',function($scope, ApiService, SubService){
             })
         }else{
             // Get top data from requested sub.
-            $.getJSON('http://www.reddit.com/r/' + sub + '/top.json?sort=top&t=week',function(response){
+            $.getJSON('http://www.reddit.com/r/' + sub + '/hot.json?sort=hot&t=week',function(response){
                 $scope.loadingSub = false;
                 $scope.posts = response.data.children;
                 $scope.$apply();
