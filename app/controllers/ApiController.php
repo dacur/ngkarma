@@ -6,7 +6,7 @@ class ApiController extends BaseController{
 
     private $reddit;
 
-    function postAuth(){
+    function postLogin(){
         $u = Input::get('username');
         $p = Input::get('password');
 
@@ -68,6 +68,10 @@ class ApiController extends BaseController{
             $data['message'] = 'INVALID_USER_DATA';
         }
         return Response::json($data);
+    }
+
+    function getLogout(){
+        return Response::make()->withCookie(Cookie::forget('username'));
     }
 
 }

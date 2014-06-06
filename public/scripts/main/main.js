@@ -19,10 +19,10 @@ app.controller('MainCtrl',function($scope, $http, ApiService, SubService){
 
         // Set initial subreddit.
         var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
-        if($scope.subs != null || $scope.subs != "")
-            getSubreddit($scope.subs);
-        else if(initSub != null && initSub[1] != null && initSub[1] != "")
+        if(initSub != null && initSub[1] != null && initSub[1] != "")
             getSubreddit(initSub[1]); // Load specified sub.
+        else if($scope.subs != null || $scope.subs != "")
+            getSubreddit($scope.subs);
         else getSubreddit(); // Load front page.
 
     };
@@ -104,19 +104,14 @@ app.controller('MainCtrl',function($scope, $http, ApiService, SubService){
     // Connect to Reddit.
     $scope.logIn = function(){
 
-        $scope.r_user = 'sqrtoftwo';
-        $scope.r_pass = 'fa7trt62';
-
         var data = {
             username: $scope.r_user,
             password: $scope.r_pass
         }
 
         $scope.loading = true;
-        ApiService.Auth(data).success(function(response){
+        ApiService.logIn(data).success(function(response){
             $scope.loading = false;
-
-            console.log(response);
 
             // Set username.
             $scope.name = response.name;
@@ -129,7 +124,14 @@ app.controller('MainCtrl',function($scope, $http, ApiService, SubService){
 
         }).error(function(response){
             console.log('Login request failed.')
-            console.log(response);
+        });
+    };
+
+    // Disconnect from Reddit.
+    $scope.logOut = function(){
+        ApiService.logOut().success(function(){
+            $scope.isLoggedIn = false;
+            getSubreddit();
         });
     };
 
@@ -156,21 +158,53 @@ app.controller('MainCtrl',function($scope, $http, ApiService, SubService){
         }else{
             // Get top data from requested sub.
             $.getJSON('http://www.reddit.com/r/' + sub + '/hot.json?sort=hot&t=week',function(response){
+                console.log(response.data)
                 $scope.loadingSub = false;
                 $scope.posts = response.data.children;
+                $scope.after = response.data.after;
                 $scope.$apply();
             });
         }
     }
 
-    function parseUrl(key) {
-        var vars = {};
-        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
-            function(m,key,value) {
-                vars[key] = value;
-            }
-        );
-        return vars[key];
-    }
+    // Get more posts.
+//    function getNextPage(){
+//
+//        if(!$scope.gettingPage)
+//        {
+//            console.log('getting next page: ' + $scope.after)
+//            if($scope.after == null || $scope.after == "")
+//                return false;
+//
+//            var params = {
+//                after: $scope.after
+//            }
+//
+//            $scope.loadingSub = true;
+//            $scope.gettingPage = true;
+//            $.getJSON('http://www.reddit.com/r/pics/hot.json?sort=hot&t=week', params, function(response){
+//                console.log(response.data)
+//                console.log('HERE')
+//
+//                $scope.loadingSub = false;
+//                $scope.gettingPage = false;
+//
+//                $scope.posts += response.data.children;
+//                $scope.after = response.data.after;
+//                $scope.$apply();
+//            });
+//        }
+//    }
+
+    // Infinite scroll testing.
+//    var win = $(window),
+//        doc = $(document);
+//
+//    win.scroll(function(){
+//        if( win.scrollTop() + 300 > doc.height() - win.height() ) {
+//            console.log('reached bottom of page.');
+//            getNextPage();
+//        }
+//    });
 
 });

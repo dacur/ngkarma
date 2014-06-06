@@ -16,8 +16,10 @@ hr {
     float: right; }
     #menubar .menu-right #login-loading {
       padding-right: 14px; }
-    #menubar .menu-right .login {
+    #menubar .menu-right #login-form {
       padding: 7px 7px 0 0; }
+    #menubar .menu-right #welcome {
+      text-align: right; }
     #menubar .menu-right .btn-menu {
       float: right; }
 
@@ -45,7 +47,8 @@ hr {
         color: black; }
     #brick-wall .brick .content {
       text-align: center;
-      overflow: hidden; }
+      max-height: 400px;
+      overflow: scroll; }
       #brick-wall .brick .content #contentImage {
         width: 288px;
         max-width: 288px; }

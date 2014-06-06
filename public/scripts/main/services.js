@@ -4,17 +4,17 @@ var app = angular.module('MainApp');
 
 app.service('ApiService',function($http){
     return {
-        Auth: function(data){
+        logIn: function(data){
             return $http({
                 method: 'POST',
-                url: '/api/auth',
+                url: '/api/login',
                 data: data
             })
         },
-        getUser: function(){
+        logOut: function(){
             return $http({
                 method: 'GET',
-                url: '/api/user'
+                url: '/api/logout'
             })
         }
     }
