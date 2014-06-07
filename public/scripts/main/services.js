@@ -14,6 +14,33 @@ app.service('MainService',function(DefaultSubService){
     }
 });
 
+app.service('ApiService',function($http, CookieService){
+    return {
+        getUserData: function(token){
+            if(token != null && token != "")
+            {
+                $http({
+                    method: 'GET',
+                    url: '/api/user-data',
+                    params: {
+                        token: token
+                    }
+                }).then(function(response){
+                    console.log(response);
+//                    CookieService.setCookie("username", username,30);
+//                    CookieService.setCookie("subs", subs,30);
+                    return true;
+                });
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+});
+
 app.service('MasonryService',function(){
     return {
         createBrickWall: function(){
@@ -33,20 +60,22 @@ app.service('MasonryService',function(){
     }
 });
 
-app.service('ApiService',function($http){
+app.service('CookieService',function(){
     return {
-        logIn: function(data){
-            return $http({
-                method: 'POST',
-                url: '/api/login',
-                data: data
-            })
+        setCookie: function(cname, cvalue, exdays){
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires="+d.toGMTString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
         },
-        logOut: function(){
-            return $http({
-                method: 'GET',
-                url: '/api/logout'
-            })
+        getCookie: function(cname){
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+            }
+            return "";
         }
     }
 });

@@ -8,16 +8,9 @@
         </div>
         <div class="col-xs-9">
             <div class="menu-right">
-                <div class="form-inline">
-                    <form id="login-form" ng-submit="logIn()" ng-show="!isLoggedIn">
-                        <img src="/resources/images/loading.gif" id="login-loading" ng-show="loading" />
-                        <input class="form-control" type="text" id="user" ng-model="r_user" placeholder="reddit username" />
-                        <input class="form-control" type="password" id="pass" ng-model="r_pass" placeholder="reddit password" />
-                        <input class="form-control" id="login-button" type="submit" value="log in"/>
-                    </form>
-                </div>
+                <button class="btn btn-default" ng-click="authorizeAccount()" ng-show="!isLoggedIn">Use Reddit Acct.</button>
                 <div id="welcome" ng-show="isLoggedIn">
-                    Welcome, @{{name}}! <i class="fa fa-power-off" ng-click="logOut()"></i>
+                    Welcome, @{{name}}! <i class="fa fa-power-off" ng-click="deauthorizeAccount()"></i>
                 </div>
             </div>
         </div>

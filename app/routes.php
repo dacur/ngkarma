@@ -3,8 +3,11 @@
 // Default route.
 Route::get('/', 'RouteController@main');
 
+// Route to redirect URI handler, which checks the response from the Reddit access approval page.
+Route::get('/redirect', 'RouteController@redirect');
+
 // Reddit-style subreddit route.
 Route::get('/r/{s}', 'RouteController@main');
 
-// Route to ApiController, which handles account-specific Reddit API calls.
-Route::controller('/api', 'ApiController');
+// Reddit API controller
+Route::controller('/api', 'RedditApiController');
