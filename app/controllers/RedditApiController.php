@@ -45,17 +45,51 @@ class RedditApiController extends BaseController{
     {
         $token = Input::get('token');
 
+        // Get User Account details
         $url = "https://oauth.reddit.com/api/v1/me";
-
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, "Authorization: 'bearer " . $token . "'");
-        curl_setopt($ch, CURLOPT_USERPWD, $this->client['id'] . ':' . $this->client['secret']);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Authorization: bearer " . $token
+        ));
 
-        $user_data = curl_exec($ch);
+        $result = json_decode(curl_exec($ch));
         curl_close($ch);
 
-        return Response::json($user_data);
+        $response = array();
+        if(!empty($result))
+            $response['user'] = $result;
+
+        // Get subscribed subreddits
+        $url = "https://oauth.reddit.com/subreddits/mine/subscriber";
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Authorization: bearer " . $token
+        ));
+
+        $result = json_decode(curl_exec($ch));
+        curl_close($ch);
+
+        $subs = array();
+        if(!empty($result))
+            if(is_object($result) && property_exists($result,'data'))
+                if(is_object($result->data) && property_exists($result->data,'children'))
+                    foreach($result->data->children as $child)
+                        if(is_object($child->data))
+                        {
+                            if(property_exists($child->data,'user_is_banned') && $child->data->user_is_banned)
+                                continue;
+                            if(property_exists($child->data,'display_name'))
+                                array_push($subs,$child->data->display_name);
+                        }
+
+        $response['subs'] = $subs;
+
+        return Response::json($response);
     }
 }

@@ -9,22 +9,56 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
      * Start Init
      */
     var currentSub; // Keep track of currently requested subs.
-    $scope.loading = false; // Disable loading gif on load.
     MainService.cycleSubs(); // Cycle through default subs in the subreddit input field.
+    $scope.loggedIn = false;
+    $scope.connecting = false;
+    $scope.sub = '';
 
     // Initialize token values from Cookie data.
     $scope.access_token = CookieService.getCookie("access_token");
     $scope.refresh_token = CookieService.getCookie("refresh_token");
 
     // Get User Data
-    ApiService.getUserData($scope.access_token);
+    if($scope.access_token != null && $scope.access_token != "")
+    {
+        $scope.connecting = true;
+        ApiService.getUserData($scope.access_token).success(function(response){
+            $scope.connecting = false;
+            if(typeof(response.user) == "object" && typeof(response.subs) == "object")
+            {
+                $scope.user = response.user;
+                $scope.subs = response.subs;
+
+                if($scope.user.hasOwnProperty('name'))
+                {
+                    CookieService.setCookie('name', $scope.user.name,30);
+                    $scope.loggedIn = true;
+                }
+
+                if($scope.subs != null && $scope.subs != "")
+                {
+                    var subs;
+                    if(typeof($scope.subs) == "object")
+                        subs = $scope.subs.join("+");
+                    else subs = $scope.subs;
+                    getSubreddit(subs);
+                }
+            }
+        });
+    }
+
+    // Set sub large display to match entered sub.
+    $scope.$watch('sub',function(){
+        if(/^[^r]/.test($scope.sub) || /^r[^/]/.test($scope.sub))
+            $scope.subbigtext = 'r/' + $scope.sub;
+        else
+            $scope.subbigtext = $scope.sub;
+    });
 
     // Set initial subreddit.
     var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
     if(initSub != null && initSub[1] != null && initSub[1] != "")
         getSubreddit(initSub[1]); // Load specified sub.
-    else if($scope.subs != null || $scope.subs != "")
-        getSubreddit($scope.subs);
     else getSubreddit(); // Load front page.
 
     // Create Masonry object.
@@ -41,7 +75,6 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
         if(/^\/?r\//.test(sub))
             sub = sub.replace(/^\/?r\//g,'');
         getSubreddit(sub);
-        $scope.sub = "";
     };
     /**
      * End Init
@@ -51,7 +84,7 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
      * Start Reddit Interaction Methods
      */
 
-    // Reddit OAuth login. TODO: Move to service.
+    // Reddit OAuth login.
     $scope.authorizeAccount = function(){
         var auth_url = "https://ssl.reddit.com/api/v1/authorize";
         var client_id = "dKiLKnbGc8ufQw";
@@ -72,15 +105,18 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
             "&scope=" + scope;
     };
 
+    // Log out.
     $scope.deauthorizeAccount = function(){
-        // TODO: Clear cookies and load front page.
+        CookieService.deleteAllCookies();
+        $scope.loggedIn = false;
+        getSubreddit();
     };
 
     // Load data from a given sub.
     function getSubreddit(sub){
         $scope.loadingSub = true;
         if(sub==undefined||sub==null||sub==""){
-            // Invalid sub. Load front page.
+            // Load front page.
             $.getJSON('http://www.reddit.com/.json',function(response){
                 currentSub = "frontPage";
                 $scope.loadingSub = false;

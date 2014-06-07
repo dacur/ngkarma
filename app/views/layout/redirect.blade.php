@@ -2,7 +2,7 @@
 <html lang="en" ng-app="RedirectApp">
 <head>
     <meta charset="UTF-8">
-    <title>SpreadIt - Accessing your account</title>
+    <title>SpreddIt - Accessing your account</title>
 
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">

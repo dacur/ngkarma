@@ -14,29 +14,16 @@ app.service('MainService',function(DefaultSubService){
     }
 });
 
-app.service('ApiService',function($http, CookieService){
+app.service('ApiService',function($http){
     return {
         getUserData: function(token){
-            if(token != null && token != "")
-            {
-                $http({
-                    method: 'GET',
-                    url: '/api/user-data',
-                    params: {
-                        token: token
-                    }
-                }).then(function(response){
-                    console.log(response);
-//                    CookieService.setCookie("username", username,30);
-//                    CookieService.setCookie("subs", subs,30);
-                    return true;
-                });
-                return false;
-            }
-            else
-            {
-                return false;
-            }
+            return $http({
+                method: 'GET',
+                url: '/api/user-data',
+                params: {
+                    token: token
+                }
+            })
         }
     }
 });
@@ -76,7 +63,16 @@ app.service('CookieService',function(){
                 if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
             }
             return "";
+        },
+        deleteAllCookies: function(){
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+            var c = cookies[i];
+            var eq = c.indexOf("=");
+            var name = eq > -1 ? c.substr(0, eq) : c;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
         }
+    }
     }
 });
 

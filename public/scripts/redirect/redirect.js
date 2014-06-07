@@ -11,7 +11,7 @@ app.controller('RedirectCtrl',function($scope, $http, ApiService, CookieService)
         if(error != null && error != "")
             $scope.message = "Error accessing your account.";
         else if(state != CookieService.getCookie('state'))
-            $scope.message = "OAuth state error. Cannot continue.";
+            $scope.message = "OAuth state error. Please try again.";
         else
         {
             ApiService.getTokens(code).then(function(response){
@@ -21,8 +21,8 @@ app.controller('RedirectCtrl',function($scope, $http, ApiService, CookieService)
                     var data = jQuery.parseJSON(response.data.match(/({.*})/)[1]);
                     if (data.access_token && data.refresh_token)
                     {
-                        CookieService.setCookie("access_token", data.access_token, 1/24);
-                        CookieService.setCookie("refresh_token", data.refresh_token, 1/24);
+                        CookieService.setCookie('access_token', data.access_token, 1/24);
+                        CookieService.setCookie('refresh_token', data.refresh_token, 1/24);
                         window.location.href = '/';
                     }
                     else if(data.error != undefined)
