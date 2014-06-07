@@ -23,7 +23,7 @@ hr {
   .hide_very_large {
     display: none; } }
 #menubar {
-  background-color: #B35555;
+  background-color: #b35555;
   color: white;
   width: 100%;
   height: 50px; }
@@ -31,6 +31,8 @@ hr {
     padding-top: 15px; }
     #menubar #connect-link a, #menubar #connect-link a:visited, #menubar #connect-link a:hover, #menubar #connect-link a:active {
       color: white; }
+  #menubar h3 {
+    text-shadow: 0 0 0.5em #703232; }
   #menubar .menu-right {
     float: right; }
     #menubar .menu-right #login-loading {
@@ -39,8 +41,13 @@ hr {
       padding: 7px 7px 0 0; }
     #menubar .menu-right #welcome {
       text-align: right; }
-    #menubar .menu-right .btn-menu {
-      float: right; }
+    #menubar .menu-right .btn-connect {
+      margin: 8px 0px;
+      background-color: #c37878;
+      text-shadow: 0 0 0.5em #934242;
+      height: 34px; }
+      #menubar .menu-right .btn-connect:hover {
+        color: white; }
 
 #sub-select {
   position: relative;
@@ -73,8 +80,9 @@ hr {
       border-radius: 4px 4px 0 0;
       padding: 0 3px 0 3px;
       color: white;
-      background-color: #557FB3;
-      overflow: hidden; }
+      background-color: #557fb3;
+      overflow: hidden;
+      text-shadow: 0 0 0.5em #324e70; }
       #brick-wall .brick .title .subLink a, #brick-wall .brick .title .subLink a:visited, #brick-wall .brick .title .subLink a:hover, #brick-wall .brick .title .subLink a:active {
         color: black; }
     #brick-wall .brick .content-outer {

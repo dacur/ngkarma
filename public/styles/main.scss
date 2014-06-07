@@ -39,7 +39,7 @@ hr{
 }
 
 #menubar{
-  background-color:#B35555;
+  background-color:$page_title;
   color:$white;
   width:100%;
   height:50px;
@@ -49,6 +49,10 @@ hr{
     a,a:visited,a:hover,a:active{
       color:$white;
     }
+  }
+
+  h3{
+    text-shadow: 0 0 0.5em darken($page_title,20);
   }
 
   .menu-right{
@@ -66,8 +70,14 @@ hr{
       text-align:right;
     }
 
-    .btn-menu{
-      float:right;
+    .btn-connect{
+      margin: 8px 0px;
+      background-color:lighten($page_title,10);
+      text-shadow: 0 0 0.5em darken($page_title,10);
+      height:34px;
+      &:hover{
+        color:$white;
+      }
     }
   }
 }
@@ -108,8 +118,9 @@ hr{
       border-radius: 4px 4px 0 0;
       padding: 0 3px 0 3px;
       color:$white;
-      background-color:#557FB3;
+      background-color:$brick_title;
       overflow:hidden;
+      text-shadow: 0 0 0.5em darken($brick_title,20);
 
       .subLink{
         a,a:visited,a:hover,a:active{

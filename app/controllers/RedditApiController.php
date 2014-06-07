@@ -38,7 +38,7 @@ class RedditApiController extends BaseController{
 
     function getRefreshToken()
     {
-
+        //TODO: Implement this.
     }
 
     function getUserData()
