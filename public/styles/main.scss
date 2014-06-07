@@ -46,13 +46,15 @@ hr{
 #brick-wall{
   width:100%;
   height:100%;
-  background-color:$black;
+  margin: 0 auto;
+  background-color:$white;
   //background-image: url("/resources/images/furley_bg.png");
 
   .brick{
     width: 290px;
     margin: 5px;
-    border: 2px solid $white;
+    box-shadow: 0 0 1em $dark_grey;
+    border: 1px solid $black;
     border-radius: 5px;
     background-color:$white;
     overflow:hidden;
@@ -63,9 +65,6 @@ hr{
       color:$white;
       background-color:rgb(109, 128, 151);
       overflow:hidden;
-//      a,a:visited,a:hover,a:active{
-//        color:$white;
-//      }
 
       .subLink{
         a,a:visited,a:hover,a:active{
@@ -74,10 +73,13 @@ hr{
       }
     }
 
-    .content{
-      text-align:center;
-      max-height: 400px;
-      overflow:scroll;
+    .content-outer{
+      overflow:hidden;
+      .content-inner{
+        text-align:center;
+        max-height: 400px;
+        overflow-x: hidden;
+      }
 
       #contentImage{
         width:288px;

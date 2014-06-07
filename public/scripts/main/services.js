@@ -2,6 +2,37 @@
 
 var app = angular.module('MainApp');
 
+app.service('MainService',function(DefaultSubService){
+    return {
+        cycleSubs: function(){
+            var subs = DefaultSubService.getDefaultSubs();
+            setInterval(function(){
+                var n = Math.floor(Math.random()*subs.length+1);
+                $('#sub').attr('placeholder','r/' + subs[n]);
+            },1500);
+        }
+    }
+});
+
+app.service('MasonryService',function(){
+    return {
+        createBrickWall: function(){
+            var container = $('#brick-wall');
+            container.masonry({
+                columnWidth:  300,
+                itemSelector: '.item',
+                isFitWidth: true
+            });
+        },
+        reloadMasonry: function(reload){
+            var container = $('#brick-wall');
+            if(reload)
+                container.masonry('reloadItems');
+            container.masonry('layout');
+        }
+    }
+});
+
 app.service('ApiService',function($http){
     return {
         logIn: function(data){
@@ -20,7 +51,7 @@ app.service('ApiService',function($http){
     }
 });
 
-app.service('SubService',function(){
+app.service('DefaultSubService',function(){
     return {
         getDefaultSubs: function(){
             return [
