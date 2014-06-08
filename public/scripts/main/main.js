@@ -92,7 +92,7 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
         var state = Math.random().toString(36).match(/0\.(.*)/)[1];
         var redirect_uri = "http://spreddit.multifarious.org:7777/redirect";
         var duration = "permanent";
-        var scope = "identity,mysubreddits";
+        var scope = "identity,mysubreddits,vote";
 
         CookieService.setCookie("state",state,30);
 
@@ -136,6 +136,14 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
             });
         }
     }
+
+    // Vote on posts.
+    $scope.submitVote = function(id,dir){
+        var token = CookieService.getCookie('access_token');
+        ApiService.submitVote(id,dir,token).then(function(response){
+            console.log(response); // TODO: Handle errors here.
+        });
+    };
     /**
      * End Reddit Interaction Methods
      */
@@ -150,34 +158,26 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
         {
             if($scope.after == null || $scope.after == "")
                 return false;
-
             var params = {
                 after: $scope.after
             }
-
             $scope.loadingSub = true;
             $scope.gettingPage = true;
-
             var url;
             if(currentSub == "frontPage")
                 url = "http://www.reddit.com/.json?sort=hot";
             else
                 url = "http://www.reddit.com/r/" + currentSub + "/hot.json?sort=hot&t=week";
-
             $.getJSON(url, params, function(response){
-
                 $scope.loadingSub = false;
                 $scope.gettingPage = false;
-
                 for(var i in response.data.children)
                 {
                     $scope.posts.push(response.data.children[i]);
                 }
-
                 // Remove bricks if too many are loaded.
 //                if($scope.posts.length > 100)
 //                    $scope.posts.splice(0,$scope.posts.length/2);
-
                 $scope.after = response.data.after;
                 $scope.$apply();
             });
@@ -241,8 +241,29 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
         return url;
     };
     // Get age of post.
-    $scope.getPostAge = function(post_time){
-        // TODO: Calculate age of page, use human readable values like "Today", "Yesterday", "2 days ago"..
+    $scope.getPostAge = function(p){
+        var now = new Date();
+        var post = new Date(p*1000);
+        var days = Math.abs((now.getTime() - post.getTime())/86400000);
+        if(Math.floor(days*24) < 1) // Less than one hour
+            return Math.floor(days*24*60) + " minutes ago";
+        if(Math.floor(days*24) == 1) // One hour
+            return Math.floor(days*24) + " hour ago";
+        if(Math.floor(days) < 1) // More than one hour, but not a day
+            return Math.floor(days*24) + " hours ago";
+        if(Math.floor(days) == 1) // One day
+            return "Yesterday";
+        if(Math.floor(days) > 1 && days/30 < 1) // More than one day, but not a month (30 days)
+            return Math.floor(days) + " days ago";
+        if(Math.floor(days/30) == 1) // One month
+            return Math.floor(days/30) + " month ago";
+        if(Math.floor(days/30) > 1 && Math.floor(days/365) < 1) // More than one month, but not a year
+            return Math.floor(days/30) + " months ago";
+        if(Math.floor(days/365) == 1) // One year
+            return Math.floor(days/365) + " year ago";
+        if(Math.floor(days/365) > 1) // More than one year
+            return Math.floor(days/365) + " years ago";
+        return "In the past";
     };
     /**
      * End Content Helper Methods

@@ -28,7 +28,8 @@ class RedditApiController extends BaseController{
         curl_setopt($ch, CURLOPT_POSTFIELDS,
                 "code=" . $code .
                 "&grant_type=authorization_code" .
-                "&redirect_uri=" . $redirect_uri);
+                "&redirect_uri=" . $redirect_uri
+        );
 
         $tokens = curl_exec($ch);
         curl_close($ch);
@@ -91,5 +92,30 @@ class RedditApiController extends BaseController{
         $response['subs'] = $subs;
 
         return Response::json($response);
+    }
+
+    function getSubmitVote()
+    {
+        $id = Input::get('id');
+        $dir = Input::get('dir'); // Vote direction (up = 1, down = -1)
+        $token = Input::get('token');
+
+        $url = "https://oauth.reddit.com/api/vote";
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Authorization: bearer " . $token
+        ));
+        curl_setopt($ch, CURLOPT_POSTFIELDS,
+            "id=" . $id .
+            "&dir=" . $dir
+        );
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return Response::json($result);
     }
 }

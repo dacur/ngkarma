@@ -23,7 +23,18 @@ app.service('ApiService',function($http){
                 params: {
                     token: token
                 }
-            })
+            });
+        },
+        submitVote: function(id,dir,token){
+            return $http({
+                method: 'GET',
+                url: '/api/submit-vote',
+                params: {
+                    id: id,
+                    dir: dir,
+                    token: token
+                }
+            });
         }
     }
 });

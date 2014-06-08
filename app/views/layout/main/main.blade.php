@@ -54,15 +54,17 @@
         <div class="info">
             <div class="left">
                 <strong><a href="http://reddit.com/u/@{{ post.data.author }}" target="_blank" >@{{ post.data.author }}</a></strong><br/>
-                On: @{{ post.data.created }}<br/>
+                Posted: @{{ getPostAge(post.data.created) }}<br/>
                 Comments:
                     <a href="http://www.reddit.com@{{ post.data.permalink }}" target="_blank">
                         @{{ post.data.num_comments }}
                     </a>
             </div>
             <div class="right">
-                <i class="fa fa-arrow-up"></i> @{{ post.data.ups }}<br/>
-                <i class="fa fa-arrow-down"></i> @{{ post.data.downs }}<br/>
+                @{{ post.data.ups }}
+                <i ng-click="submitVote(post.data.name,1)" class="fa fa-arrow-up"></i><br />
+                @{{ post.data.downs }}
+                <i ng-click="submitVote(post.data.name,-1)" class="fa fa-arrow-down"></i><br />
                 Points: @{{ post.data.score }}
             </div>
         </div>

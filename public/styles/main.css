@@ -95,7 +95,8 @@ hr {
         width: 288px;
         max-width: 288px; }
     #brick-wall .brick .info {
-      border-top: 1px solid #aaaaaa; }
+      border-top: 1px solid #aaaaaa;
+      padding: 0 5px 0 5px; }
       #brick-wall .brick .info .left {
         float: left;
         text-align: left; }
