@@ -130,6 +130,7 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
                 currentSub = sub;
                 $scope.loadingSub = false;
                 $scope.posts = response.data.children;
+                console.log(response.data.children[1]);
                 $scope.after = response.data.after;
                 $scope.$apply();
             });
@@ -188,7 +189,7 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
         doc = $(document);
 
     win.scroll(function(){
-        if( win.scrollTop() + 300 > doc.height() - win.height() ) {
+        if( win.scrollTop() + 500 > doc.height() - win.height() ) {
             getNextPage();
         }
     });
@@ -238,6 +239,10 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
         if(/^https:/i.test(url))
             return url.replace(/^https/i,'http');
         return url;
+    };
+    // Get age of post.
+    $scope.getPostAge = function(post_time){
+        // TODO: Calculate age of page, use human readable values like "Today", "Yesterday", "2 days ago"..
     };
     /**
      * End Content Helper Methods

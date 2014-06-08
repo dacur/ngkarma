@@ -37,19 +37,18 @@
                      data-yt-player="myPlayer" data-yt-vid="@{{ getYouTubeVideoId(post.data.domain,post.data.url) }}">
                 </div>
 
-                <!-- If link to Imgur, but not direct to image, half-ass append .jpg. -->
-                <img ng-if="!isImage(post.data.url) && isImgur(post.data.domain)" id="contentImage" src="@{{ post.data.url }}.jpg" />
-
+                <!-- If link to Imgur, but not direct to image, display link to gallery. -->
+                <a ng-if="!isImage(post.data.url) && isImgur(post.data.domain)" target="_blank" href="@{{ post.data.url }}">
+                    Imgur Gallery - Click here to view
+                </a>
                 <!-- If self post, post the text. -->
                 <div ng-if="post.data.is_self" id="contentText" ng-body-html-unsafe="test">@{{ post.data.selftext }}</div>
 
-                <!-- Otherwise, try to screenshot the link destination. -->
-                <a ng-if="!isImage(post.data.url) && !isImgur(post.data.domain) && !isYouTube(post.data.domain,post.data.url) && !isSelf(post.data.selftext)" href="@{{ post.data.url }}" target="_blank" >
-                    <img id="contentImage" src="http://immediatenet.com/t/l?Size=1024x768&URL=@{{ stripHttps(post.data.url) }}" />
+                <!-- Otherwise, link to external location (screenshot disabled). -->
+                <a ng-if="!isImage(post.data.url) && !isImgur(post.data.domain) && !isYouTube(post.data.domain,post.data.url) && !isSelf(post.data.selftext)" target="_blank" href="@{{ post.data.url }}" >
+                    External link - Click here to view
+<!--                    <img id="contentImage" src="http://immediatenet.com/t/l?Size=1024x768&URL=@{{ stripHttps(post.data.url) }}" />-->
                 </a>
-
-                <!-- Otherwise, display "No Image Available". -->
-                <!--<p ng-if="!isImgur(post.data.url) && !isSelf(post.data.selftext)">No Content Available</p>-->
             </div>
         </div>
         <div class="info">

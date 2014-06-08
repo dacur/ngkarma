@@ -8,11 +8,13 @@
         </div>
         <div class="col-xs-6">
             <div class="menu-right">
-                <button class="btn btn-connect" ng-click="authorizeAccount()" ng-show="!connecting">
-                    Connect with your Reddit Account!
-                </button>
-                <div id="connect-link" ng-show="!loggedIn">
-                    <div ng-show="connecting">Connecting...</div>
+                <div ng-show="!loggedIn">
+                    <button class="btn btn-connect" ng-click="authorizeAccount()" ng-show="!connecting">
+                        Connect with your Reddit Account!
+                    </button>
+                    <div id="connect-link" ng-show="connecting">
+                        Connecting...
+                    </div>
                 </div>
                 <div id="welcome" ng-show="loggedIn">
                     Welcome, @{{user.name}}! <i class="fa fa-power-off" ng-click="deauthorizeAccount()"></i>
