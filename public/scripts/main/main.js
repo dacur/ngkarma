@@ -18,35 +18,6 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     $scope.access_token = CookieService.getCookie("access_token");
     $scope.refresh_token = CookieService.getCookie("refresh_token");
 
-    // Get User Data
-    if($scope.access_token != null && $scope.access_token != "")
-    {
-        $scope.connecting = true;
-        ApiService.getUserData($scope.access_token).success(function(response){
-            $scope.connecting = false;
-            if(typeof(response.user) == "object" && typeof(response.subs) == "object")
-            {
-                $scope.user = response.user;
-                $scope.subs = response.subs;
-
-                if($scope.user.hasOwnProperty('name'))
-                {
-                    CookieService.setCookie('name', $scope.user.name,30);
-                    $scope.loggedIn = true;
-                }
-
-                if($scope.subs != null && $scope.subs != "")
-                {
-                    var subs;
-                    if(typeof($scope.subs) == "object")
-                        subs = $scope.subs.join("+");
-                    else subs = $scope.subs;
-                    getSubreddit(subs);
-                }
-            }
-        });
-    }
-
     // Set sub large display to match entered sub.
     $scope.$watch('sub',function(){
         if(/^[^r]/.test($scope.sub) || /^r[^/]/.test($scope.sub))
@@ -55,26 +26,53 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
             $scope.subbigtext = $scope.sub;
     });
 
-    // Set initial subreddit.
-    var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
-    if(initSub != null && initSub[1] != null && initSub[1] != "")
-        getSubreddit(initSub[1]); // Load specified sub.
-    else getSubreddit(); // Load front page.
-
-    // Create Masonry object.
-    MasonryService.createBrickWall();
-
     // Update masonry layout regularly.
     setInterval(function(){
         MasonryService.reloadMasonry(false);
     },1000);
+
+    // Create Masonry object.
+    MasonryService.createBrickWall();
+
+    // Get User Data
+    if($scope.access_token != null && $scope.access_token != "")
+    {
+        $scope.connecting = true;
+
+        // Try to get user data.
+        ApiService.getUserData($scope.access_token).success(function(response){
+            if(typeof(response.user) == "object" && typeof(response.subs) == "object")
+            {
+                // Set username and subreddit list.
+                $scope.user = response.user;
+                $scope.subs = response.subs;
+
+                // If username is now known, set cookie and logged-in status.
+                if($scope.user.hasOwnProperty('name'))
+                {
+                    CookieService.setCookie('name', $scope.user.name,30);
+                    $scope.connecting = false;
+                    $scope.loggedIn = true;
+
+                    // If subs list is now known, build new page with it.
+                    if($scope.subs != null && $scope.subs != "")
+                    {
+                        // TODO: This loads user subs on page load, even if URL contains reddit-style subreddit specification. Fix!
+                        if(typeof($scope.subs) == "object")
+                            getSub($scope.subs.join("+"));
+                        else getFrontPage();
+                    } else getUrlSub();
+                } else getUrlSub();
+            } else getUrlSub();
+        });
+    } else getUrlSub();
 
     // Get content from specified subreddit.
     $scope.getSub = function(sub){
         // Remove leading 'r/' if present.
         if(/^\/?r\//.test(sub))
             sub = sub.replace(/^\/?r\//g,'');
-        getSubreddit(sub);
+        getSub(sub);
     };
     /**
      * End Init
@@ -83,7 +81,6 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     /**
      * Start Reddit Interaction Methods
      */
-
     // Reddit OAuth login.
     $scope.authorizeAccount = function(){
         var auth_url = "https://ssl.reddit.com/api/v1/authorize";
@@ -109,32 +106,38 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     $scope.deauthorizeAccount = function(){
         CookieService.deleteAllCookies();
         $scope.loggedIn = false;
-        getSubreddit();
+        getFrontPage();
     };
 
-    // Load data from a given sub.
-    function getSubreddit(sub){
+    // Load front page.
+    function getFrontPage(){
         $scope.loadingSub = true;
-        if(sub==undefined||sub==null||sub==""){
-            // Load front page.
-            $.getJSON('http://www.reddit.com/.json',function(response){
-                currentSub = "frontPage";
-                $scope.loadingSub = false;
-                $scope.posts = response.data.children;
-                $scope.after = response.data.after;
-                $scope.$apply();
-            })
-        }else{
-            // Get top data from requested sub.
-            $.getJSON('http://www.reddit.com/r/' + sub + '/hot.json?sort=hot&t=week',function(response){
-                currentSub = sub;
-                $scope.loadingSub = false;
-                $scope.posts = response.data.children;
-                console.log(response.data.children[1]);
-                $scope.after = response.data.after;
-                $scope.$apply();
-            });
-        }
+        $.getJSON('http://www.reddit.com/.json',function(response){
+            currentSub = "frontPage";
+            $scope.loadingSub = false;
+            $scope.posts = response.data.children;
+            $scope.after = response.data.after;
+            $scope.$apply();
+        });
+    }
+
+    function getUrlSub()
+    {
+        var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
+        if(initSub != null && initSub[1] != null && initSub[1] != "")
+            getSub(initSub[1]);
+        else getFrontPage();
+    }
+
+    // Get top data from requested sub.
+    function getSub(sub){
+        $.getJSON('http://www.reddit.com/r/' + sub + '/hot.json?sort=hot&t=week',function(response){
+            currentSub = sub;
+            $scope.loadingSub = false;
+            $scope.posts = response.data.children;
+            $scope.after = response.data.after;
+            $scope.$apply();
+        });
     }
 
     // Vote on posts.
