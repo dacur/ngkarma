@@ -94,6 +94,27 @@ class RedditApiController extends BaseController{
         return Response::json($response);
     }
 
+    function getSubreddit()
+    {
+        $token = Input::get('token');
+        $sub = Input::get('sub');
+        $after = Input::get('after');
+
+        $url = "https://oauth.reddit.com/r/" . $sub . "/hot.json?after=" . $after;
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Authorization: bearer " . $token
+        ));
+
+        $result = json_decode(curl_exec($ch));
+        curl_close($ch);
+
+        return Response::json($result);
+    }
+
     function getSubmitVote()
     {
         $id = Input::get('id');

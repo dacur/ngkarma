@@ -25,13 +25,24 @@ app.service('ApiService',function($http){
                 }
             });
         },
-        submitVote: function(id,dir,token){
+        submitVote: function(token,id,dir){
             return $http({
                 method: 'GET',
                 url: '/api/submit-vote',
                 params: {
                     id: id,
                     dir: dir,
+                    token: token
+                }
+            });
+        },
+        getSubreddit: function(token,sub,after){
+            return $http({
+                method: 'GET',
+                url: '/api/subreddit',
+                params: {
+                    sub: sub,
+                    after: after,
                     token: token
                 }
             });

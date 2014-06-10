@@ -62,9 +62,11 @@
             </div>
             <div class="right">
                 @{{ post.data.ups }}
-                <i ng-click="submitVote(post.data.name,1)" class="fa fa-arrow-up"></i><br />
+                <i id="@{{ post.data.name }}_up" ng-class="{up: loggedIn && post.data.likes && post.data.likes != null}" ng-click="submitVote(post.data.name,post.data.likes,1)" class="fa fa-arrow-up"></i>
+                <br />
                 @{{ post.data.downs }}
-                <i ng-click="submitVote(post.data.name,-1)" class="fa fa-arrow-down"></i><br />
+                <i id="@{{ post.data.name }}_down" ng-class="{down: loggedIn && !post.data.likes && post.data.likes != null}" ng-click="submitVote(post.data.name,post.data.likes,-1)" class="fa fa-arrow-down"></i>
+                <br />
                 Points: @{{ post.data.score }}
             </div>
         </div>

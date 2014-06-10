@@ -22,6 +22,15 @@ hr {
 @media (max-width: 1199px) {
   .hide_very_large {
     display: none; } }
+.up {
+  color: #ff8b5a; }
+
+.down {
+  color: #9492ff; }
+
+.neutral {
+  color: black; }
+
 #menubar {
   background-color: #b35555;
   color: white;

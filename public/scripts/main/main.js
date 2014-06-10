@@ -89,7 +89,7 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
         var state = Math.random().toString(36).match(/0\.(.*)/)[1];
         var redirect_uri = "http://spreddit.multifarious.org:7777/redirect";
         var duration = "permanent";
-        var scope = "identity,mysubreddits,vote";
+        var scope = "identity,mysubreddits,read,vote";
 
         CookieService.setCookie("state",state,30);
 
@@ -131,21 +131,90 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
 
     // Get top data from requested sub.
     function getSub(sub){
-        $.getJSON('http://www.reddit.com/r/' + sub + '/hot.json?sort=hot&t=week',function(response){
-            currentSub = sub;
-            $scope.loadingSub = false;
-            $scope.posts = response.data.children;
-            $scope.after = response.data.after;
-            $scope.$apply();
-        });
+        currentSub = sub;
+        $scope.loadingSub = true;
+        $scope.subbigtext = "Loading...";
+        var token = CookieService.getCookie('access_token');
+        if(token != undefined && token != null && token != ""){
+            ApiService.getSubreddit(token,sub,null).then(function(response){
+                $scope.loadingSub = false;
+                $scope.subbigtext = $scope.sub;
+                $scope.posts = response.data.data.children;
+                $scope.after = response.data.data.after;
+                console.log(response)
+                setTimeout(function(){
+                    $scope.$apply();
+                });
+            });
+        }
+        else
+        {
+            $.getJSON('http://www.reddit.com/r/' + sub + '/hot.json',function(response){
+                $scope.loadingSub = false;
+                $scope.subbigtext = $scope.sub;
+                $scope.posts = response.data.children;
+                $scope.after = response.data.after;
+                $scope.$apply();
+            });
+        }
     }
 
     // Vote on posts.
-    $scope.submitVote = function(id,dir){
+    $scope.submitVote = function(id,likes,dir){
+
         var token = CookieService.getCookie('access_token');
-        ApiService.submitVote(id,dir,token).then(function(response){
-            console.log(response); // TODO: Handle errors here.
-        });
+        if(token != undefined && token != null && token != ""){
+
+            //TODO: These votes work just fine, but the colors don't disappear when trying to remove an upvote or downvote.
+            //TODO: The reason is the "likes" value never changes with the votes, since it is set by the original API call to reddit.
+            //TODO: Fix is maybe keep an array in $scope to keep track. Won't matter if a refresh happens, since reddit keeps a copy. :)
+            var up = $('#'+id+'_up');
+            var down = $('#'+id+'_down');
+
+            // If upvoting now...
+            if(dir == 1){
+
+                // Set upvote color and keep direction as 1.
+                up.addClass('up');
+
+                // If previously downvoted, clear downvote.
+                if(!likes && likes != null)
+                    down.removeClass('down');
+
+                // If previously upvoted, clear upvote color and set direction to 0.
+                if(likes && likes != null){
+                    up.removeClass('up');
+                    dir = 0;
+                }
+
+            }
+
+            // If downvoting now..
+            else if(dir == -1){
+
+                // Set downvote color and keep direction as -1.
+                down.addClass('down');
+
+                // If previously upvoted, clear upvote.
+                if(likes && likes != null)
+                    up.removeClass('up');
+
+                // If previously downvoted, clear downvote color and set direction to 0.
+                if(!likes && likes != null){
+                    down.removeClass('down');
+                    dir = 0;
+                }
+            }
+
+            ApiService.submitVote(token,id,dir).then(function(response){
+                console.log(response); // TODO: Handle errors here.
+            });
+
+        }
+        else
+        {
+            console.log("Votes don't count if you're not logged in!");
+        }
     };
     /**
      * End Reddit Interaction Methods
@@ -155,36 +224,53 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
      * Start Infinite Scroll Logic
      */
     // Get more posts.
-    function getNextPage(){
-
+    function getNextPage()
+    {
         if(!$scope.gettingPage)
         {
             if($scope.after == null || $scope.after == "")
                 return false;
-            var params = {
-                after: $scope.after
-            }
+
             $scope.loadingSub = true;
             $scope.gettingPage = true;
-            var url;
-            if(currentSub == "frontPage")
-                url = "http://www.reddit.com/.json?sort=hot";
+
+            var token = CookieService.getCookie('access_token');
+            if(token != undefined && token != null && token != ""){
+                ApiService.getSubreddit(token,currentSub,$scope.after).then(function(response){
+                    $scope.loadingSub = false;
+                    $scope.gettingPage = false;
+                    for(var i in response.data.data.children)
+                        $scope.posts.push(response.data.data.children[i]);
+                    $scope.after = response.data.data.after;
+                    console.log(response)
+                    setTimeout(function(){
+                        $scope.$apply();
+                    });
+                });
+            }
             else
-                url = "http://www.reddit.com/r/" + currentSub + "/hot.json?sort=hot&t=week";
-            $.getJSON(url, params, function(response){
-                $scope.loadingSub = false;
-                $scope.gettingPage = false;
-                for(var i in response.data.children)
-                {
-                    $scope.posts.push(response.data.children[i]);
+            {
+                var url;
+                if(currentSub == "frontPage")
+                    url = "http://www.reddit.com/hot.json";
+                else
+                    url = "http://www.reddit.com/r/" + currentSub + "/hot.json";
+
+                var params = {
+                    after: $scope.after
                 }
-                // Remove bricks if too many are loaded.
-//                if($scope.posts.length > 100)
-//                    $scope.posts.splice(0,$scope.posts.length/2);
-                $scope.after = response.data.after;
-                $scope.$apply();
-            });
+
+                $.getJSON(url, params, function(response){
+                    $scope.loadingSub = false;
+                    $scope.gettingPage = false;
+                    for(var i in response.data.children)
+                        $scope.posts.push(response.data.children[i]);
+                    $scope.after = response.data.after;
+                    $scope.$apply();
+                });
+            }
         }
+        return true;
     }
 
     // Infinite scroll testing.
