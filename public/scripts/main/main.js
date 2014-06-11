@@ -60,7 +60,7 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
                         // TODO: This loads user subs on page load, even if URL contains reddit-style subreddit specification. Fix!
                         if(typeof($scope.subs) == "object")
                             getSub($scope.subs.join("+"));
-                        else getFrontPage();
+                        else $scope.getFrontPage();
                     } else getUrlSub();
                 } else getUrlSub();
             } else getUrlSub();
@@ -106,28 +106,32 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     $scope.deauthorizeAccount = function(){
         CookieService.deleteAllCookies();
         $scope.loggedIn = false;
-        getFrontPage();
+        $scope.getFrontPage();
     };
 
-    // Load front page.
+    // Load front page. TODO: Use OAuth if logged in.
     function getFrontPage(){
         $scope.loadingSub = true;
         $.getJSON('http://www.reddit.com/.json',function(response){
             currentSub = "frontPage";
             $scope.loadingSub = false;
+            $scope.sub = '';
             $scope.posts = response.data.children;
             $scope.after = response.data.after;
             $scope.$apply();
         });
-    }
+    };
+    $scope.getFrontPage = function(){
+        getFrontPage();
+    };
 
-    function getUrlSub()
-    {
+    // Load subreddit specified in URL.
+    function getUrlSub(){
         var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
         if(initSub != null && initSub[1] != null && initSub[1] != "")
             getSub(initSub[1]);
         else getFrontPage();
-    }
+    };
 
     // Get top data from requested sub.
     function getSub(sub){
@@ -141,7 +145,6 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
                 $scope.subbigtext = $scope.sub;
                 $scope.posts = response.data.data.children;
                 $scope.after = response.data.data.after;
-                console.log(response)
                 setTimeout(function(){
                     $scope.$apply();
                 });
@@ -221,7 +224,7 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
      */
 
     /**
-     * Start Infinite Scroll Logic
+     * Start Scroll Logic
      */
     // Get more posts.
     function getNextPage()
@@ -242,7 +245,6 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
                     for(var i in response.data.data.children)
                         $scope.posts.push(response.data.data.children[i]);
                     $scope.after = response.data.data.after;
-                    console.log(response)
                     setTimeout(function(){
                         $scope.$apply();
                     });
@@ -277,13 +279,35 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     var win = $(window),
         doc = $(document);
 
+    // Trigger when scrolling.
     win.scroll(function(){
-        if( win.scrollTop() + 500 > doc.height() - win.height() ) {
+
+        // If near bottom of page.
+        if(win.scrollTop() + 500 > doc.height() - win.height())
             getNextPage();
+
+        // Set scroll state based on distance from top of page.
+        if(!$scope.scrolled && win.scrollTop() > 1000)
+        {
+            $scope.scrolled = true;
+            setTimeout(function(){
+                $scope.$apply();
+            });
+        } else if($scope.scrolled && win.scrollTop() <= 1000)
+        {
+            $scope.scrolled = false;
+            setTimeout(function(){
+                $scope.$apply();
+            });
         }
+
     });
+
+    $scope.goToTop = function(){
+        window.scrollTo(0, 0);
+    };
     /**
-     * End Infinite Scroll Logic
+     * End Scroll Logic
      */
 
 
