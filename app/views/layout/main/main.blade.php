@@ -23,6 +23,7 @@
         </div>
         <div class="content-outer">
             <div class="content-inner">
+
                 <!-- If image, but not Imgur, display it here. -->
                 <img ng-if="isImage(post.data.url) && !isImgur(post.data.domain)" id="contentImage" src="@{{ post.data.url }}" />
 

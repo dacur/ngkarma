@@ -34,8 +34,10 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
 
     <!--Main Angular Scripts-->
-    <script src="/scripts/main/main.js"></script>
+    <script src="/scripts/main/controllers.js"></script>
     <script src="/scripts/main/services.js"></script>
+    <script src="/scripts/main/factories.js"></script>
+    <script src="/scripts/main/directives.js"></script>
 
     <!--Masonry-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>

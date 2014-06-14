@@ -3,13 +3,13 @@
 var app = angular.module('MainApp',['wu.masonry','youtube-api']);
 
 // Controller for sub form.
-app.controller('MainCtrl',function($scope, $http, MainService, ApiService, MasonryService, CookieService){
-
+app.controller('MainCtrl',function($scope, $http, MainFactory, PostContentFactory, ApiService, MasonryService, CookieService)
+{
     /**
      * Start Init
      */
     var currentSub; // Keep track of currently requested subs.
-    MainService.cycleSubs(); // Cycle through default subs in the subreddit input field.
+    MainFactory.cycleSubs(); // Cycle through default subs in the subreddit input field.
     $scope.loggedIn = false;
     $scope.connecting = false;
     $scope.sub = '';
@@ -40,7 +40,8 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
         $scope.connecting = true;
 
         // Try to get user data.
-        ApiService.getUserData($scope.access_token).success(function(response){
+        ApiService.getUserData($scope.access_token).success(function(response)
+        {
             if(typeof(response.user) == "object" && typeof(response.subs) == "object")
             {
                 // Set username and subreddit list.
@@ -68,7 +69,8 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     } else getUrlSub();
 
     // Get content from specified subreddit.
-    $scope.getSub = function(sub){
+    $scope.getSub = function(sub)
+    {
         // Remove leading 'r/' if present.
         if(/^\/?r\//.test(sub))
             sub = sub.replace(/^\/?r\//g,'');
@@ -82,7 +84,8 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
      * Start Reddit Interaction Methods
      */
     // Reddit OAuth login.
-    $scope.authorizeAccount = function(){
+    $scope.authorizeAccount = function()
+    {
         var auth_url = "https://ssl.reddit.com/api/v1/authorize";
         var client_id = "dKiLKnbGc8ufQw";
         var response_type = "code";
@@ -103,14 +106,16 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     };
 
     // Log out.
-    $scope.deauthorizeAccount = function(){
+    $scope.deauthorizeAccount = function()
+    {
         CookieService.deleteAllCookies();
         $scope.loggedIn = false;
         $scope.getFrontPage();
     };
 
     // Load front page. TODO: Use OAuth if logged in.
-    function getFrontPage(){
+    function getFrontPage()
+    {
         $scope.loadingSub = true;
         $.getJSON('http://www.reddit.com/.json',function(response){
             currentSub = "frontPage";
@@ -126,7 +131,8 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     };
 
     // Load subreddit specified in URL.
-    function getUrlSub(){
+    function getUrlSub()
+    {
         var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
         if(initSub != null && initSub[1] != null && initSub[1] != "")
             getSub(initSub[1]);
@@ -134,7 +140,8 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     };
 
     // Get top data from requested sub.
-    function getSub(sub){
+    function getSub(sub)
+    {
         currentSub = sub;
         $scope.loadingSub = true;
         $scope.subbigtext = "Loading...";
@@ -163,8 +170,8 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     }
 
     // Vote on posts.
-    $scope.submitVote = function(id,likes,dir){
-
+    $scope.submitVote = function(id,likes,dir)
+    {
         var token = CookieService.getCookie('access_token');
         if(token != undefined && token != null && token != ""){
 
@@ -355,28 +362,7 @@ app.controller('MainCtrl',function($scope, $http, MainService, ApiService, Mason
     };
     // Get age of post.
     $scope.getPostAge = function(p){
-        var now = new Date();
-        var post = new Date(p*1000);
-        var days = Math.abs((now.getTime() - post.getTime())/86400000);
-        if(Math.floor(days*24) < 1) // Less than one hour
-            return Math.floor(days*24*60) + " minutes ago";
-        if(Math.floor(days*24) == 1) // One hour
-            return Math.floor(days*24) + " hour ago";
-        if(Math.floor(days) < 1) // More than one hour, but not a day
-            return Math.floor(days*24) + " hours ago";
-        if(Math.floor(days) == 1) // One day
-            return "Yesterday";
-        if(Math.floor(days) > 1 && days/30 < 1) // More than one day, but not a month (30 days)
-            return Math.floor(days) + " days ago";
-        if(Math.floor(days/30) == 1) // One month
-            return Math.floor(days/30) + " month ago";
-        if(Math.floor(days/30) > 1 && Math.floor(days/365) < 1) // More than one month, but not a year
-            return Math.floor(days/30) + " months ago";
-        if(Math.floor(days/365) == 1) // One year
-            return Math.floor(days/365) + " year ago";
-        if(Math.floor(days/365) > 1) // More than one year
-            return Math.floor(days/365) + " years ago";
-        return "In the past";
+        return PostContentFactory.getPostAge(p);
     };
     /**
      * End Content Helper Methods
