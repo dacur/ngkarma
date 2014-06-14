@@ -1,0 +1,55 @@
+<div ng-controller="contentCtrl">
+    <div class="title">
+        <a class="subLink" href="#" ng-click="getSub(post.subreddit)">r/{{ post.subreddit }}</a> - {{ post.title }}
+    </div>
+    <div class="content-outer">
+        <div class="content-inner">
+
+            <!-- If image, but not Imgur, display it here. -->
+            <img ng-if="isImage(post.url) && !isImgur(post.domain)" id="contentImage" src="{{ post.url }}" />
+
+            <!-- If direct link to Imgur image, load large thumbnail. -->
+            <a ng-if="isImage(post.url) && isImgur(post.domain)"
+               href="{{ post.url }}" target="_blank" >
+                <img id="contentImage" src="{{ getImgurThumb(post.url) }}" />
+            </a>
+
+            <!-- If YouTube video, try to embed. -->
+            <div id="youtube-{{ post.id }}" ng-if="isYouTube(post.domain,post.url)"
+                 data-yt-player="myPlayer" data-yt-vid="{{ getYouTubeVideoId(post.domain,post.url) }}">
+            </div>
+
+            <!-- If link to Imgur, but not direct to image, display link to gallery. -->
+            <a ng-if="!isImage(post.url) && isImgur(post.domain)" target="_blank" href="{{ post.url }}">
+                Imgur Gallery - Click here to view
+            </a>
+            <!-- If self post, post the text. -->
+            <div ng-if="post.is_self" id="contentText" ng-body-html-unsafe="test">{{ post.selftext }}</div>
+
+            <!-- Otherwise, link to external location (screenshot disabled). -->
+            <a ng-if="!isImage(post.url) && !isImgur(post.domain) && !isYouTube(post.domain,post.url) && !isSelf(post.selftext)" target="_blank" href="{{ post.url }}" >
+                External link - Click here to view
+                <!--<img id="contentImage" src="http://immediatenet.com/t/l?Size=1024x768&URL={{ stripHttps(post.url) }}" />-->
+            </a>
+        </div>
+    </div>
+    <div class="info">
+        <div class="left">
+            <strong><a href="http://reddit.com/u/{{ post.author }}" target="_blank" >{{ post.author }}</a></strong><br/>
+            Posted: {{ getPostAge(post.created) }}<br/>
+            Comments:
+            <a href="http://www.reddit.com{{ post.permalink }}" target="_blank">
+                {{ post.num_comments }}
+            </a>
+        </div>
+        <div class="right">
+            {{ post.ups }}
+            <i id="{{ post.name }}_up" ng-class="{up: loggedIn && post.likes && post.likes != null}" ng-click="submitVote(post.name,post.likes,1)" class="fa fa-arrow-up"></i>
+            <br />
+            {{ post.downs }}
+            <i id="{{ post.name }}_down" ng-class="{down: loggedIn && !post.likes && post.likes != null}" ng-click="submitVote(post.name,post.likes,-1)" class="fa fa-arrow-down"></i>
+            <br />
+            Points: {{ post.score }}
+        </div>
+    </div>
+</div>

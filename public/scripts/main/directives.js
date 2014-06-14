@@ -4,18 +4,16 @@ var app = angular.module('MainApp');
 
 app.directive('brickContent',function(){
 
-    function link(scope,element,attributes)
-    {
-        var post = jQuery.parseJSON(scope.post);
-        console.log(post.domain);
+    function link(scope,element,attributes){
+        scope.post = jQuery.parseJSON(scope.postData);
     }
 
     return {
         restrict: 'A',
-        transclude: true,
         scope: {
-            post: '@postData'
+            postData: '@'
         },
-        link: link
+        link: link,
+        templateUrl: '/templates/template.html'
     }
 });
