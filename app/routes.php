@@ -10,4 +10,7 @@ Route::get('/redirect', 'RouteController@redirect');
 Route::get('/r/{s}', 'RouteController@main');
 
 // Reddit API controller
-Route::controller('/api', 'RedditApiController');
+Route::controller('/api/reddit', 'RedditApiController');
+
+// Imgur API controller
+Route::controller('/api/imgur', 'ImgurApiController');

@@ -2,13 +2,13 @@
 
 var app = angular.module('MainApp');
 
-app.service('ApiService',function($http)
+app.service('RedditApiService',function($http)
 {
 
     this.getUserData = function(token){
         return $http({
             method: 'GET',
-            url: '/api/user-data',
+            url: '/api/reddit/user-data',
             params: {
                 token: token
             }
@@ -18,7 +18,7 @@ app.service('ApiService',function($http)
     this.submitVote = function(token,id,dir){
         return $http({
             method: 'GET',
-            url: '/api/submit-vote',
+            url: '/api/reddit/submit-vote',
             params: {
                 id: id,
                 dir: dir,
@@ -30,7 +30,7 @@ app.service('ApiService',function($http)
     this.getSubreddit = function(token,sub,after){
         return $http({
             method: 'GET',
-            url: '/api/subreddit',
+            url: '/api/reddit/subreddit',
             params: {
                 sub: sub,
                 after: after,

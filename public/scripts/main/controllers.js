@@ -3,7 +3,7 @@
 var app = angular.module('MainApp',['wu.masonry','youtube-api']);
 
 // Main Page Controller.
-app.controller('MainCtrl',function($scope, $http, MainFactory, ApiService, MasonryService, CookieService)
+app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService, MasonryService, CookieService, PostContent)
 {
     /**
      * Start Init
@@ -40,7 +40,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, ApiService, Mason
         $scope.connecting = true;
 
         // Try to get user data.
-        ApiService.getUserData($scope.access_token).success(function(response)
+        RedditApiService.getUserData($scope.access_token).success(function(response)
         {
             if(typeof(response.user) == "object" && typeof(response.subs) == "object")
             {
@@ -71,6 +71,9 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, ApiService, Mason
     // Get content from specified subreddit.
     $scope.getSub = function(sub)
     {
+        // Clear posts so new ones can be properly created.
+        $scope.posts = [];
+
         // Remove leading 'r/' if present.
         if(/^\/?r\//.test(sub))
             sub = sub.replace(/^\/?r\//g,'');
@@ -147,7 +150,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, ApiService, Mason
         $scope.subbigtext = "Loading...";
         var token = CookieService.getCookie('access_token');
         if(token != undefined && token != null && token != ""){
-            ApiService.getSubreddit(token,sub,null).then(function(response){
+            RedditApiService.getSubreddit(token,sub,null).then(function(response){
                 $scope.loadingSub = false;
                 $scope.subbigtext = $scope.sub;
                 $scope.posts = response.data.data.children;
@@ -216,7 +219,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, ApiService, Mason
                 }
             }
 
-            ApiService.submitVote(token,id,dir).then(function(response){
+            RedditApiService.submitVote(token,id,dir).then(function(response){
                 console.log(response); // TODO: Handle errors here.
             });
 
@@ -246,7 +249,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, ApiService, Mason
 
             var token = CookieService.getCookie('access_token');
             if(token != undefined && token != null && token != ""){
-                ApiService.getSubreddit(token,currentSub,$scope.after).then(function(response){
+                RedditApiService.getSubreddit(token,currentSub,$scope.after).then(function(response){
                     $scope.loadingSub = false;
                     $scope.gettingPage = false;
                     for(var i in response.data.data.children)
@@ -315,6 +318,17 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, ApiService, Mason
     };
     /**
      * End Scroll Logic
+     */
+
+    /**
+     * Start Post content methods.
+     */
+    $scope.getPostAge = function(p)
+    {
+        return PostContent.getPostAge(p);
+    }
+    /**
+     * End Post content methods.
      */
 
 });

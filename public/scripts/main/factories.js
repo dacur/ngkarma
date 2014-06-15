@@ -15,7 +15,27 @@ app.factory('MainFactory',function(DefaultSubService)
     }
 });
 
-app.factory('PostContentFactory',function()
+app.factory('ImgurApi',function($http)
+{
+    return {
+        getGallery: function(id){
+            console.log(id);
+            return $http({
+                method: 'GET',
+                url: '/api/imgur/gallery',
+                params: {
+                    id: id
+                }
+            }).success(function(response){
+                console.log(response);
+            }).error(function(response){
+                console.error('Error retrieving gallery id ' + id);
+            });
+        }
+    }
+});
+
+app.factory('PostContent',function()
 {
     return {
         getPostAge: function(p){
@@ -55,9 +75,7 @@ app.factory('PostContentFactory',function()
         },
 
         getImgurThumb: function(url){
-            if(!(/\.gif$/).test(url))
-                return url.replace(/(\.[a-zA-Z0-9]+)$/,"m$1");
-            return url;
+            return url.replace(/(\.[a-zA-Z0-9]+)$/,"m$1");
         },
 
         stripHttps: function(url){
@@ -66,4 +84,28 @@ app.factory('PostContentFactory',function()
             return url;
         }
     };
+});
+
+app.factory('PostType',function(){
+    return {
+        // Check if post content is direct image link.
+        isImage: function(url){
+            return /\.(jpg|png|gif)$/i.test(url);
+        },
+
+        // Check if post is direct link to Imgur image.
+        isImgurImage: function(url){
+            return /imgur\.com.*\.(jpg|png)$/.test(url);
+        },
+
+        // Check if post is Imgur Gallery.
+        isImgurGallery: function(url){
+            return /imgur.com\/gallery/.test(url);
+        },
+
+        // Check if post is YouTube video link.
+        isYouTube: function(dom, url){
+            return (/youtube\.com/.test(dom) && /watch/.test(url)) || /youtu\.be/.test(dom);
+        }
+    }
 });
