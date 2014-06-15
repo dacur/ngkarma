@@ -96,7 +96,6 @@ app.service('CookieService',function()
 
 app.service('DefaultSubService',function()
 {
-
     this.defaultSubs = [
         "announcements",
         "art",
@@ -200,5 +199,4 @@ app.service('DefaultSubService',function()
         "nottheonion",
         "woahdude"
     ];
-
 });

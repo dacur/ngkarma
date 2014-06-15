@@ -41,6 +41,29 @@ app.factory('PostContentFactory',function()
             if(Math.floor(days/365) > 1) // More than one year
                 return Math.floor(days/365) + " years ago";
             return "In the past";
+        },
+
+        getYouTubeVideoId: function(dom,url){
+            var video_id;
+            if(/youtube.com/.test(dom))
+                video_id = url.match(/[^a-zA-Z0-9]v=([a-zA-Z0-9-_]+)/);
+            else if(/youtu.be/.test(dom))
+                video_id = url.match(/youtu\.be\/([a-zA-Z0-9-_]+)/);
+            if(video_id != undefined && video_id.length > 1)
+                return video_id[1];
+            return false;
+        },
+
+        getImgurThumb: function(url){
+            if(!(/\.gif$/).test(url))
+                return url.replace(/(\.[a-zA-Z0-9]+)$/,"m$1");
+            return url;
+        },
+
+        stripHttps: function(url){
+            if(/^https:/i.test(url))
+                return url.replace(/^https/i,'http');
+            return url;
         }
     };
 });

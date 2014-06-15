@@ -3,7 +3,7 @@
 var app = angular.module('MainApp',['wu.masonry','youtube-api']);
 
 // Main Page Controller.
-app.controller('MainCtrl',function($scope, $http, MainFactory, PostContentFactory, ApiService, MasonryService, CookieService)
+app.controller('MainCtrl',function($scope, $http, MainFactory, ApiService, MasonryService, CookieService)
 {
     /**
      * Start Init
@@ -316,61 +316,5 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, PostContentFactor
     /**
      * End Scroll Logic
      */
-
-});
-
-// Masonry Brick Content Controller
-app.controller('contentCtrl',function($scope, PostContentFactory){
-
-    // Get age of post.
-    $scope.getPostAge = function(p){
-        return PostContentFactory.getPostAge(p);
-    };
-
-    // Check if post content is direct image link.
-    $scope.isImage = function(url){
-        return /jpg|png|gif$/i.test(url);
-    };
-
-    // Check if post is Imgur link.
-    $scope.isImgur = function(dom){
-        return /imgur\.com/.test(dom);
-    };
-
-    // Convert Imgur image links to large thumbnails.
-    $scope.getImgurThumb = function(url){
-        if(!(/\.gif$/).test(url))
-            return url.replace(/(\.[a-zA-Z0-9]+)$/,"m$1");
-        return url;
-    };
-
-    // Check if post is YouTube video link.
-    $scope.isYouTube = function(dom, url){
-        return (/youtube.com/.test(dom) && /watch/.test(url)) || /youtu.be/.test(dom)
-    };
-
-    // Get YouTube embed code.
-    $scope.getYouTubeVideoId = function(dom,url){
-        var video_id;
-        if(/youtube.com/.test(dom))
-            video_id = url.match(/[^a-zA-Z0-9]v=([a-zA-Z0-9-_]+)/);
-        else if(/youtu.be/.test(dom))
-            video_id = url.match(/youtu\.be\/([a-zA-Z0-9-_]+)/);
-        if(video_id != undefined && video_id.length > 1)
-            return video_id[1];
-        return false;
-    };
-
-    // Check if post content is self post.
-    $scope.isSelf = function(self){
-        return self != null && self != "";
-    };
-
-    // Remove https from URLs.
-    $scope.stripHttps = function(url){
-        if(/^https:/i.test(url))
-            return url.replace(/^https/i,'http');
-        return url;
-    };
 
 });

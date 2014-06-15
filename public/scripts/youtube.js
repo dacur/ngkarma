@@ -48,13 +48,15 @@ module.directive( 'ytPlayer', [ 'constructor', function( constructor ) {
                     url: 'http://gdata.youtube.com/feeds/api/videos/' + $scope.vid + '?v=2&alt=json&callback=JSON_CALLBACK'
                 }).success(function( data, status ) {
                     /* template usage */
-                    $scope.title = data.entry.title.$t;
-                    $scope.description = data.entry.media$group.media$description.$t;
-                    $scope.author = data.entry.author[0].name.$t;
-                    $scope.viewCount = data.entry.yt$statistics.viewCount;
-                    $scope.published = data.entry.published.$t;
-                    $scope.likes = data.entry.yt$rating.numLikes;
-                    $scope.dislikes = data.entry.yt$rating.numDislikes;
+                    if(data.hasOwnProperty('entry')){
+                        $scope.title = data.entry.title.$t;
+                        $scope.description = data.entry.media$group.media$description.$t;
+                        $scope.author = data.entry.author[0].name.$t;
+                        $scope.viewCount = data.entry.yt$statistics.viewCount;
+                        $scope.published = data.entry.published.$t;
+                        $scope.likes = data.entry.yt$rating.numLikes;
+                        $scope.dislikes = data.entry.yt$rating.numDislikes;
+                    }
                     /* spy usage */
 //                    constructor.players[$scope.player].title = data.entry.title.$t;
 //                    constructor.players[$scope.player].description = data.entry.media$group.media$description.$t;
