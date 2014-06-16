@@ -10,8 +10,8 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
         },
         link: function(scope){
             if(PostType.isImgurImage(scope.post.url)){
-                scope.post.url = PostContent.getImgurThumb(scope.post.url);
-                scope.template = '/templates/image.html';
+                scope.post.large_thumbnail = PostContent.getImgurThumb(scope.post.url);
+                scope.template = '/templates/imgur_image.html';
             }
             else if(PostType.isImgurGallery(scope.post.url)){
                 scope.gallery_id = scope.post.url.match(/\/gallery\/([^/]+)/)[1];
