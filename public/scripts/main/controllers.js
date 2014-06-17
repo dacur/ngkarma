@@ -86,7 +86,8 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     $scope.deauthorizeAccount = function(){
         CookieService.deleteAllCookies();
         $scope.loggedIn = false;
-        getPosts();
+        clearPosts();
+        getPosts('frontPage');
     };
 
     // Scroll to top of page.
