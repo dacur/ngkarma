@@ -19,7 +19,6 @@ app.factory('ImgurApi',function($http)
 {
     return {
         getGallery: function(id){
-            console.log(id);
             return $http({
                 method: 'GET',
                 url: '/api/imgur/gallery',
@@ -27,9 +26,9 @@ app.factory('ImgurApi',function($http)
                     id: id
                 }
             }).success(function(response){
-                console.log(response);
+                //console.log(response);
             }).error(function(response){
-                console.error('Error retrieving gallery id ' + id);
+                //console.error('Error retrieving gallery id ' + id);
             });
         }
     }

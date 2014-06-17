@@ -5,25 +5,30 @@ var app = angular.module('MainApp',['wu.masonry','youtube-api']);
 // Main Page Controller.
 app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService, MasonryService, CookieService, PostContent)
 {
-    /**
-     * Start Init
-     */
-    var currentSub; // Keep track of currently requested subs.
-    MainFactory.cycleSubs(); // Cycle through default subs in the subreddit input field.
+
+    // Used for infinite scroll logic.
+    var win = $(window);
+    var doc = $(document);
+
+    // Set state of a few scope vars.
     $scope.loggedIn = false;
     $scope.connecting = false;
+    $scope.posts = [];
+    $scope.currentSub = 'frontPage';
     $scope.sub = '';
 
     // Initialize token values from Cookie data.
     $scope.access_token = CookieService.getCookie("access_token");
     $scope.refresh_token = CookieService.getCookie("refresh_token");
 
+    // Cycle through default subs in the subreddit input field.
+    MainFactory.cycleSubs();
+
     // Set sub large display to match entered sub.
     $scope.$watch('sub',function(){
         if(/^[^r]/.test($scope.sub) || /^r[^/]/.test($scope.sub))
             $scope.subbigtext = 'r/' + $scope.sub;
-        else
-            $scope.subbigtext = $scope.sub;
+        else $scope.subbigtext = $scope.sub;
     });
 
     // Update masonry layout regularly.
@@ -34,149 +39,71 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     // Create Masonry object.
     MasonryService.createBrickWall();
 
-    // Get User Data
-    if($scope.access_token != null && $scope.access_token != "")
-    {
-        $scope.connecting = true;
+    // Get User Data if access token is available in the cookie.
+    if($scope.access_token != null && $scope.access_token != ''){
 
-        // Try to get user data.
-        RedditApiService.getUserData($scope.access_token).success(function(response)
-        {
-            if(typeof(response.user) == "object" && typeof(response.subs) == "object")
-            {
-                // Set username and subreddit list.
+        // Get user data using given access token.
+        $scope.connecting = true;
+        RedditApiService.getUserData($scope.access_token).success(function(response){
+
+            // Set user object and subreddit list.
+            if(typeof(response.user) == "object" && typeof(response.subs) == "object"){
                 $scope.user = response.user;
                 $scope.subs = response.subs;
 
                 // If username is now known, set cookie and logged-in status.
-                if($scope.user.hasOwnProperty('name'))
-                {
+                if($scope.user.hasOwnProperty('name')){
                     CookieService.setCookie('name', $scope.user.name,30);
                     $scope.connecting = false;
                     $scope.loggedIn = true;
 
                     // If subs list is now known, build new page with it.
-                    if($scope.subs != null && $scope.subs != "")
-                    {
-                        // TODO: This loads user subs on page load, even if URL contains reddit-style subreddit specification. Fix!
-                        if(typeof($scope.subs) == "object")
-                            getSub($scope.subs.join("+"));
-                        else $scope.getFrontPage();
-                    } else getUrlSub();
-                } else getUrlSub();
-            } else getUrlSub();
+                    if(typeof($scope.subs) == "object")
+                        getPosts($scope.subs.join("+"));
+                    else getPosts();
+                }
+            }
         });
-    } else getUrlSub();
+    }
+
+    // If no access token is available, just start loading posts.
+    else getPosts();
 
     // Get content from specified subreddit.
-    $scope.getSub = function(sub)
-    {
-        // Clear posts so new ones can be properly created.
-        $scope.posts = [];
+    $scope.getSub = function(sub){
+        clearPosts();
 
         // Remove leading 'r/' if present.
         if(/^\/?r\//.test(sub))
             sub = sub.replace(/^\/?r\//g,'');
-        getSub(sub);
+        getPosts(sub);
     };
-    /**
-     * End Init
-     */
 
-    /**
-     * Start Reddit Interaction Methods
-     */
     // Reddit OAuth login.
-    $scope.authorizeAccount = function()
-    {
-        var auth_url = "https://ssl.reddit.com/api/v1/authorize";
-        var client_id = "dKiLKnbGc8ufQw";
-        var response_type = "code";
-        var state = Math.random().toString(36).match(/0\.(.*)/)[1];
-        var redirect_uri = "http://spreddit.multifarious.org:7777/redirect";
-        var duration = "permanent";
-        var scope = "identity,mysubreddits,read,vote";
-
-        CookieService.setCookie("state",state,30);
-
-        window.location.href = auth_url +
-            "?client_id=" + client_id +
-            "&response_type=" + response_type +
-            "&state=" + state +
-            "&redirect_uri=" + redirect_uri +
-            "&duration=" + duration +
-            "&scope=" + scope;
+    $scope.authorizeAccount = function(){
+        RedditApiService.authorizeAccount();
     };
 
     // Log out.
-    $scope.deauthorizeAccount = function()
-    {
+    $scope.deauthorizeAccount = function(){
         CookieService.deleteAllCookies();
         $scope.loggedIn = false;
-        $scope.getFrontPage();
+        getPosts();
     };
 
-    // Load front page. TODO: Use OAuth if logged in.
-    function getFrontPage()
-    {
-        $scope.loadingSub = true;
-        $.getJSON('http://www.reddit.com/.json',function(response){
-            currentSub = "frontPage";
-            $scope.loadingSub = false;
-            $scope.sub = '';
-            $scope.posts = response.data.children;
-            $scope.after = response.data.after;
-            $scope.$apply();
-        });
-    };
-    $scope.getFrontPage = function(){
-        getFrontPage();
+    // Scroll to top of page.
+    $scope.goToTop = function(){
+        window.scrollTo(0, 0);
     };
 
-    // Load subreddit specified in URL.
-    function getUrlSub()
-    {
-        var initSub = window.location.href.match(/\/r\/([a-zA-Z0-9]+)/);
-        if(initSub != null && initSub[1] != null && initSub[1] != "")
-            getSub(initSub[1]);
-        else getFrontPage();
+    // Get human-readable age of post.
+    $scope.getPostAge = function(p){
+        return PostContent.getPostAge(p);
     };
-
-    // Get top data from requested sub.
-    function getSub(sub)
-    {
-        currentSub = sub;
-        $scope.loadingSub = true;
-        $scope.subbigtext = "Loading...";
-        var token = CookieService.getCookie('access_token');
-        if(token != undefined && token != null && token != ""){
-            RedditApiService.getSubreddit(token,sub,null).then(function(response){
-                $scope.loadingSub = false;
-                $scope.subbigtext = $scope.sub;
-                $scope.posts = response.data.data.children;
-                $scope.after = response.data.data.after;
-                setTimeout(function(){
-                    $scope.$apply();
-                });
-            });
-        }
-        else
-        {
-            $.getJSON('http://www.reddit.com/r/' + sub + '/hot.json',function(response){
-                $scope.loadingSub = false;
-                $scope.subbigtext = $scope.sub;
-                $scope.posts = response.data.children;
-                $scope.after = response.data.after;
-                $scope.$apply();
-            });
-        }
-    }
 
     // Vote on posts.
-    $scope.submitVote = function(id,likes,dir)
-    {
-        var token = CookieService.getCookie('access_token');
-        if(token != undefined && token != null && token != ""){
+    $scope.submitVote = function(id,likes,dir){
+        if($scope.access_token != undefined && $scope.access_token != null && $scope.access_token != ""){
 
             //TODO: These votes work just fine, but the colors don't disappear when trying to remove an upvote or downvote.
             //TODO: The reason is the "likes" value never changes with the votes, since it is set by the original API call to reddit.
@@ -219,65 +146,78 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
                 }
             }
 
-            RedditApiService.submitVote(token,id,dir).then(function(response){
-                console.log(response); // TODO: Handle errors here.
+            RedditApiService.submitVote($scope.access_token,id,dir).then(function(response){
+                //console.log(response); // TODO: Handle errors here.
             });
 
         }
-        else
-        {
-            console.log("Votes don't count if you're not logged in!");
-        }
+        else console.log("Votes don't count if you're not logged in!");
     };
-    /**
-     * End Reddit Interaction Methods
-     */
 
-    /**
-     * Start Scroll Logic
-     */
-    // Get more posts.
-    function getNextPage()
-    {
-        if(!$scope.gettingPage)
-        {
-            if($scope.after == null || $scope.after == "")
-                return false;
+    // Get some posts! //TODO: Every first request to a specific subreddit returns 0 results. Fix!
+    function getPosts(sub){
 
+        // Update currentSub with given sub if needed.
+        if(sub != undefined && sub != null && sub != '')
+            $scope.currentSub = sub;
+
+        if(!$scope.gettingPage){
+
+            // Set loading states.
             $scope.loadingSub = true;
             $scope.gettingPage = true;
 
-            var token = CookieService.getCookie('access_token');
-            if(token != undefined && token != null && token != ""){
-                RedditApiService.getSubreddit(token,currentSub,$scope.after).then(function(response){
+            // Get posts using OAuth if access token is available.
+            if($scope.access_token != undefined && $scope.access_token != null && $scope.access_token != ''){
+
+                RedditApiService.getSubreddit($scope.access_token,$scope.currentSub,$scope.after).then(function(response){
+
+                    // Unset loading states.
                     $scope.loadingSub = false;
                     $scope.gettingPage = false;
+
+                    // Add new posts to posts array.
                     for(var i in response.data.data.children)
                         $scope.posts.push(response.data.data.children[i]);
+
+                    // Set new 'after' value for next page.
                     $scope.after = response.data.data.after;
+
+                    // Apply scope changes.
                     setTimeout(function(){
                         $scope.$apply();
-                    });
+                    },0);
                 });
             }
-            else
-            {
-                var url;
-                if(currentSub == "frontPage")
-                    url = "http://www.reddit.com/hot.json";
-                else
-                    url = "http://www.reddit.com/r/" + currentSub + "/hot.json";
 
+            // If no access token is available, use the JSON API.
+            else{
+
+                // Set URL.
+                var url = "http://www.reddit.com/r/" + $scope.currentSub + "/hot.json";
+                if($scope.currentSub == "frontPage")
+                    url = "http://www.reddit.com/hot.json";
+
+                // Set 'after' value for request.
                 var params = {
                     after: $scope.after
-                }
+                };
 
                 $.getJSON(url, params, function(response){
+                    console.log(response.data);
+
+                    // Unset loading states.
                     $scope.loadingSub = false;
                     $scope.gettingPage = false;
+
+                    // Add new posts to posts array.
                     for(var i in response.data.children)
                         $scope.posts.push(response.data.children[i]);
+
+                    // Set new 'after' value for next page.
                     $scope.after = response.data.after;
+
+                    // Apply scope changes.
                     $scope.$apply();
                 });
             }
@@ -285,50 +225,26 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         return true;
     }
 
-    // Infinite scroll testing.
-    var win = $(window),
-        doc = $(document);
+    // Clear posts.
+    function clearPosts(){
+        $scope.posts = [];
+    }
 
     // Trigger when scrolling.
     win.scroll(function(){
-
-        // If near bottom of page.
         if(win.scrollTop() + 500 > doc.height() - win.height())
-            getNextPage();
-
-        // Set scroll state based on distance from top of page.
-        if(!$scope.scrolled && win.scrollTop() > 1000)
-        {
+            getPosts();
+        if(!$scope.scrolled && win.scrollTop() > 1000){
             $scope.scrolled = true;
             setTimeout(function(){
                 $scope.$apply();
-            });
-        } else if($scope.scrolled && win.scrollTop() <= 1000)
-        {
+            },0);
+        }else if($scope.scrolled && win.scrollTop() <= 1000){
             $scope.scrolled = false;
             setTimeout(function(){
                 $scope.$apply();
-            });
+            },0);
         }
-
     });
-
-    $scope.goToTop = function(){
-        window.scrollTo(0, 0);
-    };
-    /**
-     * End Scroll Logic
-     */
-
-    /**
-     * Start Post content methods.
-     */
-    $scope.getPostAge = function(p)
-    {
-        return PostContent.getPostAge(p);
-    }
-    /**
-     * End Post content methods.
-     */
 
 });

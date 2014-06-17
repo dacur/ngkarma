@@ -2,8 +2,40 @@
 
 var app = angular.module('MainApp');
 
-app.service('RedditApiService',function($http)
+app.service('RedditApiService',function($http, CookieService)
 {
+
+    this.authorizeAccount = function(){
+        var auth_url = "https://ssl.reddit.com/api/v1/authorize";
+        var client_id = "dKiLKnbGc8ufQw";
+        var response_type = "code";
+        var state = Math.random().toString(36).match(/0\.(.*)/)[1];
+        var redirect_uri = "http://spreddit.multifarious.org:7777/redirect";
+        var duration = "permanent";
+        var scope = "identity,mysubreddits,read,vote";
+
+        CookieService.setCookie("state",state,30);
+
+        window.location.href = auth_url +
+            "?client_id=" + client_id +
+            "&response_type=" + response_type +
+            "&state=" + state +
+            "&redirect_uri=" + redirect_uri +
+            "&duration=" + duration +
+            "&scope=" + scope;
+    };
+
+    this.getSubreddit = function(token,sub,after){
+        return $http({
+            method: 'GET',
+            url: '/api/reddit/subreddit',
+            params: {
+                sub: sub,
+                after: after,
+                token: token
+            }
+        });
+    };
 
     this.getUserData = function(token){
         return $http({
@@ -22,18 +54,6 @@ app.service('RedditApiService',function($http)
             params: {
                 id: id,
                 dir: dir,
-                token: token
-            }
-        });
-    };
-
-    this.getSubreddit = function(token,sub,after){
-        return $http({
-            method: 'GET',
-            url: '/api/reddit/subreddit',
-            params: {
-                sub: sub,
-                after: after,
                 token: token
             }
         });

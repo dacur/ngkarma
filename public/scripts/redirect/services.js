@@ -27,7 +27,7 @@ app.service('ApiService',function($http){
         getTokens: function(code){
             return $http({
                 method: 'GET',
-                url: '/api/tokens',
+                url: '/api/reddit/tokens',
                 params: {
                     code: code,
                     redirect_uri: "http://spreddit.multifarious.org:7777/redirect"
