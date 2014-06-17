@@ -71,8 +71,6 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 
     // Get content from specified subreddit.
     $scope.getSub = function(sub){
-        clearPosts();
-
         // Remove leading 'r/' if present.
         if(/^\/?r\//.test(sub))
             sub = sub.replace(/^\/?r\//g,'');
@@ -154,13 +152,23 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         else console.log("Votes don't count if you're not logged in!");
     };
 
-    // Get some posts! //TODO: Every first request to a specific subreddit returns 0 results. Fix!
+    // Get some posts!
     function getPosts(sub){
 
-        // Update currentSub with given sub if needed.
-        if(sub != undefined && sub != null && sub != '')
+        // Prepare for if requesting a new sub...
+        if(sub != $scope.currentSub && sub != undefined && sub != null && sub != ''){
+
+            // Update currentSub value.
             $scope.currentSub = sub;
 
+            // Clear 'after' page value.
+            $scope.after = null;
+
+            // Clear existing posts.
+            clearPosts();
+        }
+
+        // If not already in the process of getting a new page..
         if(!$scope.gettingPage){
 
             // Set loading states.
@@ -169,7 +177,6 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 
             // Get posts using OAuth if access token is available.
             if($scope.access_token != undefined && $scope.access_token != null && $scope.access_token != ''){
-
                 RedditApiService.getSubreddit($scope.access_token,$scope.currentSub,$scope.after).then(function(response){
 
                     // Unset loading states.
@@ -203,8 +210,8 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
                     after: $scope.after
                 };
 
+                // Get new posts via JSON API.
                 $.getJSON(url, params, function(response){
-                    console.log(response.data);
 
                     // Unset loading states.
                     $scope.loadingSub = false;
@@ -222,7 +229,6 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
                 });
             }
         }
-        return true;
     }
 
     // Clear posts.
