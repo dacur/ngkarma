@@ -19,16 +19,31 @@ app.factory('ImgurApi',function($http)
 {
     return {
         getGallery: function(id){
-            return $http({
+            console.log('getting gallery id ' + id)
+            $http({
                 method: 'GET',
                 url: '/api/imgur/gallery',
                 params: {
                     id: id
                 }
             }).success(function(response){
-                //console.log(response);
-            }).error(function(response){
-                //console.error('Error retrieving gallery id ' + id);
+                if(response.hasOwnProperty('status'))
+                    if(response.status == 'GOOD')
+                    {
+                        if(response.images != undefined)
+                        {
+                            console.log(response.images);
+                            return response.images;
+                        }
+                    }
+                    else if(response.status == 'FAIL')
+                    {
+                        console.log(response);
+                        return false;
+                    }
+                return false;
+            }).error(function(){
+                console.error('Error retrieving gallery id ' + id);
             });
         }
     }
