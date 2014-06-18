@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('MainApp',['wu.masonry','youtube-api']);
+var app = angular.module('MainApp',['wu.masonry','youtube-api','ui.bootstrap']);
 
 // Main Page Controller.
 app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService, MasonryService, CookieService, PostContent)
@@ -14,6 +14,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     $scope.loggedIn = false;
     $scope.connecting = false;
     $scope.posts = [];
+    $scope.votes = {};
     $scope.currentSub = 'frontPage';
     $scope.sub = '';
 
@@ -82,11 +83,19 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         RedditApiService.authorizeAccount();
     };
 
-    // Log out.
+    // Remove OAuth data.
     $scope.deauthorizeAccount = function(){
+
+        // Clear cookies.
         CookieService.deleteAllCookies();
+
+        // Set logged in status to false.
         $scope.loggedIn = false;
+
+        // Clear posts from Masonry.
         clearPosts();
+
+        // Get new set of posts from Front page.
         getPosts('frontPage');
     };
 
@@ -102,55 +111,51 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 
     // Vote on posts.
     $scope.submitVote = function(id,likes,dir){
-        if($scope.access_token != undefined && $scope.access_token != null && $scope.access_token != ""){
+        if(CookieService.getCookie("access_token") != null && CookieService.getCookie("access_token") != ""){
 
-            //TODO: These votes work just fine, but the colors don't disappear when trying to remove an upvote or downvote.
-            //TODO: The reason is the "likes" value never changes with the votes, since it is set by the original API call to reddit.
-            //TODO: Fix is maybe keep an array in $scope to keep track. Won't matter if a refresh happens, since reddit keeps a copy. :)
             var up = $('#'+id+'_up');
             var down = $('#'+id+'_down');
 
+            // Set vote status from Reddit data if not already set.
+            if(typeof $scope.votes[id] === "undefined")
+                $scope.votes[id] = likes;
+
             // If upvoting now...
             if(dir == 1){
-
-                // Set upvote color and keep direction as 1.
-                up.addClass('up');
-
-                // If previously downvoted, clear downvote.
-                if(!likes && likes != null)
-                    down.removeClass('down');
-
-                // If previously upvoted, clear upvote color and set direction to 0.
-                if(likes && likes != null){
+                if($scope.votes[id] == 1)
+                {
+                    $scope.votes[id] = 0;
                     up.removeClass('up');
-                    dir = 0;
                 }
-
+                else
+                {
+                    $scope.votes[id] = 1;
+                    up.addClass('up');
+                    down.removeClass('down');
+                }
             }
 
             // If downvoting now..
             else if(dir == -1){
 
-                // Set downvote color and keep direction as -1.
-                down.addClass('down');
-
-                // If previously upvoted, clear upvote.
-                if(likes && likes != null)
-                    up.removeClass('up');
-
-                // If previously downvoted, clear downvote color and set direction to 0.
-                if(!likes && likes != null){
+                if($scope.votes[id] == -1)
+                {
+                    $scope.votes[id] = 0;
                     down.removeClass('down');
-                    dir = 0;
+                }
+                else
+                {
+                    $scope.votes[id] = -1;
+                    down.addClass('down');
+                    up.removeClass('up');
                 }
             }
 
-            RedditApiService.submitVote($scope.access_token,id,dir).then(function(response){
-                //console.log(response); // TODO: Handle errors here.
+            RedditApiService.submitVote($scope.access_token,id,$scope.votes[id]).then(function(response){
+                console.log(response)
             });
 
         }
-        else console.log("Votes don't count if you're not logged in!");
     };
 
     // Get some posts!

@@ -205,3 +205,16 @@ hr{
   background-color:$white;
   color:$very_dark_blue;
 }
+
+// Button zoom animation
+@-webkit-keyframes zoom{
+  0%{
+    zoom: 100%;
+  }
+  50%{
+    zoom: 200%;
+  }
+  100%{
+    zoom:100%;
+  }
+}

@@ -9,7 +9,7 @@
         <div id="right">
             <div ng-show="!loggedIn">
                 <button class="btn btn-danger btn-connect" ng-click="authorizeAccount()" ng-show="!connecting">
-                    Log in to Reddit to vote!
+                    Log in with your Reddit account!
                 </button>
                 <div id="connect-link" ng-show="connecting">
                     Connecting...

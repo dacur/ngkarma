@@ -118,7 +118,7 @@ class RedditApiController extends BaseController{
     function getSubmitVote()
     {
         $id = Input::get('id');
-        $dir = Input::get('dir'); // Vote direction (up = 1, down = -1)
+        $dir = Input::get('dir');
         $token = Input::get('token');
 
         $url = "https://oauth.reddit.com/api/vote";

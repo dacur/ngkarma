@@ -13,10 +13,16 @@
     <!--Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
 
+    <!--Redirect Stylesheet-->
+    <link rel="stylesheet" href="/styles/redirect.css">
+
 </head>
 <body ng-controller="RedirectCtrl" ng-init="init('{{ Input::get('state') }}','{{ Input::get('code') }}','{{ Input::get('error') }}')" ng-cloak>
 
-@{{ message }}
+<div id="alien">
+    <i class="fa fa-reddit"></i>
+</div>
+@{{message}}
 
 <!--jQuery-->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

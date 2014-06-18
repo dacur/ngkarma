@@ -34,12 +34,18 @@
                 </a>
             </div>
             <div class="right">
-                @{{ post.data.ups }}
-                <i id="@{{ post.data.name }}_up" ng-class="{up: loggedIn && post.data.likes && post.data.likes != null}" ng-click="submitVote(post.data.name,post.data.likes,1)" class="fa fa-arrow-up"></i>
-                <br />
-                @{{ post.data.downs }}
-                <i id="@{{ post.data.name }}_down" ng-class="{down: loggedIn && !post.data.likes && post.data.likes != null}" ng-click="submitVote(post.data.name,post.data.likes,-1)" class="fa fa-arrow-down"></i>
-                <br />
+                <div ng-show="loggedIn">
+                    @{{ post.data.ups }}
+                    <i id="@{{ post.data.name }}_up" ng-class="{up: loggedIn && post.data.likes && post.data.likes != null}" ng-click="submitVote(post.data.name,post.data.likes,1)" class="fa fa-arrow-up"></i><br />
+                    @{{ post.data.downs }}
+                    <i ng-show="loggedIn" id="@{{ post.data.name }}_down" ng-class="{down: loggedIn && !post.data.likes && post.data.likes != null}" ng-click="submitVote(post.data.name,post.data.likes,-1)" class="fa fa-arrow-down"></i>
+                </div>
+                <div ng-show="!loggedIn" tooltip="Log in to vote!">
+                    @{{ post.data.ups }}
+                    <i class="fa fa-arrow-up"></i><br />
+                    @{{ post.data.downs }}
+                    <i class="fa fa-arrow-down"></i>
+                </div>
                 Points: @{{ post.data.score }}
             </div>
         </div>

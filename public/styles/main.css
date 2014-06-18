@@ -152,3 +152,13 @@ hr {
 .btn-menu:hover {
   background-color: white;
   color: #000033; }
+
+@-webkit-keyframes zoom {
+  0% {
+    zoom: 100%; }
+
+  50% {
+    zoom: 200%; }
+
+  100% {
+    zoom: 100%; } }
