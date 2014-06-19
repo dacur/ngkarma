@@ -19,7 +19,9 @@
 <div id="brick-wall" masonry>
     <div class="brick masonry-brick" ng-repeat="post in posts track by $index">
         <div class="title">
-            <a class="subLink" href="#" ng-click="getSub(post.data.subreddit)">r/@{{ post.data.subreddit }}</a> - @{{ post.data.title }}
+            <a class="subLink" href="#" ng-click="getSub(post.data.subreddit)">r/@{{ post.data.subreddit }}</a>
+            -
+            <a class="titleLink" ng-href="@{{ post.data.url }}" target="_blank">@{{ post.data.title }}</a>
         </div>
         <div class="content-outer">
             <div class="content-inner" brick-content post-data="post.data"></div>

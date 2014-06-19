@@ -9,18 +9,28 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
             post: '=postData'
         },
         link: function(scope){
+            console.log(scope.post)
             if(PostType.isImgurImage(scope.post.url)){
                 scope.post.large_thumbnail = PostContent.getImgurThumb(scope.post.url);
                 scope.template = '/templates/imgur_image.html';
             }
             else if(PostType.isImgurGallery(scope.post.url)){
-                console.log(scope.post.title);
+                scope.gallery_images = [];
                 scope.gallery_id = scope.post.url.match(/\/gallery\/([^/]+)/)[1];
+
+                console.log('Gallery: ' + scope.post.title);
+                console.log('ID: ' + scope.gallery_id);
 
                 ImgurApi.getGallery(scope.gallery_id).success(function(response){
                     if(response.hasOwnProperty('status'))
                         if(response.status == 'GOOD' && response.images != undefined){
-                            scope.gallery_images = response.images;
+                            for(var i = 0; i < response.images.length; i++){
+                                scope.gallery_images.push({
+                                    image: response.images[i],
+                                    thumb: PostContent.getImgurThumb(response.images[i])
+                                });
+                            }
+                            console.log(scope.gallery_images);
                             scope.template = '/templates/imgur_gallery.html';
                         }
                         else if(response.status == 'FAIL'){ /* TODO: do something here! */ }

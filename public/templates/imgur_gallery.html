@@ -1,5 +1,5 @@
 <div id="gallery_image" ng-repeat="gallery_image in gallery_images track by $index">
-    <a ng-href="{{ gallery_image }}" target="_blank">
-        <img class="contentImage" ng-src="{{ gallery_image }}" />
+    <a ng-href="{{ gallery_image.image }}" target="_blank">
+        <img class="contentImage" ng-src="{{ gallery_image.thumb }}" />
     </a>
 </div>

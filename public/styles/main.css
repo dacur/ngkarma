@@ -2,7 +2,6 @@ html, body {
   font-family: 'Ubuntu', sans-serif; }
   html a, html a:visited, html a:hover, html a:active, body a, body a:visited, body a:hover, body a:active {
     text-decoration: none;
-    color: black;
     text-shadow: 0 0 0.5em white; }
 
 hr {
@@ -108,9 +107,12 @@ hr {
       background-color: #557fb3;
       background: linear-gradient(to bottom, #557fb3, #426693);
       overflow: hidden;
-      text-shadow: 0 0 0.5em #324e70; }
-      #brick-wall .brick .title .subLink a, #brick-wall .brick .title .subLink a:visited, #brick-wall .brick .title .subLink a:hover, #brick-wall .brick .title .subLink a:active {
+      text-shadow: 0 0 0.2em #324e70; }
+      #brick-wall .brick .title .subLink {
         color: black; }
+      #brick-wall .brick .title .titleLink {
+        text-shadow: none;
+        color: white; }
     #brick-wall .brick .content-outer {
       overflow: hidden; }
       #brick-wall .brick .content-outer .content-inner {

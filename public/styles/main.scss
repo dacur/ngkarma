@@ -4,7 +4,6 @@ html,body{
   font-family: 'Ubuntu', sans-serif;
   a,a:visited,a:hover,a:active{
     text-decoration:none;
-    color:$black;
     text-shadow:0 0 0.5em $white;
   }
 }
@@ -145,11 +144,13 @@ hr{
           $brick_title, darken($brick_title,10)
       );
       overflow:hidden;
-      text-shadow: 0 0 0.5em darken($brick_title,20);
+      text-shadow: 0 0 0.2em darken($brick_title,20);
       .subLink{
-        a,a:visited,a:hover,a:active{
-          color:$black;
-        }
+        color:$black;
+      }
+      .titleLink{
+        text-shadow:none;
+        color:$white;
       }
     }
     .content-outer{
