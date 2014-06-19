@@ -17,10 +17,12 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
                 scope.gallery_images = [];
                 if(PostType.isImgurGalleryId(scope.post.url)){
                     scope.id = scope.post.url.match(/\/gallery\/([^/]+)/)[1];
+                } else if(PostType.isImgurAlbumId(scope.post.url)){
+                    scope.id = scope.post.url.match(/\/a\/([^/]+)/)[1];
                 } else if(PostType.isImgurImageId(scope.post.url)){
                     scope.id = scope.post.url.match(/imgur.com\/([a-zA-Z0-9-]+)/)[1];
                 } else {
-                    console.error('No match for post url ' + scope.post.url);
+                    console.error('No match for Imgur url ' + scope.post.url);
                     return false;
                 }
 
@@ -35,7 +37,9 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
                             }
                             scope.template = '/templates/imgur_gallery.html';
                         }
-                        else if(response.status == 'FAIL'){ /* TODO: do something here! */ }
+                        else if(response.status == 'FAIL')
+                            scope.template = '/templates/external.html';
+
                 }).error(function(){
                     console.error('Error retrieving gallery id ' + id);
                 });

@@ -30,17 +30,18 @@ class ImgurApiController extends BaseController{
         curl_close($ch);
 
         $images = array();
-        if(property_exists($results,'success') && $results->success)
-            if(property_exists($results,'data'))
-                if(property_exists($results->data,'is_album') && $results->data->is_album)
-                {
-                    if(property_exists($results->data,'images'))
-                        foreach($results->data->images as $image)
-                            if(property_exists($image,'link'))
-                                array_push($images,$image->link);
-                }
-                else if(property_exists($results->data,'link'))
-                    array_push($images,$results->data->link);
+        if(is_object($results))
+            if(property_exists($results,'success') && $results->success)
+                if(property_exists($results,'data'))
+                    if(property_exists($results->data,'is_album') && $results->data->is_album)
+                    {
+                        if(property_exists($results->data,'images'))
+                            foreach($results->data->images as $image)
+                                if(property_exists($image,'link'))
+                                    array_push($images,$image->link);
+                    }
+                    else if(property_exists($results->data,'link'))
+                        array_push($images,$results->data->link);
 
 
 

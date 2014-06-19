@@ -85,7 +85,7 @@ app.factory('PostType',function(){
     return {
         // Check if post is direct link to Imgur image.
         isImgurImage: function(url){
-            return /imgur\.com.*\.(jpg|png)$/.test(url);
+            return /imgur\.com.*\.(jpg|jpeg|png)$/i.test(url);
         },
 
         // Check if post content is direct image link.
@@ -99,17 +99,22 @@ app.factory('PostType',function(){
 
         // Check if post is Imgur Image by ID.
         isImgurImageId: function(url){
-            return /imgur.com\/[a-zA-Z0-9-]+$/.test(url);
+            return /imgur.com\/[a-zA-Z0-9-]+$/i.test(url);
         },
 
         // Check if post is Imgur Gallery.
         isImgurGalleryId: function(url){
-            return /imgur.com\/gallery/.test(url);
+            return /imgur.com\/gallery/i.test(url);
+        },
+
+        // Check if post is Imgur Gallery.
+        isImgurAlbumId: function(url){
+            return /imgur.com\/a\//i.test(url);
         },
 
         // Check if post is YouTube video link.
         isYouTube: function(dom, url){
-            return (/youtube\.com/.test(dom) && /watch/.test(url)) || /youtu\.be/.test(dom);
+            return (/youtube\.com/i.test(dom) && /watch/.test(url)) || /youtu\.be/.test(dom);
         }
     }
 });
