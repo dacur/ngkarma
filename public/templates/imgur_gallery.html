@@ -1,3 +1,5 @@
-<a target="_blank" href="{{ post.url }}">
-    <button class="btn btn-primary">Imgur gallery ({{ gallery_id }})</button>
-</a>
+<div id="gallery_image" ng-repeat="gallery_image in gallery_images track by $index">
+    <a ng-href="{{ gallery_image }}" target="_blank">
+        <img class="contentImage" ng-src="{{ gallery_image }}" />
+    </a>
+</div>

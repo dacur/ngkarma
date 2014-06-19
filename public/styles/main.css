@@ -117,7 +117,7 @@ hr {
         text-align: center;
         max-height: 400px;
         overflow-x: hidden; }
-      #brick-wall .brick .content-outer #contentImage {
+      #brick-wall .brick .content-outer .contentImage {
         width: 288px;
         max-width: 288px; }
     #brick-wall .brick .info {

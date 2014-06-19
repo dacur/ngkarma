@@ -18,7 +18,6 @@ class ImgurApiController extends BaseController{
 
         $url = 'https://api.imgur.com/3/gallery/' . $id;
 
-
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -31,27 +30,27 @@ class ImgurApiController extends BaseController{
         curl_close($ch);
 
         $images = array();
+        if(property_exists($results,'success') && $results->success)
+            if(property_exists($results,'data'))
+                if(property_exists($results->data,'is_album') && $results->data->is_album)
+                {
+                    if(property_exists($results->data,'images'))
+                        foreach($results->data->images as $image)
+                            if(property_exists($image,'link'))
+                                array_push($images,$image->link);
+                }
+                else if(property_exists($results->data,'link'))
+                    array_push($images,$results->data->link);
 
-        if(property_exists($results,'data') && property_exists($results->data,'images'))
-        foreach($results->data->images as $image)
-        {
-            if(property_exists($image,'link'))
-                array_push($images,$image->link);
-        }
+
 
         if(count($images) >= 1)
-        {
             $response = array(
                 "status" => 'GOOD',
                 "images" => $images
             );
-        }
-        else
-        {
-            $response = array(
-                "status" => 'FAIL'
-            );
-        }
+        else $response = array("status" => 'FAIL');
+
         return Response::json($response);
     }
 }
