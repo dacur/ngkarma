@@ -88,14 +88,23 @@ app.factory('PostType',function(){
             return /imgur\.com.*\.(jpg|png)$/.test(url);
         },
 
-        // Check if post is Imgur Gallery.
-        isImgurGallery: function(url){
-            return /imgur.com\/gallery/.test(url);
-        },
-
         // Check if post content is direct image link.
         isImage: function(url){
             return /\.(jpg|png|gif)$/i.test(url);
+        },
+
+        isImgur: function(dom){
+            return dom == 'imgur.com';
+        },
+
+        // Check if post is Imgur Image by ID.
+        isImgurImageId: function(url){
+            return /imgur.com\/[a-zA-Z0-9-]+$/.test(url);
+        },
+
+        // Check if post is Imgur Gallery.
+        isImgurGalleryId: function(url){
+            return /imgur.com\/gallery/.test(url);
         },
 
         // Check if post is YouTube video link.

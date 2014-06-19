@@ -9,19 +9,22 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
             post: '=postData'
         },
         link: function(scope){
-            console.log(scope.post)
             if(PostType.isImgurImage(scope.post.url)){
                 scope.post.large_thumbnail = PostContent.getImgurThumb(scope.post.url);
                 scope.template = '/templates/imgur_image.html';
             }
-            else if(PostType.isImgurGallery(scope.post.url)){
+            else if(PostType.isImgur(scope.post.domain)){
                 scope.gallery_images = [];
-                scope.gallery_id = scope.post.url.match(/\/gallery\/([^/]+)/)[1];
+                if(PostType.isImgurGalleryId(scope.post.url)){
+                    scope.id = scope.post.url.match(/\/gallery\/([^/]+)/)[1];
+                } else if(PostType.isImgurImageId(scope.post.url)){
+                    scope.id = scope.post.url.match(/imgur.com\/([a-zA-Z0-9-]+)/)[1];
+                } else {
+                    console.error('No match for post url ' + scope.post.url);
+                    return false;
+                }
 
-                console.log('Gallery: ' + scope.post.title);
-                console.log('ID: ' + scope.gallery_id);
-
-                ImgurApi.getGallery(scope.gallery_id).success(function(response){
+                ImgurApi.getGallery(scope.id).success(function(response){
                     if(response.hasOwnProperty('status'))
                         if(response.status == 'GOOD' && response.images != undefined){
                             for(var i = 0; i < response.images.length; i++){
@@ -30,7 +33,6 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
                                     thumb: PostContent.getImgurThumb(response.images[i])
                                 });
                             }
-                            console.log(scope.gallery_images);
                             scope.template = '/templates/imgur_gallery.html';
                         }
                         else if(response.status == 'FAIL'){ /* TODO: do something here! */ }
