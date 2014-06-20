@@ -44,7 +44,7 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
                             scope.template = '/templates/external.html';
 
                 }).error(function(){
-                    console.error('Error retrieving gallery id ' + id);
+                    console.error('Error retrieving gallery id ' + scope.id);
                 });
 
             }

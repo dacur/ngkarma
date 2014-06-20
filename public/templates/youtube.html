@@ -1,1 +1,7 @@
-<div id="youtube-{{ post.id }}" data-yt-player="myPlayer" data-yt-vid="{{ video_id }}"></div>
+<div ng-controller="ContentCtrl">
+    <div id="yt-{{video_id}}">
+        <img src="/resources/images/yt-placeholder.png"
+             tooltip="Click to play"
+             ng-click="embedYouTube('yt-' + video_id,video_id)" />
+    </div>
+</div>

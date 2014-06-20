@@ -48,8 +48,5 @@
     <!--Script to allow Masonry to wait until all images have loaded before reacting.-->
     <script src="/bower_components/imagesloaded/imagesloaded.js"></script>
 
-    <!--AngularJS YouTube API directive-->
-    <script src="/scripts/youtube.js"></script>
-
 </body>
 </html>

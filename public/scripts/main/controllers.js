@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('MainApp',['wu.masonry','youtube-api','ui.bootstrap']);
+var app = angular.module('MainApp',['wu.masonry','ui.bootstrap']);
 
 // Main Page Controller.
 app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService, MasonryService, CookieService, PostContent)
@@ -262,7 +262,15 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 });
 
 app.controller('ContentCtrl',function($scope){
+
     $scope.toggleDescription = function(id){
         $('#' + id).slideToggle();
+    };
+
+    $scope.embedYouTube = function(id,video_id){
+        console.log('id: ' + id + ' video_id: ' + video_id);
+        $('#' + id).html(
+            '<iframe width="288" height="216" src="http://www.youtube.com/embed/' + video_id + '?autoplay=1" frameborder="0" allowfullscreen></iframe>'
+        );
     };
 });
