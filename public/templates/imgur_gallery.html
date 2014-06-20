@@ -1,5 +1,20 @@
-<div id="gallery_image" ng-repeat="gallery_image in gallery_images track by $index">
-    <a ng-href="{{ gallery_image.image }}" target="_blank">
-        <img class="contentImage" ng-src="{{ gallery_image.thumb }}" />
-    </a>
+<div ng-controller="ContentCtrl">
+    <div id="gallery_image" ng-repeat="gallery_image in gallery_images track by $index">
+        <div ng-show="gallery_images.length>1">
+            <div ng-show="gallery_image.description==null">
+                {{ gallery_image.title }}
+            </div>
+            <div ng-show="gallery_image.description!=null"
+                 tooltip="Click to toggle description"
+                 ng-click="toggleDescription('desc-' + gallery_image.id)">
+                {{ gallery_image.title }}
+            </div>
+            <div id="desc-{{ gallery_image.id }}" class="gallery-description">
+                {{ gallery_image.description }}
+            </div>
+        </div>
+        <a ng-href="{{ gallery_image.link }}" target="_blank">
+            <img class="contentImage" ng-src="{{ gallery_image.thumb }}" />
+        </a>
+    </div>
 </div>

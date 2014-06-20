@@ -37,11 +37,27 @@ class ImgurApiController extends BaseController{
                     {
                         if(property_exists($results->data,'images'))
                             foreach($results->data->images as $image)
-                                if(property_exists($image,'link'))
-                                    array_push($images,$image->link);
+                                if(property_exists($image,'id') && property_exists($image,'title') && property_exists($image,'description') && property_exists($image,'link'))
+                                    array_push(
+                                        $images,
+                                        array(
+                                            'id' => $image->id,
+                                            'title' => $image->title,
+                                            'description' => $image->description,
+                                            'link' => $image->link
+                                        )
+                                    );
                     }
-                    else if(property_exists($results->data,'link'))
-                        array_push($images,$results->data->link);
+                    else if(property_exists($results->data,'id') && property_exists($results->data,'title') && property_exists($results->data,'description') && property_exists($results->data,'link'))
+                        array_push(
+                            $images,
+                            array(
+                                'id' => $results->data->id,
+                                'title' => $results->data->title,
+                                'description' => $results->data->description,
+                                'link' => $results->data->link
+                            )
+                        );
 
 
 

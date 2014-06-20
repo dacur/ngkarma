@@ -260,3 +260,9 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     });
 
 });
+
+app.controller('ContentCtrl',function($scope){
+    $scope.toggleDescription = function(id){
+        $('#' + id).slideToggle();
+    };
+});

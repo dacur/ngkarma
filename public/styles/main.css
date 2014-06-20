@@ -122,6 +122,9 @@ hr {
       #brick-wall .brick .content-outer .contentImage {
         width: 288px;
         max-width: 288px; }
+      #brick-wall .brick .content-outer .gallery-description {
+        display: none;
+        padding: 1px; }
     #brick-wall .brick .info {
       border-top: 1px solid #aaaaaa;
       padding: 0 5px 0 5px; }

@@ -31,8 +31,11 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
                         if(response.status == 'GOOD' && response.images != undefined){
                             for(var i = 0; i < response.images.length; i++){
                                 scope.gallery_images.push({
-                                    image: response.images[i],
-                                    thumb: PostContent.getImgurThumb(response.images[i])
+                                    id: response.images[i].id,
+                                    title: response.images[i].title,
+                                    description: response.images[i].description,
+                                    link: response.images[i].link,
+                                    thumb: PostContent.getImgurThumb(response.images[i].link)
                                 });
                             }
                             scope.template = '/templates/imgur_gallery.html';
