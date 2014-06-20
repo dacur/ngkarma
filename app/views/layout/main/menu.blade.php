@@ -3,8 +3,10 @@
 
 <div id="menubar" ng-cloak>
     <div id="menu">
-        <div id="left" ng-click="getFrontPage()">
-            <i class="fa fa-reddit"></i> SpreddIt
+        <div id="left" ng-click="reload()">
+            <a id="logo" href="#">
+                <i class="fa fa-reddit"></i> SpreddIt
+            </a>
         </div>
         <div id="right">
             <div ng-show="!loggedIn">

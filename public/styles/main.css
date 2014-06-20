@@ -53,6 +53,8 @@ hr {
       width: auto;
       font-size: 22px;
       padding-top: 8px; }
+      #menubar #menu #left #logo {
+        text-shadow: 0 0 0.2em black; }
     #menubar #menu #right {
       float: right; }
       #menubar #menu #right #login-loading {

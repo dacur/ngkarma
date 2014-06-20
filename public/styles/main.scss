@@ -74,6 +74,9 @@ hr{
       width:auto;
       font-size: 22px;
       padding-top: 8px;
+      #logo{
+        text-shadow: 0 0 0.2em $black;
+      }
     }
     #right{
       float:right;
@@ -201,7 +204,7 @@ hr{
   }
 }
 
-// Override Bootstrap Buttons
+// Override Bootstrap CSS
 .btn-menu{
   background-color:$white;
   color:$very_dark_blue;

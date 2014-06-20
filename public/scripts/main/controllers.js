@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('MainApp',['wu.masonry','ui.bootstrap']);
+var app = angular.module('MainApp',['wu.masonry']);
 
 // Main Page Controller.
 app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService, MasonryService, CookieService, PostContent)
@@ -70,6 +70,10 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     // If no access token is available, just start loading posts.
     else getPosts();
 
+    // Reload page.
+    $scope.reload = function(){
+        location.reload();
+    };
     // Get content from specified subreddit.
     $scope.getSub = function(sub){
         // Remove leading 'r/' if present.
@@ -107,55 +111,6 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     // Get human-readable age of post.
     $scope.getPostAge = function(p){
         return PostContent.getPostAge(p);
-    };
-
-    // Vote on posts.
-    $scope.submitVote = function(id,likes,dir){
-        if(CookieService.getCookie("access_token") != null && CookieService.getCookie("access_token") != ""){
-
-            var up = $('#'+id+'_up');
-            var down = $('#'+id+'_down');
-
-            // Set vote status from Reddit data if not already set.
-            if(typeof $scope.votes[id] === "undefined")
-                $scope.votes[id] = likes;
-
-            // If upvoting now...
-            if(dir == 1){
-                if($scope.votes[id] == 1)
-                {
-                    $scope.votes[id] = 0;
-                    up.removeClass('up');
-                }
-                else
-                {
-                    $scope.votes[id] = 1;
-                    up.addClass('up');
-                    down.removeClass('down');
-                }
-            }
-
-            // If downvoting now..
-            else if(dir == -1){
-
-                if($scope.votes[id] == -1)
-                {
-                    $scope.votes[id] = 0;
-                    down.removeClass('down');
-                }
-                else
-                {
-                    $scope.votes[id] = -1;
-                    down.addClass('down');
-                    up.removeClass('up');
-                }
-            }
-
-            RedditApiService.submitVote($scope.access_token,id,$scope.votes[id]).then(function(response){
-                console.log(response)
-            });
-
-        }
     };
 
     // Get some posts!
@@ -242,6 +197,55 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         $scope.posts = [];
     }
 
+    // Vote on posts.
+    $scope.submitVote = function(id,likes,dir){
+        if(CookieService.getCookie("access_token") != null && CookieService.getCookie("access_token") != ""){
+
+            var up = $('#'+id+'_up');
+            var down = $('#'+id+'_down');
+
+            // Set vote status from Reddit data if not already set.
+            if(typeof $scope.votes[id] === "undefined")
+                $scope.votes[id] = likes;
+
+            // If upvoting now...
+            if(dir == 1){
+                if($scope.votes[id] == 1)
+                {
+                    $scope.votes[id] = 0;
+                    up.removeClass('up');
+                }
+                else
+                {
+                    $scope.votes[id] = 1;
+                    up.addClass('up');
+                    down.removeClass('down');
+                }
+            }
+
+            // If downvoting now..
+            else if(dir == -1){
+
+                if($scope.votes[id] == -1)
+                {
+                    $scope.votes[id] = 0;
+                    down.removeClass('down');
+                }
+                else
+                {
+                    $scope.votes[id] = -1;
+                    down.addClass('down');
+                    up.removeClass('up');
+                }
+            }
+
+            RedditApiService.submitVote($scope.access_token,id,$scope.votes[id]).then(function(response){
+                console.log(response)
+            });
+
+        }
+    };
+
     // Trigger when scrolling.
     win.scroll(function(){
         if(win.scrollTop() + 500 > doc.height() - win.height())
@@ -264,11 +268,10 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 app.controller('ContentCtrl',function($scope){
 
     $scope.toggleDescription = function(id){
-        $('#' + id).slideToggle();
+        $('#' + id).slideToggle(200);
     };
 
     $scope.embedYouTube = function(id,video_id){
-        console.log('id: ' + id + ' video_id: ' + video_id);
         $('#' + id).html(
             '<iframe width="288" height="216" src="http://www.youtube.com/embed/' + video_id + '?autoplay=1" frameborder="0" allowfullscreen></iframe>'
         );

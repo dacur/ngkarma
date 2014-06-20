@@ -30,9 +30,6 @@
     <!--AngularJS-->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 
-    <!--Angular-Bootstrap-UI-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
-
     <!--Main Angular Scripts-->
     <script src="/scripts/main/controllers.js"></script>
     <script src="/scripts/main/services.js"></script>
