@@ -2,7 +2,7 @@
 <html lang="en" ng-app="MainApp">
 <head>
     <meta charset="UTF-8">
-    <title>SpreddIt - Just another way to reddit</title>
+    <title>Wall Of Reddit</title>
 
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -12,6 +12,7 @@
 
     <!--Google Fonts-->
     <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Cedarville+Cursive' rel='stylesheet' type='text/css'>
 
     <!--Main Stylesheet-->
     <link rel="stylesheet" href="/styles/main.css">

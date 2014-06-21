@@ -4,9 +4,8 @@
 <div id="menubar" ng-cloak>
     <div id="menu">
         <div id="left" ng-click="reload()">
-            <a id="logo" href="#">
-                <i class="fa fa-reddit"></i> SpreddIt
-            </a>
+            <a id="logo" href="#"> <i class="fa fa-reddit"></i> Wall of Reddit</a>
+            <span id="slogan" class="hide_small">see reddit faster</span>
         </div>
         <div id="right">
             <div ng-show="!loggedIn">

@@ -15,7 +15,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     $scope.connecting = false;
     $scope.posts = [];
     $scope.votes = {};
-    $scope.currentSub = '';
+    $scope.currentSub = 'frontPage';
     $scope.submitButton = 'submit';
     $scope.sub = '';
 

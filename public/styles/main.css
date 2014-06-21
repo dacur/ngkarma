@@ -9,7 +9,7 @@ hr {
   margin-top: 10px; }
 
 @media (max-width: 500px) {
-  .hige_very_small {
+  .hide_very_small {
     display: none; } }
 @media (max-width: 650px) {
   .hide_small {
@@ -56,6 +56,9 @@ hr {
       padding-top: 8px; }
       #menubar #menu #left #logo {
         text-shadow: 0 0 0.2em black; }
+      #menubar #menu #left #slogan {
+        font-family: 'Cedarville Cursive', cursive;
+        font-style: italic; }
     #menubar #menu #right {
       float: right; }
       #menubar #menu #right #login-loading {
@@ -106,10 +109,10 @@ hr {
       border-radius: 4px 4px 0 0;
       padding: 0 3px 0 3px;
       color: white;
-      background-color: #557fb3;
-      background: linear-gradient(to bottom, #557fb3, #426693);
+      background-color: #b35555;
+      background: linear-gradient(to bottom, #b35555, #934242);
       overflow: hidden;
-      text-shadow: 0 0 0.2em #324e70; }
+      text-shadow: 0 0 0.2em #703232; }
       #brick-wall .brick .title .subLink {
         color: black; }
       #brick-wall .brick .title .titleLink {

@@ -14,7 +14,7 @@ hr{
 }
 
 @media (max-width: 500px) {
-  .hige_very_small {
+  .hide_very_small {
     display: none;
   }
 }
@@ -77,6 +77,10 @@ hr{
       padding-top: 8px;
       #logo{
         text-shadow: 0 0 0.2em $black;
+      }
+      #slogan{
+        font-family: 'Cedarville Cursive', cursive;
+        font-style:italic;
       }
     }
     #right{
