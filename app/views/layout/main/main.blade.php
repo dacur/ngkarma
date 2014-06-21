@@ -17,7 +17,7 @@
                     <button class="btn btn-default"
                             type="submit"
                             ng-disabled="loadingSub||sub==''||sub==undefined">
-                        submit
+                        @{{ submitButton }}
                     </button>
                 </span>
             </div>

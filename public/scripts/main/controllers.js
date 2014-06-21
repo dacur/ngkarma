@@ -15,7 +15,8 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     $scope.connecting = false;
     $scope.posts = [];
     $scope.votes = {};
-    $scope.currentSub = 'frontPage';
+    $scope.currentSub = '';
+    $scope.submitButton = 'submit';
     $scope.sub = '';
 
     // Initialize token values from Cookie data.
@@ -27,6 +28,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 
     // Set sub large display to match entered sub.
     $scope.$watch('sub',function(newVal,oldVal){
+        $scope.submitButton = 'submit';
         if($scope.sub==null||$scope.sub==''){
             $scope.subbigtext = '';
             return;
@@ -81,8 +83,12 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     $scope.reload = function(){
         location.reload();
     };
+
     // Get content from specified subreddit.
     $scope.getSub = function(sub){
+        if(/\+/.test(sub))
+            $scope.submitButton = 'more from these subs';
+        else $scope.submitButton = 'more from this sub';
         // Remove leading 'r/' if present.
         if(/^\/?r\//.test(sub))
             sub = sub.replace(/^\/?r\//g,'');
