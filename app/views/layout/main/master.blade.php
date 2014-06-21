@@ -45,5 +45,8 @@
     <!--Script to allow Masonry to wait until all images have loaded before reacting.-->
     <script src="/bower_components/imagesloaded/imagesloaded.js"></script>
 
+    <!--Bootstrap UI-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+
 </body>
 </html>

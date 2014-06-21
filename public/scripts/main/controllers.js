@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('MainApp',['wu.masonry']);
+var app = angular.module('MainApp',['wu.masonry','ui.bootstrap']);
 
 // Main Page Controller.
 app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService, MasonryService, CookieService, PostContent)
@@ -27,9 +27,14 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 
     // Set sub large display to match entered sub.
     $scope.$watch('sub',function(){
-        if(/^[^r]/.test($scope.sub) || /^r[^/]/.test($scope.sub))
-            $scope.subbigtext = 'r/' + $scope.sub;
-        else $scope.subbigtext = $scope.sub;
+        if($scope.sub==null||$scope.sub=='')
+            return;
+        var subs = $scope.sub.replace(/\s/g,'').split('+');
+        for(var i = 0;i<subs.length;i++)
+            if(!/^r\//.test(subs[i]))
+                subs[i] = 'r/' + subs[i];
+        $scope.subbigtext = subs.join(' + ');
+        $scope.subString = subs.join('+').replace(/r\//g,'');
     });
 
     // Update masonry layout regularly.
@@ -239,9 +244,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
                 }
             }
 
-            RedditApiService.submitVote($scope.access_token,id,$scope.votes[id]).then(function(response){
-                console.log(response)
-            });
+            RedditApiService.submitVote($scope.access_token,id,$scope.votes[id]);
 
         }
     };

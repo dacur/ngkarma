@@ -73,6 +73,10 @@ app.factory('PostContent',function()
             return url.replace(/(\.[a-zA-Z0-9]+)$/,"m$1");
         },
 
+        htmlEntities: function(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        },
+
         stripHttps: function(url){
             if(/^https:/i.test(url))
                 return url.replace(/^https/i,'http');

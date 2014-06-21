@@ -3,8 +3,8 @@
 <div class="container-fluid" id="sub-select">
     <div id="sub-bigtext" class="hide_medium">@{{ subbigtext }}</div>
     <div class="col-sm-5 col-xs-12">
-        <form ng-submit="getSub(sub)">
-            <label ng-show="!loadingSub">Enter a subreddit:</label>
+        <form ng-submit="getSub(subString)">
+            <label ng-show="!loadingSub">Enter a subreddit or multireddit (e.g. "pics+funny"):</label>
             <label ng-show="loadingSub">Loading...</label><br />
             <div class="input-group">
                 <input class="form-control" id="sub" type="text" ng-model="sub" placeholder="loading..." ng-disabled="loadingSub" />
@@ -28,10 +28,10 @@
         </div>
         <div class="info">
             <div class="left">
-                <strong><a href="http://reddit.com/u/@{{ post.data.author }}" target="_blank" >@{{ post.data.author }}</a></strong><br/>
+                <strong><a href="http://reddit.com/u/@{{ post.data.author }}" tooltip="View profile" target="_blank" >@{{ post.data.author }}</a></strong><br/>
                 Posted: @{{ getPostAge(post.data.created) }}<br/>
                 Comments:
-                <a href="http://www.reddit.com@{{ post.data.permalink }}" target="_blank">
+                <a href="http://www.reddit.com@{{ post.data.permalink }}" tooltip="View comments" target="_blank">
                     @{{ post.data.num_comments }}
                 </a>
             </div>
@@ -42,7 +42,7 @@
                     @{{ post.data.downs }}
                     <i ng-show="loggedIn" id="@{{ post.data.name }}_down" ng-class="{down: loggedIn && !post.data.likes && post.data.likes != null}" ng-click="submitVote(post.data.name,post.data.likes,-1)" class="fa fa-arrow-down"></i>
                 </div>
-                <div ng-show="!loggedIn" tooltip="Log in to vote!">
+                <div ng-show="!loggedIn" tooltip="Log in first!" ng-click="authorizeAccount()">
                     @{{ post.data.ups }}
                     <i class="fa fa-arrow-up"></i><br />
                     @{{ post.data.downs }}
