@@ -73,8 +73,16 @@ app.factory('PostContent',function()
             return url.replace(/(\.[a-zA-Z0-9]+)$/,"m$1");
         },
 
-        htmlEntities: function(str) {
-            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        htmlEntitiesEncode: function(str) {
+            if(str != null)
+                return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            return null;
+        },
+
+        htmlEntitiesDecode: function(str) {
+            if(str != null)
+                return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+            return null;
         },
 
         stripHttps: function(url){

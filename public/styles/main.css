@@ -1,4 +1,5 @@
 html, body {
+  background-image: url("/resources/images/snoo-bg.png");
   font-family: 'Ubuntu', sans-serif; }
   html a, html a:visited, html a:hover, html a:active, body a, body a:visited, body a:hover, body a:active {
     text-decoration: none;

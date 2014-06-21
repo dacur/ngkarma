@@ -26,9 +26,11 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     MainFactory.cycleSubs();
 
     // Set sub large display to match entered sub.
-    $scope.$watch('sub',function(){
-        if($scope.sub==null||$scope.sub=='')
+    $scope.$watch('sub',function(newVal,oldVal){
+        if($scope.sub==null||$scope.sub==''){
+            $scope.subbigtext = '';
             return;
+        }
         var subs = $scope.sub.replace(/\s/g,'').split('+');
         for(var i = 0;i<subs.length;i++)
             if(!/^r\//.test(subs[i]))

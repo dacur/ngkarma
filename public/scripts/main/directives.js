@@ -10,6 +10,8 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
         },
         link: function(scope){
 
+            scope.post.title = PostContent.htmlEntitiesDecode(scope.post.title);
+
             if(PostType.isImgurImage(scope.post.url)){
                 scope.post.large_thumbnail = PostContent.getImgurThumb(scope.post.url);
                 scope.template = '/templates/imgur_image.html';
@@ -33,8 +35,8 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
                             for(var i = 0; i < response.images.length; i++){
                                 scope.gallery_images.push({
                                     id: response.images[i].id,
-                                    title: PostContent.htmlEntities(response.images[i].title),
-                                    description: PostContent.htmlEntities(response.images[i].description),
+                                    title: PostContent.htmlEntitiesDecode(response.images[i].title),
+                                    description: PostContent.htmlEntitiesDecode(response.images[i].description),
                                     link: response.images[i].link,
                                     thumb: PostContent.getImgurThumb(response.images[i].link)
                                 });

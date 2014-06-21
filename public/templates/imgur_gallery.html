@@ -5,10 +5,11 @@
                 <span ng-show="gallery_image.title!=null">{{ gallery_image.title }}</span>
             </div>
             <div ng-show="gallery_image.description!=null">
+                <div ng-show="gallery_image.title==null">{{ gallery_image.description }}</div>
                 <div tooltip="Click to toggle description"
+                     ng-show="gallery_image.title!=null"
                      ng-click="toggleDescription('desc-' + gallery_image.id)">
-                    <div ng-show="gallery_image.title==null">[no title]</div>
-                    <div ng-show="gallery_image.title!=null">{{ gallery_image.title }}</div>
+                    <i>{{ gallery_image.title }}</i>
                 </div>
             </div>
             <div id="desc-{{ gallery_image.id }}" class="gallery-description">
