@@ -136,7 +136,7 @@ hr{
     border: 1px solid $black;
     border-radius: 5px;
     background-color:$white;
-    overflow:hidden;
+    //overflow:hidden;
     .title{
       border-radius: 4px 4px 0 0;
       padding: 0 3px 0 3px;
@@ -212,6 +212,9 @@ hr{
 .btn-menu:hover{
   background-color:$white;
   color:$very_dark_blue;
+}
+.tooltip-inner{
+  z-index:1000;
 }
 
 // Button zoom animation

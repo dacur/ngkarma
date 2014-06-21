@@ -100,8 +100,7 @@ hr {
     box-shadow: 0 0 1em #555555;
     border: 1px solid black;
     border-radius: 5px;
-    background-color: white;
-    overflow: hidden; }
+    background-color: white; }
     #brick-wall .brick .title {
       border-radius: 4px 4px 0 0;
       padding: 0 3px 0 3px;
@@ -159,6 +158,9 @@ hr {
 .btn-menu:hover {
   background-color: white;
   color: #000033; }
+
+.tooltip-inner {
+  z-index: 1000; }
 
 @-webkit-keyframes zoom {
   0% {

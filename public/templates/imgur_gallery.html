@@ -2,12 +2,14 @@
     <div id="gallery_image" ng-repeat="gallery_image in gallery_images track by $index">
         <div ng-show="gallery_images.length>1">
             <div ng-show="gallery_image.description==null">
-                {{ gallery_image.title }}
+                <span ng-show="gallery_image.title!=null">{{ gallery_image.title }}</span>
             </div>
-            <div ng-show="gallery_image.description!=null"
-                 tooltip="Click to toggle description"
-                 ng-click="toggleDescription('desc-' + gallery_image.id)">
-                {{ gallery_image.title }}
+            <div ng-show="gallery_image.description!=null">
+                <div tooltip="Click to toggle description"
+                     ng-click="toggleDescription('desc-' + gallery_image.id)">
+                    <div ng-show="gallery_image.title==null">[no title]</div>
+                    <div ng-show="gallery_image.title!=null">{{ gallery_image.title }}</div>
+                </div>
             </div>
             <div id="desc-{{ gallery_image.id }}" class="gallery-description">
                 {{ gallery_image.description }}
