@@ -107,7 +107,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         clearPosts();
 
         // Get new set of posts from Front page.
-        getPosts('frontPage');
+        getPosts();
     };
 
     // Scroll to top of page.
