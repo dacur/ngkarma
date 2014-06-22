@@ -286,6 +286,9 @@ hr{
       }
       .content{
         padding:3px;
+        max-height:350px;
+        overflow-x:hidden;
+        overflow-y:scroll;
       }
       .tech {
         text-align:center;

@@ -205,7 +205,10 @@ hr {
         background-color: #dddddd;
         background: linear-gradient(to bottom, #aaaaaa, white); }
       #about-page #brick-wall .brick .content {
-        padding: 3px; }
+        padding: 3px;
+        max-height: 350px;
+        overflow-x: hidden;
+        overflow-y: scroll; }
       #about-page #brick-wall .brick .tech {
         text-align: center;
         max-height: 250px;

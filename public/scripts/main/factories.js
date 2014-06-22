@@ -75,7 +75,7 @@ app.factory('PostContent',function()
         },
 
         getImgurThumb: function(url){
-            return url.replace(/(\.[a-zA-Z0-9]+)$/,"m$1");
+            return url.replace(/(\/[a-zA-Z0-9]+)(\.(jpg|jpeg|png))/,"$1m$2");
         },
 
         htmlEntitiesEncode: function(str) {
@@ -102,7 +102,7 @@ app.factory('PostType',function(){
     return {
         // Check if post is direct link to Imgur image.
         isImgurImage: function(url){
-            return /imgur\.com.*\.(jpg|jpeg|png)$/i.test(url);
+            return /imgur\.com.*\.(jpg|jpeg|png)/i.test(url);
         },
 
         // Check if post content is direct image link.
@@ -116,17 +116,17 @@ app.factory('PostType',function(){
 
         // Check if post is Imgur Gallery.
         isImgurGalleryId: function(url){
-            return /imgur.com\/gallery\/[a-zA-Z0-9-]+$/i.test(url);
+            return /imgur.com\/gallery\/[a-zA-Z0-9-]+/i.test(url);
         },
 
         // Check if post is Imgur Gallery.
         isImgurAlbumId: function(url){
-            return /imgur.com\/a\/[a-zA-Z0-9-]+$/i.test(url);
+            return /imgur.com\/a\/[a-zA-Z0-9-]+/i.test(url);
         },
 
         // Check if post is Imgur Image by ID.
         isImgurImageId: function(url){
-            return /imgur.com\/[a-zA-Z0-9-]+$/i.test(url);
+            return /imgur.com\/[a-zA-Z0-9-]+/i.test(url);
         },
 
         // Check if post is YouTube video link.

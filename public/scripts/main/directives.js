@@ -21,13 +21,13 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
                 scope.gallery_images = [];
                 if(PostType.isImgurGalleryId(scope.post.url)){
                     scope.type = 'gallery';
-                    scope.id = scope.post.url.match(/\/gallery\/([^/]+)/)[1];
+                    scope.id = scope.post.url.match(/\/gallery\/([a-zA-Z0-9]+)/)[1];
                 } else if(PostType.isImgurAlbumId(scope.post.url)){
                     scope.type = 'album';
-                    scope.id = scope.post.url.match(/\/a\/([^/]+)/)[1];
+                    scope.id = scope.post.url.match(/\/a\/([a-zA-Z0-9]+)/)[1];
                 } else if(PostType.isImgurImageId(scope.post.url)){
                     scope.type = 'image';
-                    scope.id = scope.post.url.match(/imgur.com\/([a-zA-Z0-9-]+)/)[1];
+                    scope.id = scope.post.url.match(/imgur\.com\/([a-zA-Z0-9-]+)/)[1];
                 } else {
                     console.error('No match for Imgur url ' + scope.post.url);
                     return false;

@@ -370,7 +370,7 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             type: 'paragraphs',
             title: 'Usage Tips',
             content: [
-                'The main page will load the default front page posts, but you can use the subreddit input field to specify a subreddit, or multireddit, to view. Try entering "funny+aww". :)',
+                'The main page will load posts from the default front page, but you can use the subreddit input field to specify a subreddit, or multireddit, to view. Separate your favorite subs with a plus, like "funny+aww", to view multiple subs at once.',
                 'If you haven\'t already, use the login button in the menu at the top of the page to use this service with your Reddit account. It\'s 100% safe and secure, and allows you to automatically view your own front page content, and also vote!',
                 $sce.trustAsHtml(
                     'If you aren\'t using <a href="http://hoverzoom.net/" target="_blank">HoverZoom</a>, I highly recommend installing it!'
@@ -405,7 +405,7 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             updates: [
                 {
                     date: '6/22/2014',
-                    details: 'Vimeo support added.'
+                    details: 'Vimeo support added. Imgur API support vastly improved.'
                 },
                 {
                     date: '6/21/2014',
@@ -455,6 +455,16 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
                     date: '6/1/2014',
                     details: 'Inital write. Posts retrieved with Reddit JSON API, displayed with Masonry.'
                 }
+            ]
+        },
+        {
+            type: 'paragraphs',
+            title: 'Coming Soon',
+            content: [
+                'Flickr support',
+                'External page screenshots',
+                'Display top comments',
+                'UI Options'
             ]
         },
         {
