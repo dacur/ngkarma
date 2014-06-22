@@ -68,7 +68,7 @@ app.service('MasonryService',function()
         var container = $('#brick-wall');
         container.masonry({
             columnWidth:  300,
-            itemSelector: '.item',
+            itemSelector: '.brick',
             isFitWidth: true
         });
     };

@@ -14,4 +14,10 @@ class RouteController extends BaseController{
     {
         return View::make('layout.redirect');
     }
+
+    function about()
+    {
+        $this->layout->menu = View::make('layout.main.menu');
+        $this->layout->main = View::make('layout.about');
+    }
 }

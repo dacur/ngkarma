@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('MainApp',['wu.masonry','ui.bootstrap']);
+var app = angular.module('MainApp',['wu.masonry','ui.bootstrap','ngSanitize']);
 
 // Main Page Controller.
 app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService, MasonryService, CookieService, PostContent)
@@ -15,7 +15,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     $scope.connecting = false;
     $scope.posts = [];
     $scope.votes = {};
-    $scope.currentSub = 'frontPage';
+    $scope.currentSub = '';
     $scope.submitButton = 'submit';
     $scope.sub = '';
 
@@ -176,7 +176,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 
                 // Set URL.
                 var url = "http://www.reddit.com/r/" + $scope.currentSub + "/hot.json";
-                if($scope.currentSub == "frontPage")
+                if($scope.currentSub == '')
                     url = "http://www.reddit.com/hot.json";
 
                 // Set 'after' value for request.
@@ -257,6 +257,13 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         }
     };
 
+    // Change location using ng-clicks.
+    $scope.goTo = function(loc){
+        if(loc==null||loc=='')
+            window.location.href = '/';
+        else window.location.href = loc;
+    };
+
     // Trigger when scrolling.
     win.scroll(function(){
         if(win.scrollTop() + 500 > doc.height() - win.height())
@@ -287,4 +294,97 @@ app.controller('ContentCtrl',function($scope){
             '<iframe width="288" height="216" src="http://www.youtube.com/embed/' + video_id + '?autoplay=1" frameborder="0" allowfullscreen></iframe>'
         );
     };
+});
+
+app.controller('AboutCtrl',function($scope, $sce, MasonryService){
+
+    // Create Masonry object.
+    MasonryService.createBrickWall();
+
+    $scope.bricks = [
+        {
+            title: 'Why',
+            content: [
+                'This project was started with the goal of creating a quick and easy way to view Reddit post content without the need to open a million browser tabs.'
+                ]
+        },
+        {
+            title: 'The Tech',
+            content: '',
+            tech: [
+                {
+                    id: 'laravel',
+                    icon: '/resources/images/laravel.png',
+                    label: 'Laravel 4',
+                    url: 'http://laravel.com/'
+                },
+                {
+                    id: 'jquery',
+                    icon: '/resources/images/jquery.png',
+                    label: 'jQuery',
+                    url: 'http://jquery.com/'
+                },
+                {
+                    id: 'angular',
+                    icon: '/resources/images/angular.png',
+                    label: 'AngularJS',
+                    url: 'https://angularjs.org/'
+                },
+                {
+                    id: 'masonry',
+                    icon: '/resources/images/masonry.png',
+                    label: 'Masonry',
+                    url: 'http://masonry.desandro.com/'
+                },
+                {
+                    id: 'bootstrap',
+                    icon: '/resources/images/bootstrap.png',
+                    label: 'Bootstrap CSS',
+                    url: 'http://getbootstrap.com/css/'
+                },
+                {
+                    id: 'fontawesome',
+                    icon: '/resources/images/fontawesome.png',
+                    label: 'Font Awesome Icons',
+                    url: 'http://fontawesome.io/icons/'
+                }
+            ]
+        },
+        {
+            title: 'Usage Tips',
+            content: [
+                'The main page will load the default front page posts, but you can use the subreddit input field to specify a subreddit, or multireddit, to view. Try entering "funny+aww". :)',
+                'If you haven\'t already, use the login button in the menu at the top of the page to use this service with your Reddit account. It\'s 100% safe and secure, and allows you to automatically view your own front page content, and also vote!',
+                $sce.trustAsHtml(
+                    'If you aren\'t using <a href="http://hoverzoom.net/" target="_blank">HoverZoom</a>, I highly recommend installing it!'
+                )
+            ]
+        },
+        {
+            title: 'APIs',
+            content: [
+                'The official Reddit API is used to get post data, and also to connect securely to your own Reddit account using OAuth and SSL.',
+                'Imgur\'s API is also used to help pull image and gallery/album data and thumbnails, making it easy to quickly view post content from Imgur without leaving the page.'
+            ]
+        },
+        {
+            title: 'Privacy Matters',
+            content: [
+                'When using your Reddit account with this site, none of your account details (not even your username) is made available to anyone but Reddit. Your browser only communicates with my servers to handle secure Reddit API interactions such as voting and retrieving post data from subreddits to which you\'re subscribed.'
+            ]
+        },
+        {
+            title: 'Bugs',
+            content: [
+                'Yes, there are some.'
+            ]
+        },
+        {
+            title: 'Inspiration',
+            content: [
+                'This project was inspired by <a href="http://pinterest.com/" target="_blank">Pinterest</a>, <a href="http://scrolldit.com/" target="_blank">Scrolldit</a> and several other services using tiled interfaces with infinite scroll functionality.'
+            ]
+        }
+    ];
+
 });

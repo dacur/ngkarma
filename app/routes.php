@@ -6,6 +6,9 @@ Route::get('/', 'RouteController@main');
 // Route to redirect URI handler, which checks the response from the Reddit access approval page.
 Route::get('/redirect', 'RouteController@redirect');
 
+//Route to the About page.
+Route::get('/about', 'RouteController@about');
+
 // Reddit-style subreddit route.
 //Route::get('/r/{s}', 'RouteController@main');
 

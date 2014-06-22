@@ -31,6 +31,9 @@
     <!--AngularJS-->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 
+    <!--Angular ngSanitize-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-sanitize.min.js"></script>
+
     <!--Main Angular Scripts-->
     <script src="/scripts/main/controllers.js"></script>
     <script src="/scripts/main/services.js"></script>
