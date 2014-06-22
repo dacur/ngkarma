@@ -69,6 +69,10 @@ app.factory('PostContent',function()
             return false;
         },
 
+        getVimeoVideoId: function(url){
+            return url.match(/\/([0-9]+)$/)[1];
+        },
+
         getImgurThumb: function(url){
             return url.replace(/(\.[a-zA-Z0-9]+)$/,"m$1");
         },
@@ -127,6 +131,11 @@ app.factory('PostType',function(){
         // Check if post is YouTube video link.
         isYouTube: function(dom, url){
             return (/youtube\.com/i.test(dom) && /watch/.test(url)) || /youtu\.be/.test(dom);
+        },
+
+        // Check if post is Vimeo link.
+        isVimeo: function(dom, url){
+            return (/vimeo\.com/i.test(dom) && /\/[0-9]+$/.test(url));
         }
     }
 });

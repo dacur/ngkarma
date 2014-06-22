@@ -294,6 +294,13 @@ app.controller('ContentCtrl',function($scope){
             '<iframe width="288" height="216" src="http://www.youtube.com/embed/' + video_id + '?autoplay=1" frameborder="0" allowfullscreen></iframe>'
         );
     };
+
+    $scope.embedVimeo = function(id,video_id){
+        $('#' + id).html(
+            '<iframe width="288" height="216" src="http://player.vimeo.com/video/' + video_id + '?color=a8a8a8&autoplay=1" frameborder="0"></iframe>'
+        );
+    };
+
 });
 
 app.controller('AboutCtrl',function($scope, $sce, MasonryService){

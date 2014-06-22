@@ -16,6 +16,7 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
                 scope.post.large_thumbnail = PostContent.getImgurThumb(scope.post.url);
                 scope.template = '/templates/imgur_image.html';
             }
+
             else if(PostType.isImgur(scope.post.domain)){
                 scope.gallery_images = [];
                 if(PostType.isImgurGalleryId(scope.post.url)){
@@ -51,17 +52,27 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
                 });
 
             }
+
             else if(PostType.isImage(scope.post.url)){
                 scope.template = '/templates/image.html';
             }
+
             else if(PostType.isYouTube(scope.post.domain,scope.post.url)){
                 scope.video_id = PostContent.getYouTubeVideoId(scope.post.domain,scope.post.url);
                 scope.template = '/templates/youtube.html';
             }
+
+            else if(PostType.isVimeo(scope.post.domain,scope.post.url)){
+                scope.video_id = PostContent.getVimeoVideoId(scope.post.url);
+                scope.template = '/templates/vimeo.html';
+            }
+
             else if(scope.post.is_self){
                 scope.template = '/templates/self.html';
             }
+
             else scope.template = '/templates/external.html';
+
         },
         template: '<div ng-include="template"></div>'
     }
