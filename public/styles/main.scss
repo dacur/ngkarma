@@ -333,6 +333,13 @@ hr{
           }
         }
       }
+
+      .changelog{
+        max-height:250px;
+        overflow-x:hidden;
+        overflow-y:scroll;
+        padding:3px;
+      }
     }
   }
 }

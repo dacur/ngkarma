@@ -310,14 +310,15 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
 
     $scope.bricks = [
         {
+            type: 'paragraphs',
             title: 'Why',
             content: [
                 'This project was started with the goal of creating a quick and easy way to view Reddit post content without the need to open a million browser tabs.'
                 ]
         },
         {
+            type: 'tech',
             title: 'The Tech',
-            content: '',
             tech: [
                 {
                     id: 'laravel',
@@ -358,6 +359,7 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             ]
         },
         {
+            type: 'paragraphs',
             title: 'Usage Tips',
             content: [
                 'The main page will load the default front page posts, but you can use the subreddit input field to specify a subreddit, or multireddit, to view. Try entering "funny+aww". :)',
@@ -368,6 +370,7 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             ]
         },
         {
+            type: 'paragraphs',
             title: 'APIs',
             content: [
                 'The official Reddit API is used to get post data, and also to connect securely to your own Reddit account using OAuth and SSL.',
@@ -375,18 +378,79 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             ]
         },
         {
-            title: 'Privacy Matters',
+            type: 'paragraphs',
+            title: $sce.trustAsHtml('<i class="fa fa-lock"></i> Privacy Matters'),
             content: [
                 'When using your Reddit account with this site, none of your account details (not even your username) is made available to anyone but Reddit. Your browser only communicates with my servers to handle secure Reddit API interactions such as voting and retrieving post data from subreddits to which you\'re subscribed.'
             ]
         },
         {
+            type: 'paragraphs',
             title: 'Bugs',
             content: [
                 'Yes, there are some.'
             ]
         },
         {
+            type: 'changelog',
+            title: 'Major Changes',
+            updates: [
+                {
+                    date: '6/22/2014',
+                    details: 'Vimeo support added.'
+                },
+                {
+                    date: '6/21/2014',
+                    details: 'Bootstrap tooltips added to make UI usage clearer.'
+                },
+                {
+                    date: '6/20/2014',
+                    details: 'YouTube support added.'
+                },
+                {
+                    date: '6/19/2014',
+                    details: 'Imgur gallery support working properly. Image titles and descriptions displayed when available.'
+                },
+                {
+                    date: '6/18/2014',
+                    details: 'Tons of UI changes. Voting logic revisited, votes can now be changed/cancelled.'
+                },
+                {
+                    date: '6/16/2014',
+                    details: 'Code cleanup and complete refactor of all client-side code. Much cleaner and faster.'
+                },
+                {
+                    date: '6/15/2014',
+                    details: 'Imgur API support added.'
+                },
+                {
+                    date: '6/14/2014',
+                    details: 'Content type and display template now determined using customer Angular directive instead of Angular conditions in a global template.'
+                },
+                {
+                    date: '6/9/2014',
+                    details: 'Basic voting logic added.'
+                },
+                {
+                    date: '6/7/2014',
+                    details: 'Reddit user account access implemented securely using OAuth. Much faster. Cookies enabled.'
+                },
+                {
+                    date: '6/6/2014',
+                    details: 'Infinite scroll logic added. Next page data returned successfully for subreddits and multireddits.'
+                },
+                {
+                    date: '6/3/2014',
+                    details: 'Basic Reddit login mechanism added. Insecure, but works for testing. Posts retrieved server-side.'
+                },
+                {
+                    date: '6/1/2014',
+                    details: 'Inital write. Posts retrieved with Reddit JSON API, displayed with Masonry.'
+                }
+            ]
+        },
+        {
+            type: 'paragraphs',
             title: 'Inspiration',
             content: [
                 'This project was inspired by <a href="http://pinterest.com/" target="_blank">Pinterest</a>, <a href="http://scrolldit.com/" target="_blank">Scrolldit</a> and several other services using tiled interfaces with infinite scroll functionality.'

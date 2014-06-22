@@ -11,15 +11,15 @@
     </div>
     <div id="brick-wall" masonry>
         <div class="brick masonry-brick" ng-repeat="brick in bricks">
-            <div class="title">
+            <div class="title" ng-bind-html="brick.title">
                 @{{ brick.title }}
             </div>
-            <div ng-if="brick.content!=null" class="content">
+            <div ng-if="brick.type == 'paragraphs' " class="content">
                 <p ng-repeat="paragraph in brick.content" ng-bind-html="paragraph">
                     @{{ paragraph }}
                 </p>
             </div>
-            <div ng-if="brick.tech!=null" class="tech">
+            <div ng-if="brick.type == 'tech' " class="tech">
                 <div ng-repeat="item in brick.tech">
                     <div id="@{{ item.id }}">
                         <a href="@{{ item.url }}" target="_blank">
@@ -29,7 +29,14 @@
                             @{{ item.label }}
                         </a>
                     </div>
-                    <hr />
+                    <hr ng-show="$index+1 != brick.tech.length" />
+                </div>
+            </div>
+            <div ng-if="brick.type == 'changelog' " class="changelog">
+                <div ng-repeat="update in brick.updates">
+                    <h4>@{{ update.date }}</h4>
+                    <p>@{{ update.details }}</p>
+                    <hr ng-show="$index+1 != brick.updates.length" />
                 </div>
             </div>
         </div>

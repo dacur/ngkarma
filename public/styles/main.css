@@ -228,6 +228,11 @@ hr {
           color: #5c3f87; }
         #about-page #brick-wall .brick .tech #fontawesome a, #about-page #brick-wall .brick .tech #fontawesome a:hover {
           color: #00a072; }
+      #about-page #brick-wall .brick .changelog {
+        max-height: 250px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        padding: 3px; }
 
 .btn-menu {
   background-color: white;
