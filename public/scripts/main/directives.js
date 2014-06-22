@@ -20,17 +20,20 @@ app.directive('brickContent', ['PostContent', 'PostType', 'ImgurApi', function(P
             else if(PostType.isImgur(scope.post.domain)){
                 scope.gallery_images = [];
                 if(PostType.isImgurGalleryId(scope.post.url)){
+                    scope.type = 'gallery';
                     scope.id = scope.post.url.match(/\/gallery\/([^/]+)/)[1];
                 } else if(PostType.isImgurAlbumId(scope.post.url)){
+                    scope.type = 'album';
                     scope.id = scope.post.url.match(/\/a\/([^/]+)/)[1];
                 } else if(PostType.isImgurImageId(scope.post.url)){
+                    scope.type = 'image';
                     scope.id = scope.post.url.match(/imgur.com\/([a-zA-Z0-9-]+)/)[1];
                 } else {
                     console.error('No match for Imgur url ' + scope.post.url);
                     return false;
                 }
 
-                ImgurApi.getGallery(scope.id).success(function(response){
+                ImgurApi.getImages(scope.id,scope.type).success(function(response){
                     if(response.hasOwnProperty('status'))
                         if(response.status == 'GOOD' && response.images != undefined){
                             for(var i = 0; i < response.images.length; i++){

@@ -18,12 +18,13 @@ app.factory('MainFactory',function(DefaultSubService)
 app.factory('ImgurApi',function($http)
 {
     return {
-        getGallery: function(id){
+        getImages: function(id,type){
             return $http({
                 method: 'GET',
-                url: '/api/imgur/gallery',
+                url: '/api/imgur/images',
                 params: {
-                    id: id
+                    id: id,
+                    type: type
                 }
             });
         }
@@ -113,19 +114,19 @@ app.factory('PostType',function(){
             return dom == 'imgur.com';
         },
 
-        // Check if post is Imgur Image by ID.
-        isImgurImageId: function(url){
-            return /imgur.com\/[a-zA-Z0-9-]+$/i.test(url);
-        },
-
         // Check if post is Imgur Gallery.
         isImgurGalleryId: function(url){
-            return /imgur.com\/gallery/i.test(url);
+            return /imgur.com\/gallery\/[a-zA-Z0-9-]+$/i.test(url);
         },
 
         // Check if post is Imgur Gallery.
         isImgurAlbumId: function(url){
-            return /imgur.com\/a\//i.test(url);
+            return /imgur.com\/a\/[a-zA-Z0-9-]+$/i.test(url);
+        },
+
+        // Check if post is Imgur Image by ID.
+        isImgurImageId: function(url){
+            return /imgur.com\/[a-zA-Z0-9-]+$/i.test(url);
         },
 
         // Check if post is YouTube video link.

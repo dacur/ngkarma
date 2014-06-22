@@ -86,12 +86,15 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 
     // Get content from specified subreddit.
     $scope.getSub = function(sub){
+
         if(/\+/.test(sub))
             $scope.submitButton = 'more from these subs';
         else $scope.submitButton = 'more from this sub';
+
         // Remove leading 'r/' if present.
         if(/^\/?r\//.test(sub))
             sub = sub.replace(/^\/?r\//g,'');
+
         getPosts(sub);
     };
 
@@ -158,16 +161,21 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
                     $scope.gettingPage = false;
 
                     // Add new posts to posts array.
-                    for(var i in response.data.data.children)
-                        $scope.posts.push(response.data.data.children[i]);
+                    if(response.data.hasOwnProperty('data') && response.data.data.hasOwnProperty('children'))
+                    {
+                        for(var i in response.data.data.children)
+                            $scope.posts.push(response.data.data.children[i]);
 
-                    // Set new 'after' value for next page.
-                    $scope.after = response.data.data.after;
+                        // Set new 'after' value for next page.
+                        $scope.after = response.data.data.after;
 
-                    // Apply scope changes.
-                    setTimeout(function(){
-                        $scope.$apply();
-                    },0);
+                        // Apply scope changes.
+                        setTimeout(function(){
+                            $scope.$apply();
+                        },0);
+                    }
+                    else alert('Whoops! Failed to load "' + $scope.currentSub + '". Try again?');
+
                 });
             }
 
