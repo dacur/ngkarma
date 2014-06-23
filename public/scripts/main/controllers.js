@@ -200,8 +200,9 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
                     $scope.gettingPage = false;
 
                     // Add new posts to posts array.
-                    for(var i in response.data.children)
-                        $scope.posts.push(response.data.children[i]);
+                    if(response.hasOwnProperty('data') && response.data.hasOwnProperty('children'))
+                        for(var i in response.data.children)
+                            $scope.posts.push(response.data.children[i]);
 
                     // Set new 'after' value for next page.
                     $scope.after = response.data.after;
@@ -323,6 +324,15 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             content: [
                 'This project was started with the goal of creating a quick and easy way to view Reddit post content without the need to open a million browser tabs.'
                 ]
+        },
+        {
+            type: 'paragraphs',
+            title: 'Disclaimer',
+            content: [
+                $sce.trustAsHtml(
+                    'I am in no way affiliated with Reddit. This is to say that this app <b>is not made or maintained by Reddit</b>.'
+                )
+            ]
         },
         {
             type: 'tech',

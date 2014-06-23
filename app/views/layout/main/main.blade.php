@@ -89,7 +89,7 @@
                         @{{ post.data.downs }}
                         <i class="fa fa-arrow-down"></i>
                     </div>
-                    Points: @{{ post.data.score }}
+                    @{{ post.data.score }} points
                 </div>
             </div>
         </div>

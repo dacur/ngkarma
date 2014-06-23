@@ -5,7 +5,7 @@
     <div id="menu">
         <div id="left">
             <span ng-click="goTo('about')"><i id="logo" class="fa fa-reddit"></i></span>
-            <span id="title" ng-click="goTo()">Wall of Reddit</span>
+            <span id="title" ng-click="goTo()">ngReddit</span>
             <span id="slogan" class="hide_small">see reddit faster</span>
         </div>
         <div id="right">

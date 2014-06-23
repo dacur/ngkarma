@@ -10,7 +10,7 @@ app.service('RedditApiService',function($http, CookieService)
         var client_id = "dKiLKnbGc8ufQw";
         var response_type = "code";
         var state = Math.random().toString(36).match(/0\.(.*)/)[1];
-        var redirect_uri = "http://spreddit.multifarious.org:7777/redirect";
+        var redirect_uri = "http://ngreddit.multifarious.org:7777/redirect";
         var duration = "permanent";
         var scope = "identity,mysubreddits,read,vote";
 
