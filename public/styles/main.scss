@@ -253,6 +253,10 @@ hr{
     color:$light_red;
   }
 
+  hr{
+    margin: 10px 0;
+  }
+
   #heading{
     text-align:center;
     color:$very_light_grey;
@@ -262,6 +266,11 @@ hr{
     &.small{
       font-size:25px;
     }
+  }
+
+  #disclaimer{
+    padding:0 10px;
+    text-align:center;
   }
 
   #brick-wall{
@@ -299,10 +308,6 @@ hr{
         img{
           max-height: 90px;
           max-width: 250px;
-        }
-
-        hr{
-          margin: 10px 0;
         }
 
         #laravel{

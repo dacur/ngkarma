@@ -326,15 +326,6 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
                 ]
         },
         {
-            type: 'paragraphs',
-            title: 'Disclaimer',
-            content: [
-                $sce.trustAsHtml(
-                    'I am in no way affiliated with Reddit. This is to say that this app <b>is not made or maintained by Reddit</b>.'
-                )
-            ]
-        },
-        {
             type: 'tech',
             title: 'The Tech',
             tech: [
@@ -474,7 +465,8 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
                 'Flickr support',
                 'External page screenshots',
                 'Display top comments',
-                'UI Options'
+                'UI Options',
+                'Performance improvements'
             ]
         },
         {

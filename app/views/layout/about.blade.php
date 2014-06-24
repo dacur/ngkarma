@@ -9,6 +9,9 @@
         <i class="fa fa-chevron-circle-left" ng-click="goTo()"></i>
         About the Project
     </div>
+    <hr />
+    <div id="disclaimer">I am in no way affiliated with Reddit. This is to say that this app <b>is not made or maintained by Reddit</b>.</div>
+    <hr />
     <div id="brick-wall" masonry>
         <div class="brick masonry-brick" ng-repeat="brick in bricks">
             <div class="title" ng-bind-html="brick.title">

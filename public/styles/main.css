@@ -181,6 +181,8 @@ hr {
     transition: .5s; }
   #about-page a:hover {
     color: #ff5555; }
+  #about-page hr {
+    margin: 10px 0; }
   #about-page #heading {
     text-align: center;
     color: #dddddd; }
@@ -188,6 +190,9 @@ hr {
       font-size: 50px; }
     #about-page #heading.small {
       font-size: 25px; }
+  #about-page #disclaimer {
+    padding: 0 10px;
+    text-align: center; }
   #about-page #brick-wall {
     margin: 0 auto; }
     #about-page #brick-wall .brick {
@@ -217,8 +222,6 @@ hr {
         #about-page #brick-wall .brick .tech img {
           max-height: 90px;
           max-width: 250px; }
-        #about-page #brick-wall .brick .tech hr {
-          margin: 10px 0; }
         #about-page #brick-wall .brick .tech #laravel a, #about-page #brick-wall .brick .tech #laravel a:hover {
           color: #fd4f2f; }
         #about-page #brick-wall .brick .tech #jquery a, #about-page #brick-wall .brick .tech #jquery a:hover {
