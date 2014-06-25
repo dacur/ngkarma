@@ -111,7 +111,7 @@ app.factory('PostType',function(){
         },
 
         isImgur: function(dom){
-            return dom == 'imgur.com';
+            return /\.?imgur.com$/.test(dom);
         },
 
         // Check if post is Imgur Gallery.

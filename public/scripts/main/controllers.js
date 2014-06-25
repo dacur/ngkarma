@@ -14,6 +14,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     $scope.loggedIn = false;
     $scope.connecting = false;
     $scope.posts = [];
+    $scope.previousPosts = [];
     $scope.votes = {};
     $scope.currentSub = '';
     $scope.submitButton = 'submit';
@@ -161,10 +162,11 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
                     $scope.gettingPage = false;
 
                     // Add new posts to posts array.
-                    if(response.data.hasOwnProperty('data') && response.data.data.hasOwnProperty('children'))
+                    if(response.hasOwnProperty('data') && response.data.hasOwnProperty('data')
+                        && response.data.data.hasOwnProperty('children'))
                     {
-                        for(var i in response.data.data.children)
-                            $scope.posts.push(response.data.data.children[i]);
+                        // Push new posts.
+                        pushPosts(response.data.data.children);
 
                         // Set new 'after' value for next page.
                         $scope.after = response.data.data.after;
@@ -193,30 +195,56 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
                 };
 
                 // Get new posts via JSON API.
-                $.getJSON(url, params, function(response){
-
+                $.getJSON(url, params, function(response)
+                {
                     // Unset loading states.
                     $scope.loadingSub = false;
                     $scope.gettingPage = false;
 
                     // Add new posts to posts array.
                     if(response.hasOwnProperty('data') && response.data.hasOwnProperty('children'))
-                        for(var i in response.data.children)
-                            $scope.posts.push(response.data.children[i]);
+                    {
+                        // Push new posts.
+                        pushPosts(response.data.children);
 
-                    // Set new 'after' value for next page.
-                    $scope.after = response.data.after;
+                        // Set new 'after' value for next page.
+                        $scope.after = response.data.after;
 
-                    // Apply scope changes.
-                    $scope.$apply();
+                        // Apply scope changes.
+                        $scope.$apply();
+                    }
                 });
             }
         }
     }
 
-    // Clear posts.
+    // Push new posts to main posts array.
+    function pushPosts(newPosts){
+        var addedPostNames = [];
+
+        // Loop through new posts. If new post has a post ID, check the previous post IDs and add if unique.
+        for(var i in newPosts)
+            if(newPosts[i].hasOwnProperty('data') && newPosts[i].data.hasOwnProperty('name'))
+                if(!inArray(newPosts[i].data.name,$scope.previousPosts)){
+                    $scope.posts.push(newPosts[i]);
+                    addedPostNames.push(newPosts[i].name);
+                }
+        // Remember the names of these added posts for next time.
+        $scope.previousPostNames = addedPostNames;
+    }
+
+    // Clear posts in main posts array.
     function clearPosts(){
         $scope.posts = [];
+    }
+
+    // Return true if array contains value.
+    function inArray(value,array){
+        for(var i in array){
+            if(array[i] == value)
+                return true;
+        }
+        return false;
     }
 
     // Vote on posts.
@@ -404,6 +432,10 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             type: 'changelog',
             title: 'Major Changes',
             updates: [
+                {
+                    date: '6/25/2014',
+                    details: 'Improved duplicate post detection logic between pages.'
+                },
                 {
                     date: '6/22/2014',
                     details: 'Vimeo support added. Imgur API support vastly improved.'
