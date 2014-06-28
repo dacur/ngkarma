@@ -12,8 +12,9 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 
     // Set theme if cookie contains one.
     var theme = CookieService.getCookie('theme');
-    if(theme != null && theme != '')
+    if(theme != undefined && theme != null && theme != '')
         setTheme(theme);
+    else setTheme('default');
 
     // Set state of a few scope vars.
     $scope.loggedIn = false;
