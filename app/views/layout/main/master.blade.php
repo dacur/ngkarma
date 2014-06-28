@@ -43,11 +43,11 @@
     <!--Masonry-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>
 
-    <!--Script to make Angular and Masonry function together-->
-    <script src="/bower_components/angular-masonry/angular-masonry.js"></script>
+    <!--Angular-Masonry Compatibility Library-->
+    <script src="/bower_components_included/angular-masonry/angular-masonry.js"></script>
 
-    <!--Script to allow Masonry to wait until all images have loaded before reacting.-->
-    <script src="/bower_components/imagesloaded/imagesloaded.js"></script>
+    <!--ImagesLoaded Library.-->
+    <script src="/bower_components_included/imagesloaded/imagesloaded.js"></script>
 
     <!--Bootstrap UI-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
