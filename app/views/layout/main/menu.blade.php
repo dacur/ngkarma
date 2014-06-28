@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div id="welcome" ng-show="loggedIn">
-                Welcome, @{{user.name}}! <i class="fa fa-power-off" ng-click="deauthorizeAccount()"></i>
+                Welcome, @{{user.name}}! <span id="logout"><i class="fa fa-power-off" ng-click="deauthorizeAccount()"></i></span>
             </div>
         </div>
     </div>

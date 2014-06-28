@@ -84,8 +84,6 @@ hr {
         -webkit-animation-name: glow-white;
         -webkit-animation-duration: 10s;
         -webkit-animation-iteration-count: infinite; }
-        #menubar #menu #left #logo:hover {
-          text-shadow: 0 0 1em white; }
       #menubar #menu #left #slogan {
         font-family: 'Cedarville Cursive', cursive;
         font-style: italic; }
@@ -97,6 +95,8 @@ hr {
         padding: 7px 7px 0 0; }
       #menubar #menu #right #welcome {
         text-align: right; }
+        #menubar #menu #right #welcome #logout:hover {
+          text-shadow: 0 0 1em white; }
       #menubar #menu #right .btn-connect {
         margin: 5px 0px;
         padding: 5px 10px;

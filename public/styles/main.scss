@@ -118,9 +118,6 @@ hr{
         -webkit-animation-name: glow-white;
         -webkit-animation-duration: 10s;
         -webkit-animation-iteration-count: infinite;
-        &:hover{
-          text-shadow: 0 0 1em $white;
-        }
       }
       #slogan{
         font-family: 'Cedarville Cursive', cursive;
@@ -137,6 +134,11 @@ hr{
       }
       #welcome{
         text-align:right;
+        #logout{
+          &:hover{
+            text-shadow: 0 0 1em $white;
+          }
+        }
       }
       .btn-connect{
         margin: 5px 0px;
