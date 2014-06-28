@@ -108,7 +108,10 @@
             </div>
         </div>
     </div>
-    <div id="go-to-top" ng-show="scrolled" ng-click="goToTop()">
+    <div class="bottom-tab about-this-project" ng-click="goTo('about')">
+        <i class="fa fa-question"></i> About this project
+    </div>
+    <div class="bottom-tab go-to-top" ng-show="scrolled" ng-click="goToTop()">
         <i class="fa fa-chevron-up"></i> Scroll to top!
         <img src="/resources/images/loadingSub.gif" ng-show="loadingSub" />
     </div>

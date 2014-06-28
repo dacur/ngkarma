@@ -104,6 +104,9 @@ hr{
       padding-top: 8px;
       #title{
         padding-left:20px;
+        &:hover {
+          cursor:pointer;
+        }
       }
       #logo{
         position: absolute;
@@ -118,6 +121,9 @@ hr{
         -webkit-animation-name: glow-white;
         -webkit-animation-duration: 10s;
         -webkit-animation-iteration-count: infinite;
+        &:hover {
+          cursor:pointer;
+        }
       }
       #slogan{
         font-family: 'Cedarville Cursive', cursive;
@@ -136,6 +142,7 @@ hr{
         text-align:right;
         #logout{
           &:hover{
+            cursor:pointer;
             text-shadow: 0 0 1em $white;
           }
         }
@@ -255,20 +262,28 @@ hr{
     }
   }
 
-  #go-to-top{
+  .bottom-tab{
     position:fixed;
     height:32px;
     width:auto;
     bottom:-2px;
-    right:30px;
     padding:5px;
     background-color:$black;
     color:$white;
     border: 1px solid $white;
     border-bottom:0px;
     border-radius:5px 5px 0 0;
-    img{
-      padding:3px;
+    &:hover {
+      cursor:pointer;
+    }
+    &.go-to-top{
+      right:30px;
+      img{
+        padding:3px;
+      }
+    }
+    &.about-this-project{
+      left:30px;
     }
   }
 }
@@ -329,7 +344,7 @@ hr{
       }
       .content{
         padding:3px;
-        max-height:350px;
+        max-height:250px;
         overflow-x:hidden;
         overflow-y:scroll;
       }
