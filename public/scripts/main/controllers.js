@@ -327,13 +327,15 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     // Increase gutter width.
     $scope.increaseGutterWidth = function(){
         var gutter = document.querySelector('.gutter-sizer');
-        setGutterWidth(gutter.offsetWidth + 4);
+        if(gutter != null && gutter.hasOwnProperty('offsetWidth'))
+            setGutterWidth(gutter.offsetWidth + 4);
     };
 
     // Increase gutter width.
     $scope.decreaseGutterWidth = function(){
         var gutter = document.querySelector('.gutter-sizer');
-        setGutterWidth(gutter.offsetWidth - 4);
+        if(gutter != null && gutter.hasOwnProperty('offsetWidth'))
+            setGutterWidth(gutter.offsetWidth - 4);
     };
 
     // Trigger when scrolling.
@@ -363,8 +365,10 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         if(width < 0)
             width = 0;
         var gutter = document.querySelector('.gutter-sizer');
-        gutter.style.width = width + "px";
-        CookieService.setCookie('gutter-width',width,30);
+        if(gutter != null && gutter.hasOwnProperty('style') && gutter.style.hasOwnProperty('width')){
+            gutter.style.width = width + "px";
+            CookieService.setCookie('gutter-width',width,30);
+        }
     }
 
 });
