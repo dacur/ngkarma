@@ -2,7 +2,7 @@
 <html lang="en" ng-app="MainApp">
 <head>
     <meta charset="UTF-8">
-    <title>ngReddit</title>
+    <title>ngKarma</title>
 
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">

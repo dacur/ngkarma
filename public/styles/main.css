@@ -1,5 +1,5 @@
 html, body {
-  background-image: url("/resources/images/snoo-bg.png");
+  background-image: url("/resources/images/background.png");
   font-family: 'Ubuntu', sans-serif; }
   html a, html a:visited, html a:hover, html a:active, body a, body a:visited, body a:hover, body a:active {
     text-decoration: none;
@@ -69,8 +69,21 @@ hr {
       width: auto;
       font-size: 22px;
       padding-top: 8px; }
+      #menubar #menu #left #title {
+        padding-left: 20px; }
       #menubar #menu #left #logo {
-        text-shadow: 0 0 0.2em black; }
+        position: absolute;
+        left: 0px;
+        top: 5px;
+        font-size: 34px;
+        text-shadow: 0 0 0.2em black;
+        -webkit-transform: rotate(15deg);
+        -moz-transform: rotate(15deg);
+        -ms-transform: rotate(15deg);
+        -o-transform: rotate(15deg);
+        -webkit-animation-name: glow-white;
+        -webkit-animation-duration: 10s;
+        -webkit-animation-iteration-count: infinite; }
         #menubar #menu #left #logo:hover {
           text-shadow: 0 0 1em white; }
       #menubar #menu #left #slogan {
@@ -149,12 +162,22 @@ hr {
     #main-page #brick-wall .brick .info {
       border-top: 1px solid #aaaaaa;
       padding: 0 5px 0 5px; }
-      #main-page #brick-wall .brick .info .left {
+      #main-page #brick-wall .brick .info .top .left {
         float: left;
         text-align: left; }
-      #main-page #brick-wall .brick .info .right {
+      #main-page #brick-wall .brick .info .top .right {
         float: right;
         text-align: right; }
+        #main-page #brick-wall .brick .info .top .right .vote-box .points {
+          float: left;
+          text-align: right;
+          padding: 10px 4px 0 0; }
+        #main-page #brick-wall .brick .info .top .right .vote-box .arrows {
+          float: right; }
+      #main-page #brick-wall .brick .info .bottom {
+        text-align: center;
+        font-style: italic;
+        color: #dddddd; }
 #main-page #go-to-top {
   position: fixed;
   height: 32px;
@@ -260,3 +283,15 @@ hr {
 
   100% {
     zoom: 100%; } }
+@-webkit-keyframes glow-white {
+  0% {
+    text-shadow: 0 0 9px #000000; }
+
+  10% {
+    text-shadow: 0 0 18px #ffffff; }
+
+  20% {
+    text-shadow: 0 0 9px #000000; }
+
+  100% {
+    text-shadow: 0 0 9px #000000; } }

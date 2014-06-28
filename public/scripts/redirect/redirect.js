@@ -11,7 +11,7 @@ app.controller('RedirectCtrl',function($scope, $http, ApiService, CookieService)
         if(error != null && error != "")
             $scope.message = "Error accessing your account. Sorry. :(";
         else if(state != CookieService.getCookie('state'))
-            $scope.message = "Authentication error. Oops. Please refresh and try again.";
+            $scope.message = "Authentication error. Oops. Please try again.";
         else
         {
             ApiService.getTokens(code).then(function(response){

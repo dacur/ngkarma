@@ -433,6 +433,10 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             title: 'Major Changes',
             updates: [
                 {
+                    date: '6/28/2014',
+                    details: 'UI changes.'
+                },
+                {
                     date: '6/25/2014',
                     details: 'Improved duplicate post detection logic between pages.'
                 },
@@ -492,13 +496,15 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
         },
         {
             type: 'paragraphs',
-            title: 'Coming Soon',
+            title: 'Coming Soon (maybe)',
             content: [
                 'Flickr support',
                 'External page screenshots',
                 'Display top comments',
                 'UI Options',
-                'Performance improvements'
+                'Performance improvements',
+                'Sorting options',
+                'Message notifications'
             ]
         },
         {

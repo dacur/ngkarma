@@ -30,7 +30,7 @@ app.service('ApiService',function($http){
                 url: '/api/reddit/tokens',
                 params: {
                     code: code,
-                    redirect_uri: "http://ngreddit.multifarious.org:7777/redirect"
+                    redirect_uri: "http://ngkarma.com/redirect"
                 }
             })
         }

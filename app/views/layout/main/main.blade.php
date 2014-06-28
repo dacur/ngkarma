@@ -49,47 +49,61 @@
                 </div>
             </div>
             <div class="info">
-                <div class="left">
-                    <strong>
-                        <a href="http://reddit.com/u/@{{ post.data.author }}"
-                               tooltip="View profile"
-                               target="_blank">
-                            @{{ post.data.author }}
-                        </a>
-                    </strong><br/>
-                    Posted: @{{ getPostAge(post.data.created) }}<br/>
-                    Comments:
-                    <a href="http://www.reddit.com@{{ post.data.permalink }}"
-                       tooltip="View comments"
-                       target="_blank">
-                        @{{ post.data.num_comments }}
-                    </a>
+                <div class="row">
+                    <div class="top">
+                        <div class="col-xs-12">
+                            <div class="left">
+                                <strong>
+                                    <a href="http://reddit.com/u/@{{ post.data.author }}"
+                                       tooltip="View profile"
+                                       target="_blank">
+                                        @{{ post.data.author }}
+                                    </a>
+                                </strong><br/>
+                                Comments:
+                                <a href="http://www.reddit.com@{{ post.data.permalink }}"
+                                   tooltip="View comments"
+                                   target="_blank">
+                                    @{{ post.data.num_comments }}
+                                </a>
+                            </div>
+                            <div class="right">
+                                <div class="vote-box" ng-show="loggedIn">
+                                    <div class="points">@{{ post.data.ups }}</div>
+                                    <div class="arrows">
+                                        <i id="@{{ post.data.name }}_up"
+                                           ng-class="{up: loggedIn && post.data.likes && post.data.likes != null}"
+                                           ng-click="submitVote(post.data.name,post.data.likes,1)"
+                                           class="fa fa-arrow-up">
+                                        </i><br />
+                                        <i ng-show="loggedIn"
+                                           id="@{{ post.data.name }}_down"
+                                           ng-class="{down: loggedIn && !post.data.likes && post.data.likes != null}"
+                                           ng-click="submitVote(post.data.name,post.data.likes,-1)"
+                                           class="fa fa-arrow-down">
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="vote-box"
+                                     ng-show="!loggedIn"
+                                     tooltip="Log in"
+                                     ng-click="authorizeAccount()">
+                                    <div class="points">@{{ post.data.ups }}</div>
+                                    <div class="arrows">
+                                        <i class="fa fa-arrow-up"></i><br />
+                                        <i class="fa fa-arrow-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="right">
-                    <div ng-show="loggedIn">
-                        @{{ post.data.ups }}
-                        <i id="@{{ post.data.name }}_up"
-                           ng-class="{up: loggedIn && post.data.likes && post.data.likes != null}"
-                           ng-click="submitVote(post.data.name,post.data.likes,1)"
-                           class="fa fa-arrow-up">
-                        </i><br />
-                        @{{ post.data.downs }}
-                        <i ng-show="loggedIn"
-                           id="@{{ post.data.name }}_down"
-                           ng-class="{down: loggedIn && !post.data.likes && post.data.likes != null}"
-                           ng-click="submitVote(post.data.name,post.data.likes,-1)"
-                           class="fa fa-arrow-down">
-                       </i>
+                <div class="row">
+                    <div class="bottom">
+                        <div class="col-xs-12">
+                            @{{ getPostAge(post.data.created) }}
+                        </div>
                     </div>
-                    <div ng-show="!loggedIn"
-                         tooltip="Log in first!"
-                         ng-click="authorizeAccount()">
-                        @{{ post.data.ups }}
-                        <i class="fa fa-arrow-up"></i><br />
-                        @{{ post.data.downs }}
-                        <i class="fa fa-arrow-down"></i>
-                    </div>
-                    @{{ post.data.score }} points
                 </div>
             </div>
         </div>

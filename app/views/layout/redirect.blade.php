@@ -2,7 +2,7 @@
 <html lang="en" ng-app="RedirectApp">
 <head>
     <meta charset="UTF-8">
-    <title>SpreddIt - Accessing your account</title>
+    <title>ngKarma - Accessing your account</title>
 
     <!--Bootstrap CSS-->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -20,7 +20,7 @@
 <body ng-controller="RedirectCtrl" ng-init="init('{{ Input::get('state') }}','{{ Input::get('code') }}','{{ Input::get('error') }}')" ng-cloak>
 
 <div id="alien">
-    <i class="fa fa-reddit"></i>
+    <span id="arrow" class="glyphicon glyphicon-arrow-up"></span>
 </div>
 @{{message}}
 
