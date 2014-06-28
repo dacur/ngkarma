@@ -11,8 +11,8 @@
         <div id="right">
             <div ng-show="!loggedIn">
                 <button class="btn btn-danger btn-connect" ng-click="authorizeAccount()" ng-show="!connecting">
-                    <span class="hide_very_small">Connect to your Reddit account!</span>
-                    <span class="show_very_small">Connect!</span>
+                    <span class="hide_very_small">Connect to your Reddit account</span>
+                    <span class="show_very_small">Connect</span>
                 </button>
                 <div id="connect-link" ng-show="connecting">
                     Connecting...
