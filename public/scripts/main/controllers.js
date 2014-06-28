@@ -211,8 +211,12 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
                     // Add new posts to posts array.
                     if(response.hasOwnProperty('data') && response.data.hasOwnProperty('children'))
                     {
-                        // Push new posts.
-                        pushPosts(response.data.children);
+                        // Push new posts (only clean for now).
+                        var filtered = [];
+                        for(var i in response.data.children)
+                            if(!response.data.children[i].data.over_18)
+                                filtered.push(response.data.children[i]);
+                        pushPosts(filtered);
 
                         // Set new 'after' value for next page.
                         $scope.after = response.data.after;
@@ -458,7 +462,7 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             updates: [
                 {
                     date: '6/28/2014',
-                    details: 'UI changes, including theme support. Also added play button to YouTube and Vimeo posts.'
+                    details: 'UI changes, including theme support. Also, NSFW posts are only viewable when logged in. Finally, added play button to YouTube and Vimeo posts.'
                 },
                 {
                     date: '6/25/2014',
