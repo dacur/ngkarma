@@ -458,7 +458,7 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             updates: [
                 {
                     date: '6/28/2014',
-                    details: 'UI changes.'
+                    details: 'UI changes, including theme support. Also added play button to YouTube and Vimeo posts.'
                 },
                 {
                     date: '6/25/2014',
