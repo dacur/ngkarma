@@ -282,8 +282,16 @@ hr{
         padding:3px;
       }
     }
+    &.go-to-top-small{
+      right:10px;
+      padding: 5px 12px;
+    }
     &.about-this-project{
       left:30px;
+    }
+    &.about-this-project-small{
+      left:10px;
+      padding: 5px 12px;
     }
   }
 }

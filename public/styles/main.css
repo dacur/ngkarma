@@ -200,8 +200,14 @@ hr {
     right: 30px; }
     #main-page .bottom-tab.go-to-top img {
       padding: 3px; }
+  #main-page .bottom-tab.go-to-top-small {
+    right: 10px;
+    padding: 5px 12px; }
   #main-page .bottom-tab.about-this-project {
     left: 30px; }
+  #main-page .bottom-tab.about-this-project-small {
+    left: 10px;
+    padding: 5px 12px; }
 
 #about-page {
   padding-top: 48px; }

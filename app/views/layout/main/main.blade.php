@@ -108,11 +108,18 @@
             </div>
         </div>
     </div>
-    <div class="bottom-tab about-this-project" ng-click="goTo('about')">
+    <div class="bottom-tab about-this-project hide_small" ng-click="goTo('about')">
         <i class="fa fa-question"></i> About this project
     </div>
-    <div class="bottom-tab go-to-top" ng-show="scrolled" ng-click="goToTop()">
-        <i class="fa fa-chevron-up"></i> Scroll to top!
+    <div class="bottom-tab about-this-project-small show_small" ng-click="goTo('about')">
+        <i class="fa fa-question"></i>
+    </div>
+    <div class="bottom-tab go-to-top hide_small" ng-show="scrolled" ng-click="goToTop()">
+        <i class="fa fa-chevron-up"></i> Scroll to top
+        <img src="/resources/images/loadingSub.gif" ng-show="loadingSub" />
+    </div>
+    <div class="bottom-tab go-to-top-small show_small" ng-show="scrolled" ng-click="goToTop()">
+        <i class="fa fa-chevron-up"></i>
         <img src="/resources/images/loadingSub.gif" ng-show="loadingSub" />
     </div>
 </div>
