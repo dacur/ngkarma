@@ -68,6 +68,7 @@ app.service('MasonryService',function()
         var container = $('#brick-wall');
         container.masonry({
             columnWidth:  300,
+            gutter: '.gutter-sizer',
             itemSelector: '.brick',
             isFitWidth: true
         });

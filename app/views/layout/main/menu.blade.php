@@ -22,7 +22,9 @@
                 Welcome, @{{user.name}}! <span id="logout"><i class="fa fa-power-off" ng-click="deauthorizeAccount()"></i></span>
             </div>
         </div>
-        <div class="color-selector hide_small">
+        <div class="layout-options hide_small">
+            <span class="gutter-minus" ng-click="decreaseGutterWidth()"><i class="fa fa-minus-square"></i></span>
+            <span class="gutter-plus" ng-click="increaseGutterWidth()"><i class="fa fa-plus-square"></i></span>
             <div class="color default" ng-click="setTheme('default')"></div>
             <div class="color orangered" ng-click="setTheme('orangered')"></div>
             <div class="color greyscale" ng-click="setTheme('greyscale')"></div>

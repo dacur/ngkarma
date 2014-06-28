@@ -10,11 +10,17 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     var win = $(window);
     var doc = $(document);
 
-    // Set theme if cookie contains one.
+    // Set theme options stored in cookies.
     var theme = CookieService.getCookie('theme');
     if(theme != undefined && theme != null && theme != '')
         setTheme(theme);
     else setTheme('default');
+
+    // Set layout options.
+    var gutterWidth = CookieService.getCookie('gutter-width');
+    if(gutterWidth != undefined && gutterWidth != null && gutterWidth != '')
+        setGutterWidth(gutterWidth);
+    else setGutterWidth('8');
 
     // Set state of a few scope vars.
     $scope.loggedIn = false;
@@ -318,6 +324,18 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         CookieService.setCookie('theme',theme,30);
     };
 
+    // Increase gutter width.
+    $scope.increaseGutterWidth = function(){
+        var gutter = document.querySelector('.gutter-sizer');
+        setGutterWidth(gutter.offsetWidth + 4);
+    };
+
+    // Increase gutter width.
+    $scope.decreaseGutterWidth = function(){
+        var gutter = document.querySelector('.gutter-sizer');
+        setGutterWidth(gutter.offsetWidth - 4);
+    };
+
     // Trigger when scrolling.
     win.scroll(function(){
         if(win.scrollTop() + 500 > doc.height() - win.height())
@@ -338,6 +356,15 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     // Set theme.
     function setTheme(theme){
         document.getElementById('theme').setAttribute('href','/styles/theme-' + theme + '.css');
+    }
+
+    // Set gutter width.
+    function setGutterWidth(width){
+        if(width < 0)
+            width = 0;
+        var gutter = document.querySelector('.gutter-sizer');
+        gutter.style.width = width + "px";
+        CookieService.setCookie('gutter-width',width,30);
     }
 
 });
@@ -462,7 +489,7 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             updates: [
                 {
                     date: '6/28/2014',
-                    details: 'UI changes, including theme support. Also, NSFW posts are only viewable when logged in. Finally, added play button to YouTube and Vimeo posts.'
+                    details: 'UI changes, including theme support. Gutter between columns is now adjustable. NSFW posts are only viewable when logged in. Finally, added play button to YouTube and Vimeo posts.'
                 },
                 {
                     date: '6/25/2014',
