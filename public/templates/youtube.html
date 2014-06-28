@@ -1,9 +1,10 @@
 <div ng-controller="ContentCtrl">
-    <div id="yt-{{ video_id }}">
+    <div id="yt-{{ video_id }}"
+         ng-click="embedYouTube('yt-' + video_id,video_id)">
         <img ng-src="http://img.youtube.com/vi/{{ video_id }}/0.jpg"
              height="221"
              width="288"
-             tooltip="Click to play"
-             ng-click="embedYouTube('yt-' + video_id,video_id)" />
+             tooltip="Click to play" />
+        <img class="play-button" src="/resources/images/play_button.png" />
     </div>
 </div>

@@ -1,9 +1,10 @@
 <div ng-controller="ContentCtrl" ng-cloak>
-    <div id="vim-{{ video_id }}">
+    <div id="vim-{{ video_id }}"
+         ng-click="embedVimeo('vim-' + video_id,video_id)">
         <img ng-src="http://i.vimeocdn.com/video/{{ video_id }}_200x150.jpg"
              height="221"
              width="288"
-             tooltip="Click to play"
-             ng-click="embedVimeo('vim-' + video_id,video_id)" />
+             tooltip="Click to play" />
+        <img class="play-button" src="/resources/images/play_button.png" />
     </div>
 </div>

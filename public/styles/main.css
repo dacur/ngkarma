@@ -296,6 +296,13 @@ hr {
         overflow-y: scroll;
         padding: 3px; }
 
+.play-button {
+  position: absolute;
+  left: 120px;
+  top: 40%;
+  height: 36px;
+  width: 53px; }
+
 .btn-menu {
   background-color: white;
   color: #000033; }

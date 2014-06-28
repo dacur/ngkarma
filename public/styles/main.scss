@@ -427,6 +427,15 @@ hr{
   }
 }
 
+// Video play button.
+.play-button{
+  position: absolute;
+  left:120px;
+  top:40%;
+  height:36px;
+  width:53px;
+}
+
 // Override Bootstrap CSS
 .btn-menu{
   background-color:$white;
