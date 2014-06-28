@@ -1,0 +1,29 @@
+@import 'colors.scss';
+
+.menubar{
+  background-color:$very_light_blue;
+  text-shadow: 0 0 0.5em darken($very_light_blue,20);
+  .menu{
+    .right{
+      .btn-connect{
+        background-color:lighten($very_light_blue,10);
+        text-shadow: 0 0 0.5em darken($very_light_blue,10);
+      }
+    }
+  }
+}
+
+.brick-wall{
+  .brick{
+    .title{
+      color:$white;
+      background-color:$very_light_blue;
+      background: linear-gradient(
+          to bottom,
+          $very_light_blue, darken($very_light_blue,10)
+      );
+      overflow:hidden;
+      text-shadow: 0 0 0.2em darken($very_light_blue,20);
+    }
+  }
+}

@@ -10,6 +10,11 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     var win = $(window);
     var doc = $(document);
 
+    // Set theme if cookie contains one.
+    var theme = CookieService.getCookie('theme');
+    if(theme != null && theme != '')
+        setTheme(theme);
+
     // Set state of a few scope vars.
     $scope.loggedIn = false;
     $scope.connecting = false;
@@ -302,6 +307,12 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         else window.location.href = loc;
     };
 
+    // Set theme from user selection.
+    $scope.setTheme = function(theme) {
+        setTheme(theme);
+        CookieService.setCookie('theme',theme,30);
+    };
+
     // Trigger when scrolling.
     win.scroll(function(){
         if(win.scrollTop() + 500 > doc.height() - win.height())
@@ -318,6 +329,11 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
             },0);
         }
     });
+
+    // Set theme.
+    function setTheme(theme){
+        document.getElementById('theme').setAttribute('href','/styles/theme-' + theme + '.css');
+    }
 
 });
 

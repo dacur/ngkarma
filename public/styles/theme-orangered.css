@@ -1,0 +1,13 @@
+.menubar {
+  background-color: #ff8b60;
+  text-shadow: 0 0 0.5em #f94300; }
+  .menubar .menu .right .btn-connect {
+    background-color: #ffb093;
+    text-shadow: 0 0 0.5em #ff662d; }
+
+.brick-wall .brick .title {
+  color: white;
+  background-color: #9494ff;
+  background: linear-gradient(to bottom, #9494ff, #6161ff);
+  overflow: hidden;
+  text-shadow: 0 0 0.2em #2e2eff; }

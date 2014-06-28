@@ -47,33 +47,58 @@ hr {
 .neutral {
   color: black; }
 
-#menubar {
+.menubar {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 10;
-  background-color: #b35555;
   color: white;
   width: 100%;
   height: 40px;
-  box-shadow: 0 0px 16px 1px black;
-  text-shadow: 0 0 0.5em #703232; }
-  #menubar a, #menubar a:visited, #menubar a:hover, #menubar a:active {
+  box-shadow: 0 0px 16px 1px black; }
+  .menubar a, .menubar a:visited, .menubar a:hover, .menubar a:active {
     color: white; }
-  #menubar #connect-link {
+  .menubar .color-selector {
+    position: absolute;
+    height: 20px;
+    width: auto;
+    top: 40px;
+    right: 30px;
+    padding: 4px;
+    padding-left: 0px;
+    background-color: #aaaaaa;
+    color: white;
+    border: 1px solid white;
+    border-top: 0px;
+    border-radius: 0 0 5px 5px; }
+    .menubar .color-selector .color {
+      height: 10px;
+      width: 10px;
+      border: 1px solid #555555;
+      float: right;
+      margin-left: 5px; }
+      .menubar .color-selector .color.default {
+        background-color: #b35555; }
+      .menubar .color-selector .color.orangered {
+        background-color: #ff8b60; }
+      .menubar .color-selector .color.greyscale {
+        background-color: #dddddd; }
+      .menubar .color-selector .color.lightblue {
+        background-color: #aaaaff; }
+  .menubar .connect-link {
     padding-top: 15px; }
-  #menubar #menu {
+  .menubar .menu {
     padding: 0 10px 0 10px; }
-    #menubar #menu #left {
+    .menubar .menu .left {
       float: left;
       width: auto;
       font-size: 22px;
       padding-top: 8px; }
-      #menubar #menu #left #title {
+      .menubar .menu .left .title {
         padding-left: 20px; }
-        #menubar #menu #left #title:hover {
+        .menubar .menu .left .title:hover {
           cursor: pointer; }
-      #menubar #menu #left #logo {
+      .menubar .menu .left .logo {
         position: absolute;
         left: 0px;
         top: 5px;
@@ -86,31 +111,27 @@ hr {
         -webkit-animation-name: glow-white;
         -webkit-animation-duration: 10s;
         -webkit-animation-iteration-count: infinite; }
-        #menubar #menu #left #logo:hover {
+        .menubar .menu .left .logo:hover {
           cursor: pointer; }
-      #menubar #menu #left #slogan {
+      .menubar .menu .left .slogan {
         font-family: 'Cedarville Cursive', cursive;
         font-style: italic; }
-    #menubar #menu #right {
+    .menubar .menu .right {
       float: right; }
-      #menubar #menu #right #login-loading {
+      .menubar .menu .right #login-loading {
         padding-right: 14px; }
-      #menubar #menu #right #login-form {
+      .menubar .menu .right #login-form {
         padding: 7px 7px 0 0; }
-      #menubar #menu #right #welcome {
+      .menubar .menu .right #welcome {
         text-align: right; }
-        #menubar #menu #right #welcome #logout:hover {
+        .menubar .menu .right #welcome #logout:hover {
           cursor: pointer;
           text-shadow: 0 0 1em white; }
-      #menubar #menu #right .btn-connect {
+      .menubar .menu .right .btn-connect {
         margin: 5px 0px;
         padding: 5px 10px;
         border: 0;
-        background-color: #c37878;
-        text-shadow: 0 0 0.5em #934242;
         height: 30px; }
-        #menubar #menu #right .btn-connect:hover {
-          color: white; }
 
 #main-page #sub-select {
   position: relative;
@@ -127,59 +148,55 @@ hr {
     padding-right: 10px;
     padding-top: 50px;
     color: #dddddd; }
-#main-page #brick-wall {
+#main-page .brick-wall {
   width: 100%;
   height: 100%;
   margin: 0 auto;
   background-color: white; }
-  #main-page #brick-wall .brick {
+  #main-page .brick-wall .brick {
     width: 290px;
     margin: 5px;
     box-shadow: 0 0 1em #555555;
     border: 1px solid black;
     border-radius: 5px;
     background-color: white; }
-    #main-page #brick-wall .brick .title {
+    #main-page .brick-wall .brick .title {
       border-radius: 4px 4px 0 0;
       padding: 0 3px 0 3px;
-      color: white;
-      background-color: #b35555;
-      background: linear-gradient(to bottom, #b35555, #934242);
-      overflow: hidden;
-      text-shadow: 0 0 0.2em #703232; }
-      #main-page #brick-wall .brick .title .subLink {
+      overflow: hidden; }
+      #main-page .brick-wall .brick .title .subLink {
         color: black; }
-      #main-page #brick-wall .brick .title .titleLink {
+      #main-page .brick-wall .brick .title .titleLink {
         text-shadow: none;
         color: white; }
-    #main-page #brick-wall .brick .content-outer {
+    #main-page .brick-wall .brick .content-outer {
       overflow: hidden; }
-      #main-page #brick-wall .brick .content-outer .content-inner {
+      #main-page .brick-wall .brick .content-outer .content-inner {
         text-align: center;
         max-height: 400px;
         overflow-x: hidden; }
-      #main-page #brick-wall .brick .content-outer .contentImage {
+      #main-page .brick-wall .brick .content-outer .contentImage {
         width: 288px;
         max-width: 288px; }
-      #main-page #brick-wall .brick .content-outer .gallery-description {
+      #main-page .brick-wall .brick .content-outer .gallery-description {
         display: none;
         padding: 1px; }
-    #main-page #brick-wall .brick .info {
+    #main-page .brick-wall .brick .info {
       border-top: 1px solid #aaaaaa;
       padding: 0 5px 0 5px; }
-      #main-page #brick-wall .brick .info .top .left {
+      #main-page .brick-wall .brick .info .top .left {
         float: left;
         text-align: left; }
-      #main-page #brick-wall .brick .info .top .right {
+      #main-page .brick-wall .brick .info .top .right {
         float: right;
         text-align: right; }
-        #main-page #brick-wall .brick .info .top .right .vote-box .points {
+        #main-page .brick-wall .brick .info .top .right .vote-box .points {
           float: left;
           text-align: right;
           padding: 10px 4px 0 0; }
-        #main-page #brick-wall .brick .info .top .right .vote-box .arrows {
+        #main-page .brick-wall .brick .info .top .right .vote-box .arrows {
           float: right; }
-      #main-page #brick-wall .brick .info .bottom {
+      #main-page .brick-wall .brick .info .bottom {
         text-align: center;
         font-style: italic;
         color: #dddddd; }

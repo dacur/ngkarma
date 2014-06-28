@@ -29,7 +29,7 @@
         </div>
     </div>
     <hr />
-    <div id="brick-wall" masonry>
+    <div id="brick-wall" class="brick-wall" masonry>
         <div class="brick masonry-brick" ng-repeat="post in posts track by $index">
             <div class="title">
                 <a class="subLink" href="#"
