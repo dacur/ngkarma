@@ -168,12 +168,11 @@ hr {
   #main-page .brick-wall .brick {
     width: 290px;
     margin: 5px;
-    box-shadow: 0 0 1em #555555;
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 2px;
     background-color: white; }
     #main-page .brick-wall .brick .title {
-      border-radius: 4px 4px 0 0;
+      border-radius: 1px 1px 0 0;
       padding: 0 3px 0 3px;
       overflow: hidden; }
       #main-page .brick-wall .brick .title .subLink {

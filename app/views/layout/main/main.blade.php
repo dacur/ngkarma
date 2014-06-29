@@ -61,7 +61,7 @@
                                         @{{ post.data.author }}
                                     </a>
                                 </strong><br/>
-                                Comments:
+                                <i class="fa fa-comments"></i>
                                 <a href="http://www.reddit.com@{{ post.data.permalink }}"
                                    tooltip="View comments"
                                    target="_blank">

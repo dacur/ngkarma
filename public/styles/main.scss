@@ -230,13 +230,13 @@ hr{
     .brick{
       width: 290px;
       margin: 5px;
-      box-shadow: 0 0 1em $dark_grey;
+      //box-shadow: 0 0 1em $dark_grey;
       border: 1px solid $black;
-      border-radius: 5px;
+      border-radius: 2px;
       background-color:$white;
       //overflow:hidden;
       .title{
-        border-radius: 4px 4px 0 0;
+        border-radius: 1px 1px 0 0;
         padding: 0 3px 0 3px;
         overflow:hidden;
         .subLink{
