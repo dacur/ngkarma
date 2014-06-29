@@ -7,8 +7,8 @@ class ImgurApiController extends BaseController{
     function __construct()
     {
         $this->client = array(
-            "id" => "d77ad751ae23f3d",
-            "secret" => ""
+            "id" => "965638f046842b8",
+            "secret" => "c820053d2ef3c75bc74b72ce57f07f13559ca4b9"
         );
     }
 
