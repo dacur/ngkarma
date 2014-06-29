@@ -2,11 +2,11 @@
 @section('main')
 <div id="about-page" ng-controller="AboutCtrl">
     <div id="heading" class="hide_very_small large">
-        <i class="fa fa-chevron-circle-left" tooltip="Back to the posts" ng-click="goTo()"></i>
+        <i class="fa fa-chevron-circle-left back" tooltip="Back to the posts" ng-click="goTo()"></i>
         About the Project
     </div>
     <div id="heading" class="show_very_small small">
-        <i class="fa fa-chevron-circle-left" ng-click="goTo()"></i>
+        <i class="fa fa-chevron-circle-left back" ng-click="goTo()"></i>
         About the Project
     </div>
     <hr />

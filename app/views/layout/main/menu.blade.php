@@ -5,7 +5,7 @@
     <div class="menu">
         <div class="left">
             <span class="title" ng-click="goTo()">ngK<i class="logo fa fa-chevron-up"></i>rma</span>
-            <span class="slogan" class="hide_small">see reddit faster</span>
+            <span class="slogan hide_small">see reddit faster</span>
         </div>
         <div class="right">
             <div ng-show="!loggedIn">
