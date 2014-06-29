@@ -1,5 +1,6 @@
 html, body {
-  font-family: 'Ubuntu', sans-serif; }
+  background-color: #f5f5f5;
+  font-family: 'Play', sans-serif; }
   html a, html a:visited, html a:hover, html a:active, body a, body a:visited, body a:hover, body a:active {
     text-decoration: none;
     text-shadow: 0 0 0.5em white; }
@@ -151,29 +152,34 @@ hr {
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  background-color: white; }
+  background-color: #f5f5f5; }
   #main-page .brick-wall .gutter-sizer {
     width: 10px; }
   #main-page .brick-wall .brick {
+    border-radius: 4px 4px 2px 2px;
     width: 290px;
     margin: 5px;
     margin-bottom: 18px;
     -webkit-box-shadow: 0px 3px 6px 0px #dddddd;
     -moz-box-shadow: 0px 3px 6px 0px #dddddd;
-    box-shadow: 0px 3px 6px 0px #dddddd;
-    border-radius: 2px; }
+    box-shadow: 0px 3px 6px 0px #dddddd; }
     #main-page .brick-wall .brick hr {
       padding: 0;
       margin: 0; }
     #main-page .brick-wall .brick .content-outer {
+      border-radius: 4px 4px 0 0;
       overflow: hidden; }
       #main-page .brick-wall .brick .content-outer .content-inner {
         text-align: center;
         max-height: 400px;
         overflow-x: hidden; }
+        #main-page .brick-wall .brick .content-outer .content-inner .content-text {
+          font-family: 'Play', sans-serif;
+          font-size: 14px;
+          padding: 2px; }
       #main-page .brick-wall .brick .content-outer .above-overlay {
         padding-bottom: 25px; }
-      #main-page .brick-wall .brick .content-outer .contentImage {
+      #main-page .brick-wall .brick .content-outer .content-image {
         width: 290px;
         max-width: 290px; }
       #main-page .brick-wall .brick .content-outer .gallery-description {
@@ -184,7 +190,8 @@ hr {
       #main-page .brick-wall .brick .info .info-header {
         height: 25px;
         width: 100%;
-        padding-top: 4px; }
+        padding-top: 4px;
+        font-size: 13px; }
         #main-page .brick-wall .brick .info .info-header .left {
           text-align: left;
           color: black;
@@ -215,7 +222,6 @@ hr {
         font-style: italic;
         color: #dddddd; }
         #main-page .brick-wall .brick .info .bottom .left {
-          font-size: 13px;
           text-align: left;
           padding-left: 2px; }
         #main-page .brick-wall .brick .info .bottom .right {
@@ -284,7 +290,7 @@ hr {
       box-shadow: 0 0 1em #ffaaaa;
       border: 1px solid black;
       border-radius: 5px;
-      background-color: white; }
+      background-color: #f5f5f5; }
       #about-page #brick-wall .brick .title {
         text-align: center;
         font-size: 20px;
@@ -324,6 +330,13 @@ hr {
         overflow-x: hidden;
         overflow-y: scroll;
         padding: 3px; }
+
+.wordwrap {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word; }
 
 .play-button {
   position: absolute;

@@ -4,7 +4,8 @@ $logoRotate: 15deg;
 
 html,body{
   //background-image: url("/resources/images/background.png");
-  font-family: 'Ubuntu', sans-serif;
+  background-color:#f5f5f5;
+  font-family: 'Play', sans-serif;
   a,a:visited,a:hover,a:active{
     text-decoration:none;
     text-shadow:0 0 0.5em $white;
@@ -212,11 +213,12 @@ hr{
     width:100%;
     height:100%;
     margin:0 auto;
-    background-color:$white;
+    background-color:#f5f5f5;
     .gutter-sizer{
       width:10px;
     }
     .brick{
+      border-radius:4px 4px 2px 2px;
       width:290px;
       margin:5px;
       margin-bottom:18px;
@@ -225,23 +227,28 @@ hr{
       -moz-box-shadow: 0px 3px 6px 0px rgba(221,221,221,1);
       box-shadow: 0px 3px 6px 0px rgba(221,221,221,1);
       //border: 1px solid $black;
-      border-radius: 2px;
       //overflow:hidden;
       hr{
         padding:0;
         margin:0;
       }
       .content-outer{
+        border-radius:4px 4px 0 0;
         overflow:hidden;
         .content-inner{
           text-align:center;
-          max-height: 400px;
-          overflow-x: hidden;
+          max-height:400px;
+          overflow-x:hidden;
+          .content-text{
+            font-family: 'Play', sans-serif;
+            font-size:14px;
+            padding:2px;
+          }
         }
         .above-overlay{
           padding-bottom:25px;
         }
-        .contentImage{
+        .content-image{
           width:290px;
           max-width:290px;
         }
@@ -256,6 +263,7 @@ hr{
           height:25px;
           width:100%;
           padding-top:4px;
+          font-size:13px;
           .left{
             text-align:left;
             color:$black;
@@ -295,7 +303,6 @@ hr{
           font-style:italic;
           color:$very_light_grey;
           .left{
-            font-size:13px;
             text-align:left;
             padding-left:2px;
           }
@@ -392,7 +399,7 @@ hr{
       box-shadow: 0 0 1em $very_light_red;
       border: 1px solid $black;
       border-radius: 5px;
-      background-color:$white;
+      background-color:#f5f5f5;
       .title{
         text-align:center;
         font-size: 20px;
@@ -466,6 +473,15 @@ hr{
       }
     }
   }
+}
+
+// For self post text
+.wordwrap {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
 }
 
 // Video play button.

@@ -70,6 +70,7 @@ app.service('MasonryService',function()
             columnWidth:  300,
             gutter: '.gutter-sizer',
             itemSelector: '.brick',
+            transitionDuration: 0,
             isFitWidth: true
         });
     };

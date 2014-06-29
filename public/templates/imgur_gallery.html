@@ -1,7 +1,7 @@
 <div ng-controller="ContentCtrl">
     <div id="gallery_image" ng-repeat="gallery_image in gallery_images track by $index">
         <a ng-href="{{ gallery_image.link }}" target="_blank">
-            <img class="contentImage" ng-src="{{ gallery_image.thumb }}" />
+            <img class="content-image" ng-src="{{ gallery_image.thumb }}" />
         </a>
         <div ng-show="gallery_images.length>1">
             <div ng-show="gallery_image.description==null">
