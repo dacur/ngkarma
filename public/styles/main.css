@@ -180,6 +180,7 @@ hr {
       #main-page .brick-wall .brick .content-outer .above-overlay {
         padding-bottom: 25px; }
       #main-page .brick-wall .brick .content-outer .content-image {
+        border-radius: 4px 4px 0 0;
         width: 290px;
         max-width: 290px; }
       #main-page .brick-wall .brick .content-outer .gallery-description {
