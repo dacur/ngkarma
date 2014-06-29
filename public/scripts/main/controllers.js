@@ -492,6 +492,10 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             title: 'Major Changes',
             updates: [
                 {
+                    date: '6/29/2014',
+                    details: 'Imgur API call results are now cached and served from the ngKarma server where possible. This means faster results for images/galleries and fewer API calls to Imgur.'
+                },
+                {
                     date: '6/28/2014',
                     details: 'UI changes, including theme support. Gutter between columns is now adjustable. NSFW posts are only viewable when logged in. Finally, added play button to YouTube and Vimeo posts.'
                 },
