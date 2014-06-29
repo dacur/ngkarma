@@ -32,77 +32,65 @@
     <div id="brick-wall" class="brick-wall" masonry>
         <div class="gutter-sizer"></div>
         <div class="brick masonry-brick" ng-repeat="post in posts track by $index">
-            <div class="title">
-                <a class="subLink" href="#"
-                   ng-click="getSub(post.data.subreddit)">
-                    r/@{{ post.data.subreddit }}
-                </a>
-                -
-                <a class="titleLink"
-                   ng-href="@{{ post.data.url }}"
-                   target="_blank">
-                    @{{ post.data.title }}
-                </a>
-            </div>
             <div class="content-outer">
                 <div class="content-inner"
                      brick-content post-data="post.data">
                 </div>
             </div>
-            <div class="info">
+            <div class="container-fluid info">
                 <div class="row">
-                    <div class="top">
+                    <div class="col-xs-12 info-header">
+                        <div class="col-xs-8 left">
+                            <a href="#" ng-click="getSub(post.data.subreddit)">
+                                r/@{{ post.data.subreddit }}
+                            </a>
+                        </div>
+                        <div class="col-xs-4 right">
+                            <a href="http://www.reddit.com@{{ post.data.permalink }}" target="_blank">
+                                <i class="fa fa-comments-o"></i> @{{ post.data.num_comments }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="main">
                         <div class="col-xs-12">
-                            <div class="left">
-                                <strong>
-                                    <a href="http://reddit.com/u/@{{ post.data.author }}"
-                                       tooltip="View profile"
-                                       target="_blank">
-                                        @{{ post.data.author }}
-                                    </a>
-                                </strong><br/>
-                                <i class="fa fa-comments"></i>
-                                <a href="http://www.reddit.com@{{ post.data.permalink }}"
-                                   tooltip="View comments"
-                                   target="_blank">
-                                    @{{ post.data.num_comments }}
+                            <div class="col-xs-10 left">
+                                <a ng-href="@{{ post.data.url }}" target="_blank">
+                                    @{{ post.data.title }}
                                 </a>
                             </div>
-                            <div class="right">
-                                <div class="vote-box" ng-show="loggedIn">
-                                    <div class="points">@{{ post.data.ups }}</div>
-                                    <div class="arrows">
-                                        <i id="@{{ post.data.name }}_up"
-                                           ng-class="{up: loggedIn && post.data.likes && post.data.likes != null}"
-                                           ng-click="submitVote(post.data.name,post.data.likes,1)"
-                                           class="fa fa-arrow-up">
-                                        </i><br />
-                                        <i ng-show="loggedIn"
-                                           id="@{{ post.data.name }}_down"
-                                           ng-class="{down: loggedIn && !post.data.likes && post.data.likes != null}"
-                                           ng-click="submitVote(post.data.name,post.data.likes,-1)"
-                                           class="fa fa-arrow-down">
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="vote-box"
-                                     ng-show="!loggedIn"
-                                     tooltip="Log in"
-                                     ng-click="authorizeAccount()">
-                                    <div class="points">@{{ post.data.ups }}</div>
-                                    <div class="arrows">
-                                        <i class="fa fa-arrow-up"></i><br />
-                                        <i class="fa fa-arrow-down"></i>
-                                    </div>
-                                </div>
+                            <div class="col-xs-2 right">
+                                <i id="@{{ post.data.name }}_up"
+                                   ng-class="{up: loggedIn && post.data.likes && post.data.likes != null}"
+                                   ng-click="submitVote(post.data.name,post.data.likes,1)"
+                                   class="fa fa-chevron-up">
+                                </i>
+                                <div class="points">@{{ post.data.ups }}</div>
+                                <i id="@{{ post.data.name }}_down"
+                                   ng-class="{down: loggedIn && !post.data.likes && post.data.likes != null}"
+                                   ng-click="submitVote(post.data.name,post.data.likes,-1)"
+                                   class="fa fa-chevron-down">
+                                </i>
                             </div>
                         </div>
                     </div>
                 </div>
+                <hr />
                 <div class="row">
                     <div class="bottom">
                         <div class="col-xs-12">
-                            @{{ getPostAge(post.data.created) }}
+                            <div class="col-xs-7 left">
+                                <a href="http://reddit.com/u/@{{ post.data.author }}"
+                                   tooltip="View profile"
+                                   target="_blank">
+                                    @{{ post.data.author }}
+                                </a>
+                            </div>
+                            <div class="col-xs-5 right">
+                                @{{ getPostAge(post.data.created) }}
+                            </div>
                         </div>
                     </div>
                 </div>

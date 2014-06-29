@@ -5,9 +5,9 @@
     background-color: #ffb093;
     text-shadow: 0 0 0.5em #ff662d; }
 
-.brick-wall .brick .title {
-  color: white;
-  background-color: #9494ff;
-  background: linear-gradient(to bottom, #9494ff, #6161ff);
-  overflow: hidden;
-  text-shadow: 0 0 0.2em #2e2eff; }
+.brick-wall .brick {
+  background-color: white; }
+  .brick-wall .brick .main .left a, .brick-wall .brick .main .left a:visited, .brick-wall .brick .main .left a:hover, .brick-wall .brick .main .left a:active {
+    color: #9494ff;
+    text-decoration: none;
+    text-shadow: none; }

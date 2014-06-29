@@ -1,5 +1,4 @@
 html, body {
-  background-image: url("/resources/images/background.png");
   font-family: 'Ubuntu', sans-serif; }
   html a, html a:visited, html a:hover, html a:active, body a, body a:visited, body a:hover, body a:active {
     text-decoration: none;
@@ -168,49 +167,74 @@ hr {
   #main-page .brick-wall .brick {
     width: 290px;
     margin: 5px;
-    border: 1px solid black;
-    border-radius: 2px;
-    background-color: white; }
-    #main-page .brick-wall .brick .title {
-      border-radius: 1px 1px 0 0;
-      padding: 0 3px 0 3px;
-      overflow: hidden; }
-      #main-page .brick-wall .brick .title .subLink {
-        color: black; }
-      #main-page .brick-wall .brick .title .titleLink {
-        text-shadow: none;
-        color: white; }
+    margin-bottom: 18px;
+    -webkit-box-shadow: 0px 3px 6px 0px #dddddd;
+    -moz-box-shadow: 0px 3px 6px 0px #dddddd;
+    box-shadow: 0px 3px 6px 0px #dddddd;
+    border-radius: 2px; }
+    #main-page .brick-wall .brick hr {
+      padding: 0;
+      margin: 0; }
     #main-page .brick-wall .brick .content-outer {
       overflow: hidden; }
       #main-page .brick-wall .brick .content-outer .content-inner {
         text-align: center;
         max-height: 400px;
         overflow-x: hidden; }
+      #main-page .brick-wall .brick .content-outer .above-overlay {
+        padding-bottom: 25px; }
       #main-page .brick-wall .brick .content-outer .contentImage {
-        width: 288px;
-        max-width: 288px; }
+        width: 290px;
+        max-width: 290px; }
       #main-page .brick-wall .brick .content-outer .gallery-description {
         display: none;
         padding: 1px; }
     #main-page .brick-wall .brick .info {
-      border-top: 1px solid #aaaaaa;
       padding: 0 5px 0 5px; }
-      #main-page .brick-wall .brick .info .top .left {
-        float: left;
-        text-align: left; }
-      #main-page .brick-wall .brick .info .top .right {
-        float: right;
-        text-align: right; }
-        #main-page .brick-wall .brick .info .top .right .vote-box .points {
-          float: left;
+      #main-page .brick-wall .brick .info .info-header {
+        height: 25px;
+        width: 100%;
+        padding-top: 4px; }
+        #main-page .brick-wall .brick .info .info-header .left {
+          text-align: left;
+          color: black;
+          padding-left: 2px; }
+        #main-page .brick-wall .brick .info .info-header .right {
           text-align: right;
-          padding: 10px 4px 0 0; }
-        #main-page .brick-wall .brick .info .top .right .vote-box .arrows {
-          float: right; }
+          color: black;
+          padding-right: 2px; }
+        #main-page .brick-wall .brick .info .info-header a, #main-page .brick-wall .brick .info .info-header a:visited, #main-page .brick-wall .brick .info .info-header a:hover, #main-page .brick-wall .brick .info .info-header a:active {
+          color: black;
+          text-decoration: none;
+          text-shadow: none; }
+      #main-page .brick-wall .brick .info .main .left {
+        font-size: 13px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        margin-left: -10px; }
+      #main-page .brick-wall .brick .info .main .right {
+        float: right;
+        text-align: center;
+        padding: 0; }
+        #main-page .brick-wall .brick .info .main .right .points {
+          margin: 0 auto;
+          padding: 0; }
       #main-page .brick-wall .brick .info .bottom {
         text-align: center;
+        font-size: 13px;
         font-style: italic;
         color: #dddddd; }
+        #main-page .brick-wall .brick .info .bottom .left {
+          font-size: 13px;
+          text-align: left;
+          padding-left: 2px; }
+        #main-page .brick-wall .brick .info .bottom .right {
+          text-align: right;
+          padding-right: 2px; }
+        #main-page .brick-wall .brick .info .bottom a, #main-page .brick-wall .brick .info .bottom a:visited, #main-page .brick-wall .brick .info .bottom a:hover, #main-page .brick-wall .brick .info .bottom a:active {
+          color: #dddddd;
+          text-decoration: none;
+          text-shadow: none; }
 #main-page .bottom-tab {
   position: fixed;
   height: 32px;
@@ -310,7 +334,7 @@ hr {
 .play-button {
   position: absolute;
   left: 120px;
-  top: 40%;
+  top: 30%;
   height: 36px;
   width: 53px; }
 

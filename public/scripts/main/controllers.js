@@ -266,7 +266,8 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 
     // Vote on posts.
     $scope.submitVote = function(id,likes,dir){
-        if(CookieService.getCookie("access_token") != null && CookieService.getCookie("access_token") != ""){
+
+        if(CookieService.getCookie("access_token") != null && CookieService.getCookie("access_token") != "" && $scope.loggedIn){
 
             var up = $('#'+id+'_up');
             var down = $('#'+id+'_down');
@@ -307,8 +308,8 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
             }
 
             RedditApiService.submitVote($scope.access_token,id,$scope.votes[id]);
-
         }
+        else  $scope.authorizeAccount();
     };
 
     // Change location using ng-clicks.
@@ -381,13 +382,13 @@ app.controller('ContentCtrl',function($scope){
 
     $scope.embedYouTube = function(id,video_id){
         $('#' + id).html(
-            '<iframe width="288" height="216" src="http://www.youtube.com/embed/' + video_id + '?autoplay=1" frameborder="0" allowfullscreen></iframe>'
+            '<iframe width="290" height="216" src="http://www.youtube.com/embed/' + video_id + '?autoplay=1" frameborder="0" allowfullscreen></iframe>'
         );
     };
 
     $scope.embedVimeo = function(id,video_id){
         $('#' + id).html(
-            '<iframe width="288" height="216" src="http://player.vimeo.com/video/' + video_id + '?color=a8a8a8&autoplay=1" frameborder="0"></iframe>'
+            '<iframe width="290" height="216" src="http://player.vimeo.com/video/' + video_id + '?color=a8a8a8&autoplay=1" frameborder="0"></iframe>'
         );
     };
 
@@ -493,7 +494,7 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             updates: [
                 {
                     date: '6/29/2014',
-                    details: 'Imgur API call results are now cached and served from the ngKarma server where possible. This means faster results for images/galleries and fewer API calls to Imgur.'
+                    details: 'Imgur API call results are now cached and served from the ngKarma server where possible. This means faster results for images/galleries and fewer API calls to Imgur. Also, changed post brick layout dramatically.'
                 },
                 {
                     date: '6/28/2014',
