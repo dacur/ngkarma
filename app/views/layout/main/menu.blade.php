@@ -4,8 +4,7 @@
 <div class="menubar" ng-cloak>
     <div class="menu">
         <div class="left">
-            <span class="logo glyphicon glyphicon-arrow-up" ng-click="goTo('about')"></span>
-            <span class="title" ng-click="goTo()">ngKarma</span>
+            <span class="title" ng-click="goTo()">ngK<i class="logo fa fa-chevron-up"></i>rma</span>
             <span class="slogan" class="hide_small">see reddit faster</span>
         </div>
         <div class="right">

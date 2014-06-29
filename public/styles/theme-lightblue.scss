@@ -3,6 +3,9 @@
 .menubar{
   background-color:$very_light_blue;
   text-shadow: 0 0 0.5em darken($very_light_blue,20);
+  .layout-options{
+    background-color:$very_light_blue;
+  }
   .menu{
     .right{
       .btn-connect{

@@ -65,7 +65,6 @@ hr {
     right: 60px;
     padding: 4px;
     padding-left: 0px;
-    background-color: #aaaaaa;
     color: white;
     border: 1px solid white;
     border-top: 0px;
@@ -97,31 +96,22 @@ hr {
   .menubar .connect-link {
     padding-top: 15px; }
   .menubar .menu {
-    padding: 0 10px 0 10px; }
+    padding: 0 10px 0 0; }
     .menubar .menu .left {
       float: left;
       width: auto;
-      font-size: 22px;
-      padding-top: 8px; }
+      font-size: 24px;
+      padding-top: 4px; }
       .menubar .menu .left .title {
-        padding-left: 20px; }
+        padding-left: 12px;
+        font-family: 'Play', sans-serif;
+        font-weight: 700; }
         .menubar .menu .left .title:hover {
           cursor: pointer; }
       .menubar .menu .left .logo {
-        position: absolute;
-        left: 0px;
-        top: 5px;
-        font-size: 34px;
-        text-shadow: 0 0 0.2em black;
-        -webkit-transform: rotate(15deg);
-        -moz-transform: rotate(15deg);
-        -ms-transform: rotate(15deg);
-        -o-transform: rotate(15deg);
         -webkit-animation-name: glow-white;
-        -webkit-animation-duration: 10s;
+        -webkit-animation-duration: 6s;
         -webkit-animation-iteration-count: infinite; }
-        .menubar .menu .left .logo:hover {
-          cursor: pointer; }
       .menubar .menu .left .slogan {
         font-family: 'Cedarville Cursive', cursive;
         font-style: italic; }
@@ -321,6 +311,8 @@ hr {
           color: #ba2730; }
         #about-page #brick-wall .brick .tech #masonry a, #about-page #brick-wall .brick .tech #masonry a:hover {
           color: #ac0ccf; }
+        #about-page #brick-wall .brick .tech #mongodb a, #about-page #brick-wall .brick .tech #mongodb a:hover {
+          color: #4e3629; }
         #about-page #brick-wall .brick .tech #bootstrap a, #about-page #brick-wall .brick .tech #bootstrap a:hover {
           color: #5c3f87; }
         #about-page #brick-wall .brick .tech #fontawesome a, #about-page #brick-wall .brick .tech #fontawesome a:hover {
@@ -360,13 +352,13 @@ hr {
     zoom: 100%; } }
 @-webkit-keyframes glow-white {
   0% {
-    text-shadow: 0 0 9px #000000; }
+    text-shadow: 0 0 1px white; }
 
   10% {
-    text-shadow: 0 0 18px #ffffff; }
+    text-shadow: 0 0 18px white; }
 
   20% {
-    text-shadow: 0 0 9px #000000; }
+    text-shadow: 0 0 1px white; }
 
   100% {
-    text-shadow: 0 0 9px #000000; } }
+    text-shadow: 0 0 1px white; } }

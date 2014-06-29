@@ -3,6 +3,9 @@
 .menubar{
   background-color:$brick_red;
   text-shadow: 0 0 0.5em darken($brick_red,20);
+  .layout-options{
+    background-color:$brick_red;
+  }
   .menu{
     .right{
       .btn-connect{

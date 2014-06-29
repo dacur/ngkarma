@@ -13,6 +13,7 @@
     <!--Google Fonts-->
     <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css" />
     <link href='http://fonts.googleapis.com/css?family=Cedarville+Cursive' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Play:400,700' rel='stylesheet' type='text/css' />
 
     <!--Main Stylesheet-->
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />

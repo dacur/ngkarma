@@ -436,6 +436,12 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
                     url: 'http://masonry.desandro.com/'
                 },
                 {
+                    id: 'mongodb',
+                    icon: '/resources/images/mongodb.png',
+                    label: 'MongoDB',
+                    url: 'http://mongodb.org/'
+                },
+                {
                     id: 'bootstrap',
                     icon: '/resources/images/bootstrap.png',
                     label: 'Bootstrap CSS',
