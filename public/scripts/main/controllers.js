@@ -577,7 +577,7 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             type: 'paragraphs',
             title: 'Inspiration',
             content: [
-                'This project was inspired by <a href="http://pinterest.com/" target="_blank">Pinterest</a>, <a href="http://scrolldit.com/" target="_blank">Scrolldit</a> and several other services using tiled interfaces with infinite scroll functionality.'
+                'This project was inspired by <a href="http://pinterest.com/" target="_blank">Pinterest</a>, <a href="http://scrolldit.com/" target="_blank">Scrolldit</a> and several other services using tiled interfaces with infinite scroll functionality.<br /><br />Also, several UI design choices were influenced by Redditor\'s recommendations, so thank you to those users, and special thanks to <a href="https://www.reddit.com/user/ethanbrale">/u/ethanbrale</a> for the design help.'
             ]
         },
         {
