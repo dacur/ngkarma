@@ -296,8 +296,7 @@ hr {
         font-size: 20px;
         padding: 2px;
         border-radius: 5px 5px 0 0;
-        background-color: #dddddd;
-        background: linear-gradient(to bottom, #aaaaaa, white); }
+        background-color: #eaeaea; }
       #about-page #brick-wall .brick .content {
         padding: 3px;
         max-height: 250px;
