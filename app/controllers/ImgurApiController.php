@@ -5,16 +5,17 @@ use Illuminate\Support\Facades\Log;
 class ImgurApiController extends BaseController{
 
     private $client;
-    private $imgurCacheModel;
+//    private $imgurCacheModel;
 
-    function __construct(ImgurCacheModel $imgurCacheModel)
+//    function __construct(ImgurCacheModel $imgurCacheModel)
+    function __construct()
     {
         $this->client = array(
             "id" => "965638f046842b8",
             "secret" => "c820053d2ef3c75bc74b72ce57f07f13559ca4b9"
         );
 
-        $this->imgurCacheModel = $imgurCacheModel;
+//        $this->imgurCacheModel = $imgurCacheModel;
     }
 
     function getImages()
@@ -30,19 +31,19 @@ class ImgurApiController extends BaseController{
             $url = 'https://api.imgur.com/3/image/' . $id;
 
         // Check Imgur cache in Mongo before calling API for data.
-        $cache_results = $this->imgurCacheModel->getCacheStore($id,$type);
-        if(array_key_exists(0,$cache_results))
-            if(array_key_exists('images',$cache_results[0]))
-                if(count($cache_results[0]['images']) >= 1)
-                {
-                    Log::info('Imgur result',array('id' => $id, 'status' => 'GOOD', 'from' => 'cache'));
-                    $response = array(
-                        "status" => 'GOOD',
-                        "from" => 'cache',
-                        "images" => $cache_results[0]['images']
-                    );
-                    return Response::json($response);
-                }
+//        $cache_results = $this->imgurCacheModel->getCacheStore($id,$type);
+//        if(array_key_exists(0,$cache_results))
+//            if(array_key_exists('images',$cache_results[0]))
+//                if(count($cache_results[0]['images']) >= 1)
+//                {
+//                    Log::info('Imgur result',array('id' => $id, 'status' => 'GOOD', 'from' => 'cache'));
+//                    $response = array(
+//                        "status" => 'GOOD',
+//                        "from" => 'cache',
+//                        "images" => $cache_results[0]['images']
+//                    );
+//                    return Response::json($response);
+//                }
 
         $ch = curl_init();
 
@@ -121,8 +122,8 @@ class ImgurApiController extends BaseController{
         }
 
         // Create cache store for this result.
-        if(!$this->imgurCacheModel->createCacheStore($id, $type, $images))
-            Log::error('Error while storing image cache for ID ' . $id);
+//        if(!$this->imgurCacheModel->createCacheStore($id, $type, $images))
+//            Log::error('Error while storing image cache for ID ' . $id);
 
         if(count($images) >= 1){
             Log::info('Imgur result',array('id' => $id, 'status' => 'GOOD', 'from' => 'api'));
