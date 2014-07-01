@@ -237,17 +237,13 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
 
     // Push new posts to main posts array.
     function pushPosts(newPosts){
-        var addedPostNames = [];
-
-        // Loop through new posts. If new post has a post ID, check the previous post IDs and add if unique.
+        // Check the previous post IDs and add only if unique.
         for(var i in newPosts)
             if(newPosts[i].hasOwnProperty('data') && newPosts[i].data.hasOwnProperty('name'))
                 if(!inArray(newPosts[i].data.name,$scope.previousPosts)){
                     $scope.posts.push(newPosts[i]);
-                    addedPostNames.push(newPosts[i].name);
+                    $scope.previousPosts.push(newPosts[i].data.name);
                 }
-        // Remember the names of these added posts for next time.
-        $scope.previousPostNames = addedPostNames;
     }
 
     // Clear posts in main posts array.
