@@ -495,6 +495,10 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             title: 'Major Changes',
             updates: [
                 {
+                    date: '6/30/2014',
+                    details: 'Added file compression to improve overall site speed, and fixed bugs in post duplicate detection function.'
+                },
+                {
                     date: '6/29/2014',
                     details: 'Imgur API call results are now cached and served from the ngKarma server where possible. This means faster results for images/galleries and fewer API calls to Imgur. Also, changed post brick layout dramatically.'
                 },
