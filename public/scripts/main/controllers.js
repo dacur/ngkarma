@@ -496,7 +496,7 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             updates: [
                 {
                     date: '6/30/2014',
-                    details: 'Added file compression to improve overall site speed, and fixed bugs in post duplicate detection function.'
+                    details: 'Added file compression to improve overall site speed, and fixed bugs in duplicate post detection function.'
                 },
                 {
                     date: '6/29/2014',
