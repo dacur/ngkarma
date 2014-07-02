@@ -24,7 +24,9 @@
                 </div>
             </div>
             <div id="welcome" ng-show="loggedIn">
-                Welcome, @{{user.name}}! <span id="logout"><i class="fa fa-power-off" ng-click="deauthorizeAccount()"></i></span>
+                <span class="hide_very_small">Welcome, @{{user.name}}!</span>
+                <span class="show_very_small">@{{user.name}}</span>
+                <span id="logout"><i class="fa fa-power-off" ng-click="deauthorizeAccount()"></i></span>
             </div>
         </div>
         <div class="container-fluid options" ng-show="showOptions">
