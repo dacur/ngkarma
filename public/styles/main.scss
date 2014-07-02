@@ -91,36 +91,46 @@ hr{
   a,a:visited,a:hover,a:active{
     color:$white;
   }
-  .layout-options{
+  .toggle-options{
     position:absolute;
-    height:20px;
-    width:auto;
-    top:40px;
-    right:60px;
+    height:25px;
+    width:32px;
+    bottom:-25px;
+    right:12px;
     padding:4px;
     padding-left:0px;
     color:$white;
     border: 1px solid $white;
     border-top:0px;
     border-radius:0 0 5px 5px;
-    .gutter-plus{
-      position:absolute;
-      left:70px;
-      top:1px;
-      color:$black;
+    .icon{
+      position: absolute;
+      top: 5px;
+      left: 8px;
+      font-size:15px;
     }
-    .gutter-minus{
-      position:absolute;
-      left:-18px;
-      top:1px;
-      color:$black;
+  }
+  .toggle-options-mobile{
+    position:absolute;
+    top:7px;
+    left:50%;
+    right:50%;
+    .icon{
+      font-size:26px;
+    }
+  }
+  .options{
+    padding:18px;
+    padding-top:50px;
+    .option{
+      padding-bottom:5px;
     }
     .color{
-      height:10px;
-      width:10px;
+      height:20px;
+      width:35px;
       border:1px solid $dark_grey;
-      float:right;
       margin-left:5px;
+      float:left;
       &.default{
         background-color:$brick_red;
       }
@@ -142,7 +152,8 @@ hr{
     padding:0 10px 0 0;
     .left{
       float:left;
-      width:auto;
+      text-align:left;
+      width:50%;
       font-size: 24px;
       padding-top: 4px;
       .title{
@@ -165,6 +176,8 @@ hr{
     }
     .right{
       float:right;
+      text-align:right;
+      width:50%;
       #login-loading{
         padding-right: 14px;
       }
@@ -206,6 +219,7 @@ hr{
       padding-right: 10px;
       padding-top:50px;
       color: $very_light_grey;
+      overflow:hidden;
     }
   }
 

@@ -9,7 +9,7 @@ app.factory('MainFactory',function(DefaultSubService)
             var subs = DefaultSubService.defaultSubs;
             setInterval(function(){
                 var n = Math.floor(Math.random()*subs.length+1);
-                $('#sub').attr('placeholder','r/' + subs[n]);
+                $('#sub').attr('placeholder','/r/' + subs[n]);
             },1500);
         }
     }

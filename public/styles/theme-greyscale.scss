@@ -3,6 +3,9 @@
 .menubar{
   background-color:$light_grey;
   text-shadow: 0 0 0.5em darken($light_grey,20);
+  .toggle-options{
+    background-color:$light_grey;
+  }
   .layout-options{
     background-color:$light_grey;
   }

@@ -1,8 +1,14 @@
 @extends('layout.main.master')
 @section('menu')
 
-<div class="menubar" ng-cloak>
+<div id="menubar" class="menubar" ng-cloak>
     <div class="menu">
+        <div class="toggle-options hide_very_small" ng-click="toggleOptionsMenu()">
+            <i class="fa fa-cog icon"></i>
+        </div>
+        <div class="toggle-options-mobile show_very_small" ng-click="toggleOptionsMenu()">
+            <i class="fa fa-cog icon"></i>
+        </div>
         <div class="left">
             <span class="title" ng-click="goTo()">ngK<i class="logo fa fa-chevron-up"></i>rma</span>
             <span class="slogan hide_small">see reddit faster</span>
@@ -21,13 +27,28 @@
                 Welcome, @{{user.name}}! <span id="logout"><i class="fa fa-power-off" ng-click="deauthorizeAccount()"></i></span>
             </div>
         </div>
-        <div class="layout-options hide_small" tooltip="Layout options">
-            <span class="gutter-minus" ng-click="decreaseGutterWidth()"><i class="fa fa-minus-square"></i></span>
-            <span class="gutter-plus" ng-click="increaseGutterWidth()"><i class="fa fa-plus-square"></i></span>
-            <div class="color default" ng-click="setTheme('default')"></div>
-            <div class="color orangered" ng-click="setTheme('orangered')"></div>
-            <div class="color greyscale" ng-click="setTheme('greyscale')"></div>
-            <div class="color lightblue" ng-click="setTheme('lightblue')"></div>
+        <div class="container-fluid options" ng-show="showOptions">
+            <hr />
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-12 option">
+                    <label class="col-xs-12">Theme</label>
+                    <div class="color default" ng-click="setTheme('default')"></div>
+                    <div class="color orangered" ng-click="setTheme('orangered')"></div>
+                    <div class="color greyscale" ng-click="setTheme('greyscale')"></div>
+                    <div class="color lightblue" ng-click="setTheme('lightblue')"></div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12 option hide_small">
+                    <label class="col-xs-12">Horizontal Column Spacing</label>
+                    <button class="btn btn-primary" ng-click="decreaseGutterWidth()"><i class="fa fa-minus-square"></i></button>
+                    <button class="btn btn-primary" ng-click="increaseGutterWidth()"><i class="fa fa-plus-square"></i></button>
+                </div>
+
+                <!-- Work in progress -- hidden from view for now. -->
+                <div ng-hide="1" class="col-md-4 col-sm-6 col-xs-12 option">
+                    <label>Show NSFW Posts</label>
+                    <input type="checkbox" ng-model="showNsfw" ng-checked="showNsfw" />
+                </div>
+            </div>
         </div>
     </div>
 </div>

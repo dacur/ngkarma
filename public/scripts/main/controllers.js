@@ -10,13 +10,12 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     var win = $(window);
     var doc = $(document);
 
-    // Set theme options stored in cookies.
+    // Set stored options.
     var theme = CookieService.getCookie('theme');
     if(theme != undefined && theme != null && theme != '')
         setTheme(theme);
     else setTheme('default');
 
-    // Set layout options.
     var gutterWidth = CookieService.getCookie('gutter-width');
     if(gutterWidth != undefined && gutterWidth != null && gutterWidth != '')
         setGutterWidth(gutterWidth);
@@ -26,6 +25,7 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     $scope.loggedIn = false;
     $scope.connecting = false;
     $scope.loadingSub = false;
+    $scope.showOptions = false;
     $scope.posts = [];
     $scope.previousPosts = [];
     $scope.votes = {};
@@ -41,18 +41,20 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     MainFactory.cycleSubs();
 
     // Set sub large display to match entered sub.
-    $scope.$watch('sub',function(newVal,oldVal){
+    $scope.$watch('sub',function(){
         $scope.submitButton = 'submit';
         if($scope.sub==null||$scope.sub==''){
             $scope.subbigtext = '';
             return;
         }
         var subs = $scope.sub.replace(/\s/g,'').split('+');
-        for(var i = 0;i<subs.length;i++)
-            if(!/^r\//.test(subs[i]))
-                subs[i] = 'r/' + subs[i];
+        for(var i = 0;i<subs.length;i++){
+            subs[i] = subs[i].replace(/^\/r\//,'').replace(/^\/r/,'').replace(/^r\//,'').toLowerCase();
+            subs[i] = '/r/' + subs[i];
+        }
         $scope.subbigtext = subs.join(' + ');
-        $scope.subString = subs.join('+').replace(/r\//g,'');
+        $scope.subString = subs.join('+').replace(/\/r\//g,'');
+        console.log($scope.subString);
     });
 
     // Update masonry layout regularly.
@@ -319,6 +321,15 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
     $scope.setTheme = function(theme) {
         setTheme(theme);
         CookieService.setCookie('theme',theme,30);
+    };
+
+    // Toggle Options menu
+    $scope.toggleOptionsMenu = function(){
+        var val = '40px';
+        if(!$scope.showOptions)
+            val = 'auto';
+        $('#menubar').css('height',val);
+        $scope.showOptions = !$scope.showOptions;
     };
 
     // Increase gutter width.

@@ -1,6 +1,8 @@
 .menubar {
   background-color: #aaaaff;
   text-shadow: 0 0 0.5em #4444ff; }
+  .menubar .toggle-options {
+    background-color: #aaaaff; }
   .menubar .layout-options {
     background-color: #aaaaff; }
   .menubar .menu .right .btn-connect {
