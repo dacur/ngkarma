@@ -54,7 +54,6 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         }
         $scope.subbigtext = subs.join(' + ');
         $scope.subString = subs.join('+').replace(/\/r\//g,'');
-        console.log($scope.subString);
     });
 
     // Update masonry layout regularly.
