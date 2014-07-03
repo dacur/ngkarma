@@ -123,25 +123,32 @@ hr{
     padding:18px;
     padding-top:50px;
     .option{
-      padding-bottom:5px;
+      padding-bottom:14px;
+      .option-name{
+        font-weight:bold;
+      }
     }
     .color{
-      height:20px;
-      width:35px;
-      border:1px solid $dark_grey;
+      font-size:24px;
       margin-left:5px;
-      float:left;
       &.default{
-        background-color:$brick_red;
+        color:$brick_red;
       }
       &.orangered{
-        background-color:$up;
+        color:$up;
       }
       &.greyscale{
-        background-color:$very_light_grey;
+        color:$very_light_grey;
       }
       &.lightblue{
-        background-color:$very_light_blue;
+        color:$very_light_blue;
+      }
+    }
+    .spacing-options{
+      padding-left:10px;
+      .spacing{
+        font-size: 24px;
+        padding-right: 8px;
       }
     }
   }

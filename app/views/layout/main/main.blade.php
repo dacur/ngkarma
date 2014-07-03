@@ -3,7 +3,7 @@
 <div id="main-page">
     <div class="container-fluid" id="sub-select">
         <div id="sub-bigtext" class="hide_medium">@{{ subbigtext }}</div>
-        <div class="col-sm-5 col-xs-12">
+        <div class="col-sm-6 col-xs-12">
             <form ng-submit="getSub(subString)">
                 <label ng-show="!loadingSub">
                     <span class="hide_very_small">Enter a subreddit or multireddit (e.g. "pics+funny"):</span>

@@ -21,6 +21,11 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         setGutterWidth(gutterWidth);
     else setGutterWidth('8');
 
+    var showNsfw = CookieService.getCookie('show-nsfw');
+    if(showNsfw == 'true')
+        $scope.showNsfw = true;
+    else $scope.showNsfw = false;
+
     // Set state of a few scope vars.
     $scope.loggedIn = false;
     $scope.connecting = false;
@@ -218,15 +223,11 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
                     // Add new posts to posts array.
                     if(response.hasOwnProperty('data') && response.data.hasOwnProperty('children'))
                     {
-                        // Push new posts (only clean for now).
-                        var filtered = [];
-                        for(var i in response.data.children)
-                            if(!response.data.children[i].data.over_18)
-                                filtered.push(response.data.children[i]);
-                        pushPosts(filtered);
+                        pushPosts(response.data.children);
 
                         // Set new 'after' value for next page.
-                        $scope.after = response.data.after;
+                        if(response.data.hasOwnProperty('after'))
+                            $scope.after = response.data.after;
 
                         // Apply scope changes.
                         $scope.$apply();
@@ -236,15 +237,18 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         }
     }
 
-    // Push new posts to main posts array.
+    // Push new posts to main posts array. Check the previous post IDs and add only if unique.
     function pushPosts(newPosts){
-        // Check the previous post IDs and add only if unique.
-        for(var i in newPosts)
-            if(newPosts[i].hasOwnProperty('data') && newPosts[i].data.hasOwnProperty('name'))
+        for(var i in newPosts){
+            if(newPosts[i].hasOwnProperty('data') && newPosts[i].data.hasOwnProperty('name')){
                 if(!inArray(newPosts[i].data.name,$scope.previousPosts)){
-                    $scope.posts.push(newPosts[i]);
-                    $scope.previousPosts.push(newPosts[i].data.name);
+                    if($scope.showNsfw || !newPosts[i].data.over_18){
+                        $scope.posts.push(newPosts[i]);
+                        $scope.previousPosts.push(newPosts[i].data.name);
+                    }
                 }
+            }
+        }
     }
 
     // Clear posts in main posts array.
@@ -331,18 +335,23 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
         $scope.showOptions = !$scope.showOptions;
     };
 
+    // Set NSFW show/hide status when changed.
+    $scope.$watch('showNsfw', function(){
+        setShowNsfw($scope.showNsfw);
+    });
+
     // Increase gutter width.
     $scope.increaseGutterWidth = function(){
         var gutter = document.querySelector('.gutter-sizer');
         if(gutter != null && gutter.hasOwnProperty('offsetWidth'))
-            setGutterWidth(gutter.offsetWidth + 4);
+            setGutterWidth(gutter.offsetWidth + 5);
     };
 
     // Increase gutter width.
     $scope.decreaseGutterWidth = function(){
         var gutter = document.querySelector('.gutter-sizer');
         if(gutter != null && gutter.hasOwnProperty('offsetWidth'))
-            setGutterWidth(gutter.offsetWidth - 4);
+            setGutterWidth(gutter.offsetWidth - 5);
     };
 
     // Trigger when scrolling.
@@ -376,6 +385,11 @@ app.controller('MainCtrl',function($scope, $http, MainFactory, RedditApiService,
             gutter.style.width = width + "px";
             CookieService.setCookie('gutter-width',width,30);
         }
+    }
+
+    // Set NSFW show/hide status.
+    function setShowNsfw(s){
+        CookieService.setCookie('show-nsfw',s,30);
     }
 
 });
@@ -504,6 +518,10 @@ app.controller('AboutCtrl',function($scope, $sce, MasonryService){
             type: 'changelog',
             title: 'Major Changes',
             updates: [
+                {
+                    date: '7/2/2014',
+                    details: 'Option added to show NSFW posts without logging in. Off by default.'
+                },
                 {
                     date: '6/30/2014',
                     details: 'Added file compression to improve overall site speed, and fixed bugs in duplicate post detection function.'

@@ -86,21 +86,25 @@ hr {
     padding: 18px;
     padding-top: 50px; }
     .menubar .options .option {
-      padding-bottom: 5px; }
+      padding-bottom: 14px; }
+      .menubar .options .option .option-name {
+        font-weight: bold; }
     .menubar .options .color {
-      height: 20px;
-      width: 35px;
-      border: 1px solid #555555;
-      margin-left: 5px;
-      float: left; }
+      font-size: 24px;
+      margin-left: 5px; }
       .menubar .options .color.default {
-        background-color: #b35555; }
+        color: #b35555; }
       .menubar .options .color.orangered {
-        background-color: #ff8b60; }
+        color: #ff8b60; }
       .menubar .options .color.greyscale {
-        background-color: #dddddd; }
+        color: #dddddd; }
       .menubar .options .color.lightblue {
-        background-color: #aaaaff; }
+        color: #aaaaff; }
+    .menubar .options .spacing-options {
+      padding-left: 10px; }
+      .menubar .options .spacing-options .spacing {
+        font-size: 24px;
+        padding-right: 8px; }
   .menubar .connect-link {
     padding-top: 15px; }
   .menubar .menu {

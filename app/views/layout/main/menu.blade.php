@@ -33,22 +33,22 @@
             <hr />
             <div class="row">
                 <div class="col-md-4 col-sm-6 col-xs-12 option">
-                    <label class="col-xs-12">Theme</label>
-                    <div class="color default" ng-click="setTheme('default')"></div>
-                    <div class="color orangered" ng-click="setTheme('orangered')"></div>
-                    <div class="color greyscale" ng-click="setTheme('greyscale')"></div>
-                    <div class="color lightblue" ng-click="setTheme('lightblue')"></div>
+                    <span class="option-name">Theme</span>
+                    <i class="fa fa-square color default" ng-click="setTheme('default')"></i>
+                    <i class="fa fa-square color orangered" ng-click="setTheme('orangered')"></i>
+                    <i class="fa fa-square color greyscale" ng-click="setTheme('greyscale')"></i>
+                    <i class="fa fa-square color lightblue" ng-click="setTheme('lightblue')"></i>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12 option hide_small">
-                    <label class="col-xs-12">Horizontal Column Spacing</label>
-                    <button class="btn btn-primary" ng-click="decreaseGutterWidth()"><i class="fa fa-minus-square"></i></button>
-                    <button class="btn btn-primary" ng-click="increaseGutterWidth()"><i class="fa fa-plus-square"></i></button>
+                    <span class="option-name">Horizontal Column Spacing</span>
+                    <span class="spacing-options">
+                        <i class="fa fa-minus-square spacing" ng-click="decreaseGutterWidth()"></i>
+                        <i class="fa fa-plus-square spacing" ng-click="increaseGutterWidth()"></i>
+                    </span>
                 </div>
-
-                <!-- Work in progress -- hidden from view for now. -->
-                <div ng-hide="1" class="col-md-4 col-sm-6 col-xs-12 option">
-                    <label>Show NSFW Posts</label>
-                    <input type="checkbox" ng-model="showNsfw" ng-checked="showNsfw" />
+                <div class="col-md-4 col-sm-6 col-xs-12 option">
+                    <span class="option-name">Show NSFW Posts</span>
+                    <input type="checkbox" ng-model="showNsfw" />
                 </div>
             </div>
         </div>
