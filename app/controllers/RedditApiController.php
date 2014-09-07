@@ -22,6 +22,7 @@ class RedditApiController extends BaseController{
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'ngKarma by sqrtoftwo');
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_USERPWD, $this->client['id'] . ':' . $this->client['secret']);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -51,6 +52,7 @@ class RedditApiController extends BaseController{
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'ngKarma by sqrtoftwo');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Authorization: bearer " . $token
@@ -68,6 +70,7 @@ class RedditApiController extends BaseController{
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'ngKarma by sqrtoftwo');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Authorization: bearer " . $token
@@ -104,6 +107,7 @@ class RedditApiController extends BaseController{
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'ngKarma by sqrtoftwo');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Authorization: bearer " . $token
@@ -125,6 +129,7 @@ class RedditApiController extends BaseController{
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'ngKarma by sqrtoftwo');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Authorization: bearer " . $token
